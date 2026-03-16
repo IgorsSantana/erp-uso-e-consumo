@@ -862,4 +862,32 @@ select:focus:not(:disabled) {
         width: 100%;
         margin-bottom: 0;
     }
+
+    #view-contagem .view-header {
+        margin-bottom: 10px;
+    }
+
+    #view-contagem .view-header h2 {
+        font-size: 18px;
+        margin-bottom: 2px;
+    }
+
+    #view-contagem .view-header p {
+        font-size: 12px;
+    }
+
+    /* Compress Filter Card */
+    #view-contagem>.card {
+        padding: 10px;
+        margin-bottom: 15px !important;
+    }
+
+    #view-contagem .card .row {
+        gap: 8px;
+    }
+
+    #view-contagem label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
 }
