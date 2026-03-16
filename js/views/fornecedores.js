@@ -38,7 +38,10 @@ window.Fornecedores = {
                     ${f.Contato_Nome ? `<div>${f.Contato_Nome}</div>` : ''}
                     <div style="font-size: 12px; color: var(--text-tertiary);">${f.Email || '-'}</div>
                 </td>
-                <td>${f.Telefone || '-'}</td>
+                <td>
+                    ${f.Telefone || ''}
+                    ${f.WhatsApp ? `<div style="font-size: 11px; color: var(--success); font-weight: 500;"><i class="ph ph-whatsapp-logo"></i> ${f.WhatsApp}</div>` : ''}
+                </td>
                 <td class="text-center">${btnStatus}</td>
                 <td class="text-center">
                     <button class="btn" style="padding: 6px 10px; background: var(--primary-light); color: var(--primary);" onclick='window.Fornecedores.abrirModalEdicao(${JSON.stringify(f)})'><i class="ph ph-pencil-simple"></i></button>
@@ -61,6 +64,7 @@ window.Fornecedores = {
         document.getElementById('forn-form-cnpj').value = f ? (f.CNPJ || '') : '';
         document.getElementById('forn-form-contato').value = f ? (f.Contato_Nome || '') : '';
         document.getElementById('forn-form-telefone').value = f ? (f.Telefone || '') : '';
+        document.getElementById('forn-form-whatsapp').value = f ? (f.WhatsApp || '') : '';
         document.getElementById('forn-form-email').value = f ? (f.Email || '') : '';
 
         document.getElementById('modal-fornecedor-titulo').innerText = f ? "Editar Fornecedor" : "Novo Fornecedor";
@@ -79,6 +83,7 @@ window.Fornecedores = {
             cnpj: document.getElementById('forn-form-cnpj').value,
             contato: document.getElementById('forn-form-contato').value,
             telefone: document.getElementById('forn-form-telefone').value,
+            whatsapp: document.getElementById('forn-form-whatsapp').value,
             email: document.getElementById('forn-form-email').value
         };
 

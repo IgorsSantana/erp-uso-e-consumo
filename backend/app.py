@@ -427,8 +427,8 @@ def criar_fornecedor():
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
-            sql = "INSERT INTO Fornecedores (Nome_Fantasia, CNPJ, Contato_Nome, Email, Telefone) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(sql, (dados.get('nome'), dados.get('cnpj'), dados.get('contato'), dados.get('email'), dados.get('telefone')))
+            sql = "INSERT INTO Fornecedores (Nome_Fantasia, CNPJ, Contato_Nome, Email, Telefone, WhatsApp) VALUES (%s, %s, %s, %s, %s, %s)"
+            cursor.execute(sql, (dados.get('nome'), dados.get('cnpj'), dados.get('contato'), dados.get('email'), dados.get('telefone'), dados.get('whatsapp')))
             conn.commit()
             return jsonify({"message": "Fornecedor criado"}), 201
     except Exception as e:
@@ -447,8 +447,8 @@ def manage_fornecedor(id):
                 return jsonify({"message": "Deletado"}), 200
             else:
                 dados = request.json
-                sql = "UPDATE Fornecedores SET Nome_Fantasia=%s, CNPJ=%s, Contato_Nome=%s, Email=%s, Telefone=%s, Ativo=%s WHERE ID=%s"
-                cursor.execute(sql, (dados.get('nome'), dados.get('cnpj'), dados.get('contato'), dados.get('email'), dados.get('telefone'), dados.get('ativo', True), id))
+                sql = "UPDATE Fornecedores SET Nome_Fantasia=%s, CNPJ=%s, Contato_Nome=%s, Email=%s, Telefone=%s, WhatsApp=%s, Ativo=%s WHERE ID=%s"
+                cursor.execute(sql, (dados.get('nome'), dados.get('cnpj'), dados.get('contato'), dados.get('email'), dados.get('telefone'), dados.get('whatsapp'), dados.get('ativo', True), id))
                 conn.commit()
                 return jsonify({"message": "Atualizado"}), 200
     except Exception as e:
