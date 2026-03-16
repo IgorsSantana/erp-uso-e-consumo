@@ -495,7 +495,7 @@ def criar_cotacao():
             # 2. Insere os Itens
             for item in itens:
                 cursor.execute("INSERT INTO Cotacao_Itens (Cotacao_ID, Produto_ID, Quantidade_Solicitada) VALUES (%s, %s, %s)",
-                               (cotacao_id, item['produto_id'], item['quantidade']))
+                               (cotacao_id, item['produto_id'], item.get('quantidade', 1)))
             
             # 3. Insere os Fornecedores e gera Tokens
             links_gerados = []
