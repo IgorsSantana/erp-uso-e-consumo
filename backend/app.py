@@ -230,7 +230,7 @@ def get_produtos():
                 SELECT p.Codigo_ERP_Principal as id, p.Nome as nome, 
                        p.Destinacao_de_Uso as destinacao, p.Referencia as referencia,
                        s.Nome as secao, p.Periodo_Consumo as periodo_consumo,
-                       p.Custo as custo
+                       p.Custo as custo, p.Estoque_Minimo as estoque_minimo, p.Estoque_Maximo as estoque_maximo
                 FROM Produtos p
                 LEFT JOIN Secoes s ON p.Secao_ID = s.ID;
             """
@@ -257,25 +257,23 @@ def criar_produto():
             sql = """
                 INSERT INTO Produtos (
                     Codigo_ERP_Principal, Nome, Destinacao_de_Uso, Referencia, 
-                    Secao_ID, Periodo_Consumo, Custo
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    Secao_ID, Periodo_Consumo, Custo, Estoque_Minimo, Estoque_Maximo
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(sql, (
                 dados.get('id'), dados.get('nome'), dados.get('destinacao', ''),
                 dados.get('referencia', ''), secao_id, dados.get('periodo_consumo', 'Mensal'),
-                dados.get('custo')
+                dados.get('custo'), dados.get('estoque_minimo', 0), dados.get('estoque_maximo', 0)
             ))
             
             lojas_config = dados.get('lojas_config', [])
             for lc in lojas_config:
                 cursor.execute("""
-                    INSERT INTO Estoque_Loja (Produto_ID, Loja_ID, Estoque_Minimo, Estoque_Maximo, Consumo_Medio)
-                    VALUES (%s, %s, %s, %s, %s)
+                    INSERT INTO Estoque_Loja (Produto_ID, Loja_ID, Consumo_Medio)
+                    VALUES (%s, %s, %s)
                     ON DUPLICATE KEY UPDATE 
-                        Estoque_Minimo=VALUES(Estoque_Minimo), 
-                        Estoque_Maximo=VALUES(Estoque_Maximo), 
                         Consumo_Medio=VALUES(Consumo_Medio)
-                """, (dados.get('id'), lc['loja_id'], lc.get('min', 0), lc.get('max', 0), lc.get('consumo', 0)))
+                """, (dados.get('id'), lc['loja_id'], lc.get('consumo', 0)))
                 
             conn.commit()
             return jsonify({"message": "Produto criado", "id": dados.get('id')}), 201
@@ -298,24 +296,24 @@ def editar_produto(id):
             sql = """
                 UPDATE Produtos SET 
                     Nome = %s, Destinacao_de_Uso = %s, Referencia = %s, 
-                    Secao_ID = %s, Periodo_Consumo = %s, Custo = %s
+                    Secao_ID = %s, Periodo_Consumo = %s, Custo = %s,
+                    Estoque_Minimo = %s, Estoque_Maximo = %s
                 WHERE Codigo_ERP_Principal = %s
             """
             cursor.execute(sql, (
                 dados.get('nome'), dados.get('destinacao', ''), dados.get('referencia', ''), 
-                secao_id, dados.get('periodo_consumo', 'Mensal'), dados.get('custo'), id
+                secao_id, dados.get('periodo_consumo', 'Mensal'), dados.get('custo'), 
+                dados.get('estoque_minimo', 0), dados.get('estoque_maximo', 0), id
             ))
             
             lojas_config = dados.get('lojas_config', [])
             for lc in lojas_config:
                 cursor.execute("""
-                    INSERT INTO Estoque_Loja (Produto_ID, Loja_ID, Estoque_Minimo, Estoque_Maximo, Consumo_Medio)
-                    VALUES (%s, %s, %s, %s, %s)
+                    INSERT INTO Estoque_Loja (Produto_ID, Loja_ID, Consumo_Medio)
+                    VALUES (%s, %s, %s)
                     ON DUPLICATE KEY UPDATE 
-                        Estoque_Minimo=VALUES(Estoque_Minimo), 
-                        Estoque_Maximo=VALUES(Estoque_Maximo), 
                         Consumo_Medio=VALUES(Consumo_Medio)
-                """, (id, lc['loja_id'], lc.get('min', 0), lc.get('max', 0), lc.get('consumo', 0)))
+                """, (id, lc['loja_id'], lc.get('consumo', 0)))
 
             conn.commit()
             return jsonify({"message": "Produto atualizado", "id": id}), 200
@@ -351,7 +349,8 @@ def get_estoque_matriz():
             cursor.execute("""
                 SELECT p.Codigo_ERP_Principal as id, p.Nome as nome, s.Nome as secao, 
                        p.Periodo_Consumo as periodo_consumo, p.Estoque_Atual as estoque_global,
-                       p.Destinacao_de_Uso as destinacao, p.Referencia as referencia
+                       p.Destinacao_de_Uso as destinacao, p.Referencia as referencia,
+                       p.Estoque_Minimo as min_global, p.Estoque_Maximo as max_global
                 FROM Produtos p LEFT JOIN Secoes s ON p.Secao_ID = s.ID
             """)
             produtos = cursor.fetchall()
@@ -360,16 +359,15 @@ def get_estoque_matriz():
             cursor.execute("SELECT ID as id, Nome as nome FROM Lojas;")
             lojas = cursor.fetchall()
             
-            # 3. Obter dados das Lojas e Estoque Mínimo/Máximo e o Consumo Medio
+            # 3. Obter dados das Lojas e o Consumo Medio
             # O Estoque_Atual global será exibido apenas na Loja 1 (Matriz) para demonstração
-            cursor.execute("SELECT Produto_ID, Loja_ID, Estoque_Minimo, Estoque_Maximo, Consumo_Medio FROM Estoque_Loja")
+            cursor.execute("SELECT Produto_ID, Loja_ID, Consumo_Medio FROM Estoque_Loja")
             estoques = cursor.fetchall()
             
-            # Agrupar a resposta como o Frontend espera (mock model)
             for p in produtos:
                 p['totalAtual'] = float(p['estoque_global'])
-                p['totalMin'] = 0
-                p['totalMax'] = 0
+                p['totalMin'] = float(p.get('min_global') or 0)
+                p['totalMax'] = float(p.get('max_global') or 0)
                 p['matrizLojas'] = {}
                 p['destinacao'] = p.get('destinacao', '')
                 p['referencia'] = p.get('referencia', '')
@@ -379,18 +377,13 @@ def get_estoque_matriz():
                 for l in lojas:
                     e_loja = next((e for e in est_produto if e['Loja_ID'] == l['id']), None)
                     if e_loja:
-                        p['totalMin'] += float(e_loja['Estoque_Minimo'])
-                        p['totalMax'] += float(e_loja['Estoque_Maximo'])
-                        
                         p['matrizLojas'][l['id']] = {
-                            "consumo": float(e_loja.get('Consumo_Medio', 0) or 0),
-                            "min": float(e_loja.get('Estoque_Minimo', 0) or 0),
-                            "max": float(e_loja.get('Estoque_Maximo', 0) or 0)
+                            "consumo": float(e_loja.get('Consumo_Medio', 0) or 0)
                         }
                     else:
                         # Cria default state to show in UI instead of null
                         p['matrizLojas'][l['id']] = {
-                            "consumo": 0, "min": 0, "max": 0
+                            "consumo": 0
                         }
                 
                 # Definir Status

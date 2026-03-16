@@ -113,6 +113,8 @@ window.Produtos = {
                 document.getElementById('prod-form-periodo').value = prod.periodo_consumo || 'Mensal';
                 document.getElementById('prod-form-destinacao').value = prod.destinacao || '';
                 document.getElementById('prod-form-ref').value = prod.referencia || '';
+                document.getElementById('prod-form-minimo').value = prod.estoque_minimo || 0;
+                document.getElementById('prod-form-maximo').value = prod.estoque_maximo || 0;
             }
         } else {
             // Create Mode
@@ -134,20 +136,12 @@ window.Produtos = {
         }
 
         lojas.forEach(loja => {
-            const lc = existingConfig[loja.id] || { min: 0, max: 0, consumo: 0 };
+            const lc = existingConfig[loja.id] || { consumo: 0 };
             const div = document.createElement('div');
             div.style.cssText = 'display:flex; gap:10px; align-items:flex-end; padding-bottom:10px; border-bottom:1px solid var(--border-light);';
             div.innerHTML = `
                 <div style="width: 80px; font-weight:600; color:var(--text-primary); padding-bottom:10px;">
                     ${loja.sigla || loja.nome}
-                </div>
-                <div class="form-group flex-1" style="margin-bottom:0;">
-                    <label style="font-size:11px;">Mínimo</label>
-                    <input type="number" step="0.01" id="cfg-min-${loja.id}" value="${lc.min}">
-                </div>
-                <div class="form-group flex-1" style="margin-bottom:0;">
-                    <label style="font-size:11px;">Máximo</label>
-                    <input type="number" step="0.01" id="cfg-max-${loja.id}" value="${lc.max}">
                 </div>
                 <div class="form-group flex-1" style="margin-bottom:0;">
                     <label style="font-size:11px; color:var(--warning);">Consumo Médio</label>
@@ -174,18 +168,16 @@ window.Produtos = {
         const pPeriodo = document.getElementById('prod-form-periodo').value;
         const pDest = document.getElementById('prod-form-destinacao').value.trim();
         const pRef = document.getElementById('prod-form-ref').value.trim();
+        const pMinimo = parseFloat(document.getElementById('prod-form-minimo').value) || 0;
+        const pMaximo = parseFloat(document.getElementById('prod-form-maximo').value) || 0;
 
         const lojas_config = [];
         const lojas = window.Store.getLojas() || [];
         lojas.forEach(loja => {
-            const min = parseFloat(document.getElementById(`cfg-min-${loja.id}`).value) || 0;
-            const max = parseFloat(document.getElementById(`cfg-max-${loja.id}`).value) || 0;
             const consumo = parseFloat(document.getElementById(`cfg-consumo-${loja.id}`).value) || 0;
 
             lojas_config.push({
                 loja_id: loja.id,
-                min: min,
-                max: max,
                 consumo: consumo
             });
         });
@@ -203,6 +195,8 @@ window.Produtos = {
             periodo_consumo: pPeriodo,
             destinacao: pDest,
             referencia: pRef,
+            estoque_minimo: pMinimo,
+            estoque_maximo: pMaximo,
             lojas_config: lojas_config
         };
 
