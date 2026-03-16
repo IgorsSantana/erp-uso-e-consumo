@@ -122,6 +122,42 @@ window.Produtos = {
             document.getElementById('form-produto').reset();
         }
 
+        // --- Renderização Dinâmica das Lojas ---
+        const configContainer = document.getElementById('prod-lojas-config-container');
+        configContainer.innerHTML = '';
+        const lojas = window.Store.getLojas() || [];
+
+        let existingConfig = {};
+        if (id) {
+            const prod = window.Store.getProdutos().find(p => p.id === id);
+            existingConfig = (prod && prod.matrizLojas) ? prod.matrizLojas : {};
+        }
+
+        lojas.forEach(loja => {
+            const lc = existingConfig[loja.id] || { min: 0, max: 0, consumo: 0 };
+            const div = document.createElement('div');
+            div.style.cssText = 'display:flex; gap:10px; align-items:flex-end; padding-bottom:10px; border-bottom:1px solid var(--border-light);';
+            div.innerHTML = `
+                <div style="width: 80px; font-weight:600; color:var(--text-primary); padding-bottom:10px;">
+                    ${loja.sigla || loja.nome}
+                </div>
+                <div class="form-group flex-1" style="margin-bottom:0;">
+                    <label style="font-size:11px;">Mínimo</label>
+                    <input type="number" step="0.01" id="cfg-min-${loja.id}" value="${lc.min}">
+                </div>
+                <div class="form-group flex-1" style="margin-bottom:0;">
+                    <label style="font-size:11px;">Máximo</label>
+                    <input type="number" step="0.01" id="cfg-max-${loja.id}" value="${lc.max}">
+                </div>
+                <div class="form-group flex-1" style="margin-bottom:0;">
+                    <label style="font-size:11px; color:var(--warning);">Consumo Médio</label>
+                    <input type="number" step="0.01" id="cfg-consumo-${loja.id}" value="${lc.consumo}">
+                </div>
+            `;
+            configContainer.appendChild(div);
+        });
+        // ----------------------------------------
+
         document.getElementById('modal-produto').style.display = 'flex';
     },
 
@@ -139,22 +175,38 @@ window.Produtos = {
         const pDest = document.getElementById('prod-form-destinacao').value.trim();
         const pRef = document.getElementById('prod-form-ref').value.trim();
 
+        const lojas_config = [];
+        const lojas = window.Store.getLojas() || [];
+        lojas.forEach(loja => {
+            const min = parseFloat(document.getElementById(`cfg-min-${loja.id}`).value) || 0;
+            const max = parseFloat(document.getElementById(`cfg-max-${loja.id}`).value) || 0;
+            const consumo = parseFloat(document.getElementById(`cfg-consumo-${loja.id}`).value) || 0;
+
+            lojas_config.push({
+                loja_id: loja.id,
+                min: min,
+                max: max,
+                consumo: consumo
+            });
+        });
+
         if (!pId || !pNome || !pSecao || isNaN(pCusto)) {
             alert("Por favor, preencha todos os campos obrigatórios (*).");
             return;
         }
 
-        const produtoData = {
+        const payload = {
             id: pId,
             nome: pNome,
             secao: pSecao,
             custo: pCusto,
             periodo_consumo: pPeriodo,
             destinacao: pDest,
-            referencia: pRef
+            referencia: pRef,
+            lojas_config: lojas_config
         };
 
-        const success = await window.Store.salvarProduto(produtoData, !!this.produtoEmEdicaoId);
+        const success = await window.Store.salvarProduto(payload, !!this.produtoEmEdicaoId);
 
         if (success) {
             await window.Store.fetchProdutos(); // refresh store with true DB state

@@ -265,6 +265,18 @@ def criar_produto():
                 dados.get('referencia', ''), secao_id, dados.get('periodo_consumo', 'Mensal'),
                 dados.get('custo')
             ))
+            
+            lojas_config = dados.get('lojas_config', [])
+            for lc in lojas_config:
+                cursor.execute("""
+                    INSERT INTO Estoque_Loja (Produto_ID, Loja_ID, Estoque_Minimo, Estoque_Maximo, Consumo_Medio)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON DUPLICATE KEY UPDATE 
+                        Estoque_Minimo=VALUES(Estoque_Minimo), 
+                        Estoque_Maximo=VALUES(Estoque_Maximo), 
+                        Consumo_Medio=VALUES(Consumo_Medio)
+                """, (dados.get('id'), lc['loja_id'], lc.get('min', 0), lc.get('max', 0), lc.get('consumo', 0)))
+                
             conn.commit()
             return jsonify({"message": "Produto criado", "id": dados.get('id')}), 201
     except Exception as e:
@@ -293,6 +305,18 @@ def editar_produto(id):
                 dados.get('nome'), dados.get('destinacao', ''), dados.get('referencia', ''), 
                 secao_id, dados.get('periodo_consumo', 'Mensal'), dados.get('custo'), id
             ))
+            
+            lojas_config = dados.get('lojas_config', [])
+            for lc in lojas_config:
+                cursor.execute("""
+                    INSERT INTO Estoque_Loja (Produto_ID, Loja_ID, Estoque_Minimo, Estoque_Maximo, Consumo_Medio)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON DUPLICATE KEY UPDATE 
+                        Estoque_Minimo=VALUES(Estoque_Minimo), 
+                        Estoque_Maximo=VALUES(Estoque_Maximo), 
+                        Consumo_Medio=VALUES(Consumo_Medio)
+                """, (id, lc['loja_id'], lc.get('min', 0), lc.get('max', 0), lc.get('consumo', 0)))
+
             conn.commit()
             return jsonify({"message": "Produto atualizado", "id": id}), 200
     except Exception as e:
