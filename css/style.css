@@ -710,6 +710,12 @@ select:focus:not(:disabled) {
     padding-bottom: 20px;
 }
 
+.mobile-list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 80px;
+}
+
 .contagem-card {
     background: #fff;
     border-radius: var(--radius-lg);
@@ -844,5 +850,16 @@ select:focus:not(:disabled) {
 
     .header-actions .text-right {
         justify-content: flex-start !important;
+    }
+
+    #view-contagem .card .row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    #view-contagem .card .form-group {
+        width: 100%;
+        margin-bottom: 0;
     }
 }
