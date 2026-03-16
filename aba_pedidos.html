@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Uso e Consumo</title>
+    <!-- Fonte moderna e amigável -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #16a34a;
+            --success-hover: #15803d;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main);
+            margin: 0; 
+            padding: 40px 20px; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 900px; 
+            background: var(--card-bg); 
+            padding: 30px 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.025); 
+        }
+
+        h1 { 
+            margin-top: 0;
+            font-size: 24px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .row > div { flex: 1; min-width: 150px; }
+
+        label { 
+            display: block; 
+            margin-bottom: 6px; 
+            font-weight: 500; 
+            font-size: 14px;
+        }
+
+        select, input { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        button { 
+            font-family: inherit;
+            font-weight: 500;
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 15px; 
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:active { transform: translateY(1px); }
+
+        .btn-primary { background-color: var(--primary); color: white; margin-top: 5px; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-success { background-color: var(--success); color: white; width: 100%; padding: 14px; font-size: 16px; margin-top: 30px; }
+        .btn-success:hover { background-color: var(--success-hover); }
+
+        .btn-danger { background-color: var(--danger); color: white; padding: 6px 12px; font-size: 13px; }
+        .btn-danger:hover { background-color: var(--danger-hover); }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 30px; 
+            font-size: 15px;
+        }
+
+        th, td { 
+            padding: 14px 12px; 
+            text-align: left; 
+            border-bottom: 1px solid var(--border); 
+        }
+
+        th { 
+            background-color: #f1f5f9; 
+            font-weight: 600; 
+            color: #475569;
+        }
+
+        tbody tr:hover { background-color: #f8fafc; }
+
+        .total-container { 
+            text-align: right; 
+            margin-top: 25px; 
+            font-size: 22px; 
+            font-weight: 700; 
+            color: var(--primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Novo Pedido - Uso e Consumo</h1>
+        
+        <div class="row">
+            <div style="flex: 2;">
+                <label for="loja">Loja Solicitante:</label>
+                <select id="loja">
+                    <option value="">-- Selecione a Loja --</option>
+                    <option value="1">1 - BCS</option>
+                    <option value="3">3 - SJN</option>
+                    <option value="4">4 - MEP</option>
+                    <option value="5">5 - FCL1</option>
+                    <option value="6">6 - FCL2</option>
+                    <option value="7">7 - FCL3</option>
+                    <option value="8">8 - FCL4</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" style="align-items: flex-end;">
+            <div style="flex: 3;">
+                <label for="produto">Produto:</label>
+                <select id="produto">
+                    <option value="" data-custo="0">-- Buscar Produto --</option>
+                    <!-- Mock de produtos vindo do backend -->
+                    <option value="376520" data-custo="1.39">Bobina PDV (Cód: 376520) - R$ 1,39</option>
+                    <option value="100200" data-custo="5.50">Detergente Líquido (Cód: 100200) - R$ 5,50</option>
+                    <option value="405021" data-custo="12.90">Luva de Limpeza (Cód: 405021) - R$ 12,90</option>
+                    <option value="894411" data-custo="0.75">Etiqueta de Preço (Cód: 894411) - R$ 0,75</option>
+                </select>
+            </div>
+            <div style="flex: 1;">
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" min="1" value="1">
+            </div>
+            <div>
+                <button type="button" class="btn-primary" onclick="adicionarProduto()">Adicionar Item</button>
+            </div>
+        </div>
+
+        <table id="tabela-pedidos">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th style="text-align: center;">Qtd</th>
+                    <th>Custo Unit.</th>
+                    <th>Subtotal</th>
+                    <th style="text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6" class="empty-state">Nenhum produto adicionado ao pedido ainda.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="total-container">
+            Total Estimado: <span id="total-pedido">R$ 0,00</span>
+        </div>
+
+        <button type="button" class="btn-success" onclick="finalizarExportarPedido()">Finalizar e Exportar TXT</button>
+    </div>
+
+    <script>
+        let itensPedido = [];
+
+        function formatarMoeda(valor) {
+            return `R$ ${valor.toFixed(2).replace('.', ',')}`;
+        }
+
+        function adicionarProduto() {
+            const lojaSelect = document.getElementById('loja');
+            const produtoSelect = document.getElementById('produto');
+            const quantidadeInput = document.getElementById('quantidade');
+
+            if (!lojaSelect.value) {
+                alert('Por favor, selecione a loja solicitante primeiro.');
+                lojaSelect.focus();
+                return;
+            }
+
+            if (!produtoSelect.value) {
+                alert('Selecione um produto para adicionar.');
+                produtoSelect.focus();
+                return;
+            }
+
+            const quantidade = parseInt(quantidadeInput.value);
+            if (quantidade <= 0 || isNaN(quantidade)) {
+                alert('A quantidade deve ser maior que zero.');
+                return;
+            }
+
+            const codigo = produtoSelect.value;
+            // Pega o nome apagando a parte descritiva de custo da visualização do Select
+            const nomeStr = produtoSelect.options[produtoSelect.selectedIndex].text;
+            const nome = nomeStr.substring(0, nomeStr.indexOf(' ('));
+            
+            const custo = parseFloat(produtoSelect.options[produtoSelect.selectedIndex].getAttribute('data-custo'));
+            const subtotal = custo * quantidade;
+
+            // Verifica se o produto já existe no pedido para somar a quantidade
+            const itemExistente = itensPedido.find(item => item.codigo === codigo);
+            if (itemExistente) {
+                itemExistente.quantidade += quantidade;
+                itemExistente.subtotal = itemExistente.quantidade * itemExistente.custo;
+            } else {
+                itensPedido.push({ codigo, nome, custo, quantidade, subtotal });
+            }
+
+            atualizarTabela();
+            
+            // UX: Reseta campos
+            produtoSelect.value = '';
+            quantidadeInput.value = '1';
+        }
+
+        function removerProduto(index) {
+            itensPedido.splice(index, 1);
+            atualizarTabela();
+        }
+
+        function atualizarTabela() {
+            const tbody = document.querySelector('#tabela-pedidos tbody');
+            tbody.innerHTML = '';
+            let total = 0;
+
+            if (itensPedido.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Nenhum produto adicionado ao pedido ainda.</td></tr>`;
+                document.getElementById('total-pedido').innerText = formatarMoeda(0);
+                return;
+            }
+
+            itensPedido.forEach((item, index) => {
+                total += item.subtotal;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.codigo}</td>
+                    <td>${item.nome}</td>
+                    <td style="text-align: center;">${item.quantidade}</td>
+                    <td>${formatarMoeda(item.custo)}</td>
+                    <td style="font-weight: 500;">${formatarMoeda(item.subtotal)}</td>
+                    <td style="text-align: center;">
+                        <button class="btn-danger" onclick="removerProduto(${index})" title="Remover item">✕</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('total-pedido').innerText = formatarMoeda(total);
+        }
+
+        function finalizarExportarPedido() {
+            if (itensPedido.length === 0) {
+                alert('Adicione pelo menos um produto para exportar o pedido.');
+                return;
+            }
+
+            const payloadPedido = {
+                loja_id: document.getElementById('loja').value,
+                itens: itensPedido
+            };
+
+            // Simulação da chamada de API para o Backend Python
+            console.log("== ENVIANDO PARA O BACK-END ==", JSON.stringify(payloadPedido, null, 2));
+            
+            alert('Pedido encaminhado com sucesso!\nAbra o console do navegador (F12) para inspecionar o JSON enviado para o backend Python, que por sua vez gerará o TXT.');
+            
+            /* Exemplo de Fetch (AJAX) para o backend:
+            fetch('/api/exportar-pedido-txt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payloadPedido)
+            }).then(response => {
+                // Lógica de download do txt
+            });
+            */
+        }
+    </script>
+</body>
+</html>

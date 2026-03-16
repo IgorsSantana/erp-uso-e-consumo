@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Fornecedor | Cotação</title>
+    <!-- Fonte moderna e amigável -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ícones Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            /* Colors */
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #10b981;
+            --success-hover: #059669;
+            --danger: #ef4444;
+            --bg-main: #f8fafc;
+            --bg-surface: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border: #e2e8f0;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 14px;
+            padding: 20px 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-brand i {
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .header-brand h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .header-brand p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .cotacao-inbox h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .cotacao-inbox p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            border: none;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 15px;
+            color: white;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-success:hover {
+            background-color: var(--success-hover);
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: #fafafa;
+        }
+
+        @media (min-width: 600px) {
+            .item-card {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+
+            .item-info {
+                flex: 1;
+            }
+
+            .item-input {
+                width: 150px;
+            }
+        }
+
+        .item-info h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .item-info span {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            display: block;
+        }
+
+        .item-qtd {
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #059669;
+            border: 1px solid #6ee7b7;
+            display: none;
+        }
+
+        #total-cotacao {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: right;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header-brand">
+                <i class="ph-fill ph-package"></i>
+                <div>
+                    <h1>Portal de Cotações</h1>
+                    <p>Ambiente Exclusivo e Seguro para Fornecedores</p>
+                </div>
+            </div>
+
+            <div id="loading" style="text-align:center; padding: 40px; color: var(--text-tertiary);">
+                <i class="ph ph-spinner-gap" style="font-size:32px; animation: spin 1s linear infinite;"></i>
+                <p style="margin-top:10px;">Autenticando e carregando itens...</p>
+                <style>
+                    @keyframes spin {
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                </style>
+            </div>
+
+            <div id="error-box" class="alert-box alert-error" style="display:none;"></div>
+            <div id="success-box" class="alert-box alert-success">
+                <i class="ph-fill ph-check-circle" style="font-size: 40px; margin-bottom: 10px;"></i><br>
+                Obrigado! Sua proposta comercial foi enviada com sucesso para nossa equipe.<br>
+                Você já pode fechar esta aba.
+            </div>
+
+            <div id="cotacao-content" class="cotacao-inbox" style="display:none;">
+                <h2 id="view-titulo">Carregando...</h2>
+                <p>Olá, <strong id="view-fornecedor-nome" style="color:var(--primary)">Fornecedor</strong>! Por favor,
+                    informe seus melhores preços unitários para os itens solicitados abaixo. Considere que o frete e os
+                    impostos já devem estar inclusos no preço.</p>
+
+                <div id="alert-preencheu-aviso" class="alert-box"
+                    style="background:#fffbeb; color:#d97706; border:1px solid #fde68a; font-size:13px; text-align:left; display:none;">
+                    <i class="ph-fill ph-warning-circle"></i> <strong>Atenção:</strong> Você já enviou uma proposta para
+                    esta cotação anteriormente. Se reenviar, seus lances anteriores serão substituídos.
+                </div>
+
+                <div class="item-list" id="lista-itens">
+                    <!-- Itens Inseridos pelo JS -->
+                </div>
+
+                <div id="total-cotacao">Total Estimado: R$ 0,00</div>
+
+                <button class="btn btn-success" id="btn-enviar" onclick="enviarProposta()">
+                    <i class="ph-bold ph-paper-plane-tilt"></i>
+                    Confirmar e Enviar Minha Proposta
+                </button>
+            </div>
+        </div>
+        <div style="text-align:center; font-size:12px; color:var(--text-tertiary); margin-bottom: 40px;">
+            Dúvidas? Entre em contato com nossa equipe de compras.
+        </div>
+    </div>
+
+    <script src="js/fornecedor.js"></script>
+</body>
+
+</html>
