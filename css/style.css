@@ -687,3 +687,51 @@ select:focus:not(:disabled) {
         transform: translateY(0) scale(1);
     }
 }
+
+/* ========================================= */
+/* MOBILE RESPONSIVE QUERIES                 */
+/* ========================================= */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .date-chip {
+        display: none !important;
+    }
+
+    .mobile-logout-btn {
+        display: flex !important;
+    }
+
+    .view-container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    .card-full .header-actions {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    .header-actions .form-group {
+        width: 100%;
+    }
+
+    .header-actions .text-right {
+        justify-content: flex-start !important;
+    }
+}

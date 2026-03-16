@@ -91,5 +91,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // Auto-Routing Baseado em Dispositivo
+    if (window.innerWidth <= 768) {
+        document.querySelector('.nav-item[data-view="contagem"]')?.click();
+    } else {
+        document.querySelector('.nav-item[data-view="estoque"]')?.click();
+    }
+
     console.log("== Micro-ERP Inicializado ==");
 });

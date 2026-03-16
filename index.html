@@ -84,7 +84,11 @@
         <main class="main-content">
             <header class="topbar">
                 <h1 id="page-title">Matriz Geral de Estoque</h1>
-                <div class="topbar-actions">
+                <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
+                    <button class="mobile-logout-btn" onclick="window.Auth.logout()" title="Sair"
+                        style="display: none; background: transparent; border: none; font-size: 24px; color: var(--danger); cursor: pointer;">
+                        <i class="ph ph-sign-out"></i>
+                    </button>
                     <div class="date-chip" id="current-date"></div>
                 </div>
             </header>
