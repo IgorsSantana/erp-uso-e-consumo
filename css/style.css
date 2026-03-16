@@ -236,7 +236,6 @@ body {
     border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    flex: auto;
     overflow: hidden;
 }
 
