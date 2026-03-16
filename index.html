@@ -717,26 +717,17 @@
                         </div>
                     </div>
 
-                    <div class="card table-responsive" style="margin-bottom: 20px; max-height: 60vh; overflow-y: auto;">
-                        <table class="data-table" id="tabela-contagem">
-                            <thead>
-                                <tr>
-                                    <th>Cód. ERP</th>
-                                    <th>Produto</th>
-                                    <th>Seção</th>
-                                    <th style="text-align:center;">Estoque Atual (Sistema)</th>
-                                    <th style="text-align:center; width: 140px;">Novo Estoque (Físico)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Preenchido via js -->
-                            </tbody>
-                        </table>
+                    <div class="mobile-list-container" style="margin-bottom: 80px;">
+                        <div id="lista-contagem" class="mobile-card-list">
+                            <!-- Preenchido via js como Cards -->
+                        </div>
                     </div>
 
-                    <div style="text-align: right;">
-                        <button class="btn btn-primary btn-lg" onclick="window.Contagem.salvarContagem()">
-                            <i class="ph ph-floppy-disk"></i> Salvar Inventário
+                    <div class="mobile-sticky-footer">
+                        <button class="btn btn-primary btn-block btn-lg"
+                            style="border-radius: var(--radius-full); box-shadow: 0 4px 15px rgba(10, 37, 64, 0.3);"
+                            onclick="window.Contagem.salvarContagem()">
+                            <i class="ph ph-floppy-disk"></i> Gravar Inventário
                         </button>
                     </div>
                 </section>

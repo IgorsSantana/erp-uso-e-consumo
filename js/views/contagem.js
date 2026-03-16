@@ -62,66 +62,100 @@ window.Contagem = {
                 prod.novoEstoque = q;
             }
 
-            // Highlight row visually
+            // Highlight card visually
             const inputEl = document.getElementById(`contagem-input-${produtoId}`);
             if (inputEl) {
-                const tr = inputEl.closest('tr');
-                if (prod.novoEstoque !== '') {
-                    tr.classList.add('row-selected');
-                } else {
-                    tr.classList.remove('row-selected');
+                const card = inputEl.closest('.contagem-card');
+                if (card) {
+                    if (prod.novoEstoque !== '') {
+                        card.classList.add('selected');
+                    } else {
+                        card.classList.remove('selected');
+                    }
                 }
             }
         }
     },
 
-    renderizarGradeItens(lista) {
-        const tbody = document.querySelector('#tabela-contagem tbody');
-        if (!tbody) return;
+    ajustarQtdeRapido(produtoId, delta) {
+        const prod = this.produtosRenderizados.find(p => p.id === produtoId);
+        if (!prod) return;
 
-        tbody.innerHTML = '';
+        let atual = parseFloat(prod.novoEstoque);
+        if (isNaN(atual)) {
+            // Se está vazio, o usuário está fazendo o primeiro toque, assumimos o saldo atual como base
+            atual = parseFloat(prod.totalAtual) || 0;
+        }
+
+        let novo = atual + delta;
+        if (novo < 0) novo = 0;
+
+        this.alterarQuantidade(produtoId, novo);
+
+        // Atualiza o DOM para refletir a nova qtde sem re-renderizar a lista toda e perder o foco scroll
+        const inputEl = document.getElementById(`contagem-input-${produtoId}`);
+        if (inputEl) {
+            inputEl.value = novo;
+        }
+    },
+
+    renderizarGradeItens(lista) {
+        const container = document.getElementById('lista-contagem');
+        if (!container) return;
+
+        container.innerHTML = '';
 
         if (lista.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="empty-state text-center" style="padding: 20px;">Nenhum produto encontrado.</td></tr>`;
+            container.innerHTML = `<div class="empty-state text-center" style="padding: 20px;">Nenhum produto atende aos filtros.</div>`;
             return;
         }
 
-        // Limitando renderização para não travar tela se houver milhares de produtos (Renderiza lote inicial)
+        // Limitando renderização para não travar tela se houver milhares de produtos
         const renderList = lista.slice(0, 150);
 
         renderList.forEach(prod => {
-            const tr = document.createElement('tr');
-            if (prod.novoEstoque !== '') tr.classList.add('row-selected');
+            const isSelected = prod.novoEstoque !== '';
+            const statusColor = prod.totalAtual < prod.totalMin ? 'var(--danger)' : 'var(--success)';
 
-            tr.innerHTML = `
-                <td style="font-weight: 600; color:var(--text-primary);">${prod.id}</td>
-                <td>
-                    <div style="color:var(--text-secondary);">${prod.nome}</div>
-                </td>
-                <td><small style="color:var(--text-tertiary)">${prod.secao || 'Sem Seção'}</small></td>
-                <td class="text-center" style="vertical-align: middle; font-size: 16px;">
-                    <span style="color: ${prod.totalAtual < prod.totalMin ? 'var(--danger)' : 'var(--success)'}; font-weight: 500;">
-                        ${prod.totalAtual}
-                    </span>
-                </td>
-                <td class="text-center" style="vertical-align: middle;">
-                    <div style="display:inline-block; max-width:120px;">
+            const card = document.createElement('div');
+            card.className = `contagem-card ${isSelected ? 'selected' : ''}`;
+
+            card.innerHTML = `
+                <div class="contagem-card-header">
+                    <span style="color:var(--text-tertiary);">Cód: <strong style="color:var(--text-primary);">${prod.id}</strong></span>
+                    <span style="color:var(--text-tertiary);"><i class="ph ph-tag"></i> ${prod.secao || 'Sem Seção'}</span>
+                </div>
+                <div class="produto-nome-card">${prod.nome}</div>
+                
+                <div class="contagem-card-body">
+                    <div class="estoque-atual-box">
+                        <small>Sistema Atual</small>
+                        <strong style="color: ${statusColor};">${prod.totalAtual}</strong>
+                    </div>
+                    
+                    <div class="estoque-fisico-input">
+                        <button type="button" class="btn-circular" onclick="window.Contagem.ajustarQtdeRapido('${prod.id}', -1)" title="Subtrair 1">
+                            <i class="ph ph-minus"></i>
+                        </button>
+                        
                         <input type="number" min="0" value="${prod.novoEstoque}" 
-                            placeholder="Ajuste..."
-                            class="input-qty"
+                            placeholder="Real"
                             id="contagem-input-${prod.id}"
                             onchange="window.Contagem.alterarQuantidade('${prod.id}', this.value)"
                             onkeyup="window.Contagem.alterarQuantidade('${prod.id}', this.value)"
-                            style="border: 1px solid var(--primary); background-color: #f8fafc;"
                         >
+                        
+                        <button type="button" class="btn-circular" onclick="window.Contagem.ajustarQtdeRapido('${prod.id}', 1)" title="Somar 1">
+                            <i class="ph ph-plus"></i>
+                        </button>
                     </div>
-                </td>
+                </div>
             `;
-            tbody.appendChild(tr);
+            container.appendChild(card);
         });
 
         if (lista.length > 150) {
-            tbody.innerHTML += `<tr><td colspan="5" class="text-center" style="color: var(--text-tertiary); padding: 10px;"><small>+ ${lista.length - 150} produtos ocultos. Use a pesquisa para filtrar.</small></td></tr>`;
+            container.innerHTML += `<div class="text-center" style="color: var(--text-tertiary); padding: 10px;"><small>+ ${lista.length - 150} produtos ocultos. Use a barra de pesquisa para filtrar.</small></div>`;
         }
     },
 
@@ -142,7 +176,7 @@ window.Contagem = {
             novo_estoque: p.novoEstoque
         }));
 
-        const btn = document.querySelector('#view-contagem .btn-primary');
+        const btn = document.querySelector('.mobile-sticky-footer .btn-primary') || document.querySelector('#view-contagem .btn-primary');
         const textOrig = btn.innerHTML;
         btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Salvando...';
         btn.disabled = true;
