@@ -523,13 +523,12 @@ def get_cotacao_detalhe(id):
             if not cotacao: return jsonify({"error": "Não encontrada"}), 404
             
             # Fornecedores
-            sql_forn = """
-                SELECT f.ID, f.Nome_Fantasia as nome, cf.Token_Acesso, cf.Visualizou, cf.Preencheu 
+            cursor.execute('''
+                SELECT cf.Fornecedor_ID as ID, f.Nome_Fantasia as nome, f.WhatsApp, cf.Token_Acesso, cf.Visualizou, cf.Preencheu 
                 FROM Cotacao_Fornecedores cf
                 JOIN Fornecedores f ON cf.Fornecedor_ID = f.ID
                 WHERE cf.Cotacao_ID = %s
-            """
-            cursor.execute(sql_forn, (id,))
+            ''', (id,))
             fornecedores = cursor.fetchall()
             
             # Itens

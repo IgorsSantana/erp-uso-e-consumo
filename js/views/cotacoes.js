@@ -334,12 +334,23 @@ window.Cotacoes = {
             lc.innerHTML = data.fornecedores.map(f => {
                 const url = `${baseUrl}?token=${f.Token_Acesso}`;
                 const badge = f.Preencheu ? `<span style="color:var(--success); font-size:12px; font-weight:bold;">PREENCHEU 🟢</span>` : (f.Visualizou ? `<span style="color:var(--warning); font-size:12px;">VIU (Não Enviou) 🟡</span>` : `<span style="color:var(--text-tertiary); font-size:12px;">Não Visualizou ⚪</span>`);
+
+                // Tratar número de WhatsApp para formato internacional (55 + DDD + Numero)
+                let zapLink = '';
+                if (f.WhatsApp) {
+                    const numeroLimpo = f.WhatsApp.replace(/\D/g, ''); // só os digitos
+                    const foneStr = numeroLimpo.length >= 10 ? (numeroLimpo.startsWith('55') ? numeroLimpo : '55' + numeroLimpo) : numeroLimpo;
+                    const msg = encodeURIComponent(`Olá, você foi convidado para participar de uma cotação de compras ("${data.Titulo}"). Acesse nosso portal exclusivo pelo link abaixo e envie seus preços: \n\n${url}`);
+                    zapLink = `<a href="https://wa.me/${foneStr}?text=${msg}" target="_blank" class="btn btn-success" style="padding: 6px 12px; font-size:13px; text-decoration:none;" title="Enviar no WhatsApp"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>`;
+                }
+
                 return `
                 <div style="border: 1px dashed var(--border); padding: 12px; border-radius: 8px;">
                     <div style="font-weight: 600; margin-bottom: 5px;">${f.nome} - status: ${badge}</div>
                     <div style="display:flex; gap: 10px;">
                         <input type="text" value="${url}" readonly style="font-size: 11px; padding: 6px; background:#f8fafc; color:#94a3b8; border:none; border-radius:4px; margin:0;">
                         <button class="btn btn-primary" style="padding: 6px; font-size:14px;" onclick="navigator.clipboard.writeText('${url}'); alert('Copiado!')" title="Copiar Link Mágico"><i class="ph ph-copy"></i></button>
+                        ${zapLink}
                     </div>
                 </div>`;
             }).join('');
