@@ -239,6 +239,8 @@ def get_produtos():
             # formatting numbers
             for p in produtos:
                 p['custo'] = float(p['custo']) if p['custo'] else 0.0
+                p['estoque_minimo'] = float(p['estoque_minimo']) if p.get('estoque_minimo') else 0.0
+                p['estoque_maximo'] = float(p['estoque_maximo']) if p.get('estoque_maximo') else 0.0
             return jsonify(produtos)
     finally:
         conn.close()
@@ -365,7 +367,7 @@ def get_estoque_matriz():
             estoques = cursor.fetchall()
             
             for p in produtos:
-                p['totalAtual'] = float(p['estoque_global'])
+                p['totalAtual'] = float(p.get('estoque_global') or 0)
                 p['totalMin'] = float(p.get('min_global') or 0)
                 p['totalMax'] = float(p.get('max_global') or 0)
                 p['matrizLojas'] = {}
