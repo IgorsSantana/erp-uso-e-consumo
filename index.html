@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="sidebar-collapsed">
     <div class="app-layout">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
@@ -33,29 +33,29 @@
             </div>
 
             <nav class="sidebar-nav">
-                <button class="nav-item active" data-view="estoque">
+                <button class="nav-item active" data-view="estoque" title="Matriz Geral e Pedidos">
                     <i class="ph ph-squares-four"></i>
-                    Matriz Geral e Pedidos
+                    <span class="nav-text">Matriz Geral e Pedidos</span>
                 </button>
-                <button class="nav-item" data-view="produtos">
+                <button class="nav-item" data-view="produtos" title="Cadastros">
                     <i class="ph ph-tag"></i>
-                    Cadastros
+                    <span class="nav-text">Cadastros</span>
                 </button>
-                <button class="nav-item" data-view="fornecedores">
+                <button class="nav-item" data-view="fornecedores" title="Fornecedores">
                     <i class="ph ph-users"></i>
-                    Fornecedores
+                    <span class="nav-text">Fornecedores</span>
                 </button>
-                <button class="nav-item" data-view="cotacoes">
+                <button class="nav-item" data-view="cotacoes" title="Portal Cotações">
                     <i class="ph ph-scales"></i>
-                    Portal Cotações
+                    <span class="nav-text">Portal Cotações</span>
                 </button>
-                <button class="nav-item" data-view="contagem">
+                <button class="nav-item" data-view="contagem" title="Contagem (Inventário)">
                     <i class="ph ph-check-square-offset"></i>
-                    Contagem (Inventário)
+                    <span class="nav-text">Contagem (Inventário)</span>
                 </button>
-                <button class="nav-item" data-view="usuarios" id="nav-btn-usuarios" style="display: none;">
+                <button class="nav-item" data-view="usuarios" id="nav-btn-usuarios" style="display: none;" title="Gestão de Usuários">
                     <i class="ph ph-shield-check"></i>
-                    Gestão de Usuários
+                    <span class="nav-text">Gestão de Usuários</span>
                 </button>
             </nav>
 
@@ -64,15 +64,15 @@
                     style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <div class="avatar"
-                            style="width:35px; height:35px; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; border-radius:50%;">
+                            style="width:35px; height:35px; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; border-radius:50%; flex-shrink: 0;">
                             👨‍💻</div>
-                        <div>
+                        <div class="user-details">
                             <strong id="auth-user-name">Carregando...</strong>
                             <br>
                             <small id="auth-user-role">...</small>
                         </div>
                     </div>
-                    <button onclick="window.Auth.logout()" title="Sair do Sistema"
+                    <button class="logout-btn-desktop" onclick="window.Auth.logout()" title="Sair do Sistema"
                         style="background:transparent; border:none; color:var(--text-secondary); cursor:pointer; font-size:20px;">
                         <i class="ph ph-sign-out"></i>
                     </button>
@@ -83,7 +83,12 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="topbar">
-                <h1 id="page-title">Matriz Geral de Estoque</h1>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="sidebar-toggle-btn desktop-only" onclick="document.body.classList.toggle('sidebar-collapsed')" style="background:transparent; border:none; font-size:24px; cursor:pointer; color:var(--text-secondary); display: flex; align-items: center;" title="Expandir/Recolher Menu">
+                        <i class="ph ph-list"></i>
+                    </button>
+                    <h1 id="page-title">Matriz Geral de Estoque</h1>
+                </div>
                 <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
                     <button class="mobile-logout-btn" onclick="window.Auth.logout()" title="Sair"
                         style="display: none; background: transparent; border: none; font-size: 24px; color: var(--danger); cursor: pointer;">
