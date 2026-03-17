@@ -3,6 +3,19 @@
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Carrega a preferência de Sidebar Colapsável
+    const isSidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+    if (isSidebarCollapsed) {
+        document.body.classList.add('sidebar-collapsed');
+    }
+
+    const toggleBtn = document.getElementById('btn-toggle-sidebar');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-collapsed');
+            localStorage.setItem('sidebar_collapsed', document.body.classList.contains('sidebar-collapsed'));
+        });
+    }
 
     // Carrega dados do usuário logado
     const sessionUser = JSON.parse(localStorage.getItem('erp_user'));
