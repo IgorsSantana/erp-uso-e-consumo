@@ -61,8 +61,7 @@ window.Produtos = {
         lista.forEach(prod => {
             const tr = document.createElement('tr');
 
-            const dest = prod.destinacao || '-';
-            const ref = prod.referencia || '-';
+            const detalhes = window.Helpers.gerarDetalhesSecao(prod);
 
             tr.innerHTML = `
                 <td>
@@ -73,8 +72,7 @@ window.Produtos = {
                     <small style="color:var(--text-tertiary)">${prod.secao}</small>
                 </td>
                 <td>
-                    <div style="font-size: 13px;">${dest}</div>
-                    <small style="color:var(--text-tertiary)">Ref: ${ref}</small>
+                    <div style="line-height: 1.8;">${detalhes}</div>
                 </td>
                 <td class="text-center">
                     <span class="badge ${prod.periodo_consumo === 'Semanal' ? 'badge-atencao' : 'badge-normal'}">${prod.periodo_consumo}</span>

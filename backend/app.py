@@ -364,7 +364,10 @@ def get_estoque_matriz():
                 SELECT p.Codigo_ERP_Principal as id, p.Nome as nome, s.Nome as secao, 
                        p.Periodo_Consumo as periodo_consumo, p.Estoque_Atual as estoque_global,
                        p.Destinacao_de_Uso as destinacao, p.Referencia as referencia,
-                       p.Estoque_Minimo as min_global, p.Estoque_Maximo as max_global
+                       p.Estoque_Minimo as min_global, p.Estoque_Maximo as max_global,
+                       p.Custo as custo,
+                       p.Referencia_Galvanoteck as ref_galvanoteck, p.Referencia_Concorrente as ref_concorrente,
+                       p.Marca as marca, p.Diluicao as diluicao, p.Rendimento as rendimento, p.Fornecedor_Nome as fornecedor
                 FROM Produtos p LEFT JOIN Secoes s ON p.Secao_ID = s.ID
             """)
             produtos = cursor.fetchall()

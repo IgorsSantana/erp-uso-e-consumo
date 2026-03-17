@@ -92,8 +92,7 @@ window.Estoque = {
                 ? '<span style="color:var(--text-tertiary); font-size:11px;">Sem Config</span>'
                 : `<span class="badge ${badgeClass}"><div class="badge-dot"></div></span>`;
 
-            const dest = item.destinacao || '-';
-            const ref = item.referencia || '-';
+            const detalhes = window.Helpers.gerarDetalhesSecao(item);
 
             // Html da coluna Fixa do Produto
             let linhaHtml = `
@@ -102,8 +101,7 @@ window.Estoque = {
                     <div style="color: var(--text-secondary); font-size: 13px;">${item.nome}</div>
                 </td>
                 <td class="col-ref" style="font-size: 12px;">
-                    <div style="color: var(--text-primary); margin-bottom: 2px;">${ref}</div>
-                    <div style="color: var(--text-tertiary); font-size: 11px;">Uso: ${dest}</div>
+                    <div style="line-height: 1.8;">${detalhes}</div>
                 </td>
                 <td class="text-center col-total" style="vertical-align: middle;">
                     <div style="font-size: 16px; font-weight: 700; color:var(--primary);">${item.totalAtual}</div>

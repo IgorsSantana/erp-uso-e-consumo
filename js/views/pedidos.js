@@ -162,6 +162,7 @@ window.Pedidos = {
             const tr = document.createElement('tr');
             if (prod.qtdeInput > 0) tr.classList.add('row-selected');
 
+            const detalhes = window.Helpers.gerarDetalhesSecao(prod);
             const sub = prod.qtdeInput * prod.custo;
 
             tr.innerHTML = `
@@ -169,6 +170,7 @@ window.Pedidos = {
                     <div style="font-weight: 600; color:var(--text-primary);">${prod.id}</div>
                     <div style="color:var(--text-secondary);">${prod.nome}</div>
                     <small style="color:var(--text-tertiary)">${prod.secao}</small>
+                    <div style="margin-top:4px; line-height:1.8;">${detalhes}</div>
                 </td>
                 <td class="text-right" style="vertical-align: middle;">${this.formatarMoeda(prod.custo)}</td>
                 <td class="text-center" style="vertical-align: middle;">
