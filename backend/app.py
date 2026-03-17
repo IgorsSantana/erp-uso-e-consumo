@@ -230,7 +230,9 @@ def get_produtos():
                 SELECT p.Codigo_ERP_Principal as id, p.Nome as nome, 
                        p.Destinacao_de_Uso as destinacao, p.Referencia as referencia,
                        s.Nome as secao, p.Periodo_Consumo as periodo_consumo,
-                       p.Custo as custo, p.Estoque_Minimo as estoque_minimo, p.Estoque_Maximo as estoque_maximo
+                       p.Custo as custo, p.Estoque_Minimo as estoque_minimo, p.Estoque_Maximo as estoque_maximo,
+                       p.Referencia_Galvanoteck as ref_galvanoteck, p.Referencia_Concorrente as ref_concorrente,
+                       p.Marca as marca, p.Diluicao as diluicao, p.Rendimento as rendimento, p.Fornecedor_Nome as fornecedor
                 FROM Produtos p
                 LEFT JOIN Secoes s ON p.Secao_ID = s.ID;
             """
@@ -259,13 +261,17 @@ def criar_produto():
             sql = """
                 INSERT INTO Produtos (
                     Codigo_ERP_Principal, Nome, Destinacao_de_Uso, Referencia, 
-                    Secao_ID, Periodo_Consumo, Custo, Estoque_Minimo, Estoque_Maximo
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    Secao_ID, Periodo_Consumo, Custo, Estoque_Minimo, Estoque_Maximo,
+                    Referencia_Galvanoteck, Referencia_Concorrente, Marca, Diluicao, Rendimento, Fornecedor_Nome
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(sql, (
                 dados.get('id'), dados.get('nome'), dados.get('destinacao', ''),
                 dados.get('referencia', ''), secao_id, dados.get('periodo_consumo', 'Mensal'),
-                dados.get('custo'), dados.get('estoque_minimo', 0), dados.get('estoque_maximo', 0)
+                dados.get('custo'), dados.get('estoque_minimo', 0), dados.get('estoque_maximo', 0),
+                dados.get('ref_galvanoteck', ''), dados.get('ref_concorrente', ''),
+                dados.get('marca', ''), dados.get('diluicao', ''), dados.get('rendimento', ''), 
+                dados.get('fornecedor', '')
             ))
             
             lojas_config = dados.get('lojas_config', [])
@@ -299,13 +305,19 @@ def editar_produto(id):
                 UPDATE Produtos SET 
                     Nome = %s, Destinacao_de_Uso = %s, Referencia = %s, 
                     Secao_ID = %s, Periodo_Consumo = %s, Custo = %s,
-                    Estoque_Minimo = %s, Estoque_Maximo = %s
+                    Estoque_Minimo = %s, Estoque_Maximo = %s,
+                    Referencia_Galvanoteck = %s, Referencia_Concorrente = %s,
+                    Marca = %s, Diluicao = %s, Rendimento = %s, Fornecedor_Nome = %s
                 WHERE Codigo_ERP_Principal = %s
             """
             cursor.execute(sql, (
                 dados.get('nome'), dados.get('destinacao', ''), dados.get('referencia', ''), 
                 secao_id, dados.get('periodo_consumo', 'Mensal'), dados.get('custo'), 
-                dados.get('estoque_minimo', 0), dados.get('estoque_maximo', 0), id
+                dados.get('estoque_minimo', 0), dados.get('estoque_maximo', 0),
+                dados.get('ref_galvanoteck', ''), dados.get('ref_concorrente', ''),
+                dados.get('marca', ''), dados.get('diluicao', ''), dados.get('rendimento', ''), 
+                dados.get('fornecedor', ''),
+                id
             ))
             
             lojas_config = dados.get('lojas_config', [])

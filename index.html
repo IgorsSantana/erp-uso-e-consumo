@@ -322,7 +322,7 @@
                                 <div class="form-group flex-1">
                                     <label>Seção <span style="color:var(--danger)">*</span></label>
                                     <div class="select-wrapper">
-                                        <select id="prod-form-secao" required></select>
+                                        <select id="prod-form-secao" required onchange="window.Produtos.renderizarCamposDinamicos()"></select>
                                         <i class="ph ph-caret-down"></i>
                                     </div>
                                 </div>
@@ -342,15 +342,9 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="margin-bottom: 25px;">
-                                <div class="form-group flex-1">
-                                    <label>Destinação de Uso</label>
-                                    <input type="text" id="prod-form-destinacao" placeholder="Ex: Higiene do salão...">
-                                </div>
-                                <div class="form-group flex-1">
-                                    <label>Referência de Compra</label>
-                                    <input type="text" id="prod-form-ref" placeholder="Ex: Marca / Tamanho">
-                                </div>
+                            <!-- DYNAMIC SECTION FIELDS -->
+                            <div id="dynamic-fields-container" style="background: var(--bg); padding: 15px; border-radius: var(--radius); border: 1px dashed var(--border); margin-bottom: 20px;">
+                                <!-- Injetado via Javascript baseado na Seção -->
                             </div>
 
                             <div class="row" style="margin-bottom: 25px;">

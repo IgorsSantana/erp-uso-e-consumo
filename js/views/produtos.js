@@ -123,6 +123,10 @@ window.Produtos = {
             inputId.style.backgroundColor = '#fff';
             document.getElementById('form-produto').reset();
         }
+        
+        // Trigger Field Rendering
+        const currentProdData = id ? window.Store.getProdutos().find(p => p.id === id) : {};
+        this.renderizarCamposDinamicos(currentProdData);
 
         // --- Renderização Dinâmica das Lojas ---
         const configContainer = document.getElementById('prod-lojas-config-container');
@@ -151,8 +155,60 @@ window.Produtos = {
             configContainer.appendChild(div);
         });
         // ----------------------------------------
-
         document.getElementById('modal-produto').style.display = 'flex';
+    },
+    
+    renderizarCamposDinamicos(prodData = {}) {
+        const secaoAtual = document.getElementById('prod-form-secao').value;
+        const container = document.getElementById('dynamic-fields-container');
+        
+        let html = '';
+        
+        const buildInput = (id, label, value) => `
+            <div class="form-group flex-1">
+                <label>${label}</label>
+                <input type="text" id="${id}" class="dyn-field" value="${value || ''}" placeholder="...">
+            </div>
+        `;
+        
+        html += '<div class="row" style="margin-bottom:0; gap: 15px;">';
+        
+        switch (secaoAtual) {
+            case 'Embalagem':
+                html += buildInput('dyn-destinacao', 'Destinação de Uso', prodData?.destinacao);
+                html += buildInput('dyn-ref_galvanoteck', 'Referência Galvanoteck', prodData?.ref_galvanoteck);
+                html += buildInput('dyn-ref_concorrente', 'Referência Concorrente', prodData?.ref_concorrente);
+                break;
+            case 'Limpeza':
+                html += buildInput('dyn-marca', 'Marca', prodData?.marca);
+                html += buildInput('dyn-diluicao', 'Diluição / Litro', prodData?.diluicao);
+                html += buildInput('dyn-rendimento', 'Rendimento', prodData?.rendimento);
+                html += buildInput('dyn-destinacao', 'Destinação de Uso', prodData?.destinacao);
+                break;
+            case 'Escritório':
+                html += buildInput('dyn-fornecedor', 'Fornecedor', prodData?.fornecedor);
+                html += buildInput('dyn-destinacao', 'Destinação de Uso', prodData?.destinacao);
+                // Period is handled by main form
+                break;
+            case 'Consumo Geral':
+                html += buildInput('dyn-marca', 'Marca', prodData?.marca);
+                html += buildInput('dyn-fornecedor', 'Fornecedor', prodData?.fornecedor);
+                html += buildInput('dyn-referencia', 'Referência Genérica', prodData?.referencia);
+                break;
+            case 'Açougue':
+                html += buildInput('dyn-fornecedor', 'Fornecedor', prodData?.fornecedor);
+                html += buildInput('dyn-destinacao', 'Destinação de Uso', prodData?.destinacao);
+                html += buildInput('dyn-referencia', 'Referência Genérica', prodData?.referencia);
+                break;
+            default:
+                // Fallback para outras sessões (Bobinas, Etiquetas etc)
+                html += buildInput('dyn-referencia', 'Referência Adicional', prodData?.referencia);
+                html += buildInput('dyn-destinacao', 'Destinação de Uso / Local', prodData?.destinacao);
+                break;
+        }
+        
+        html += '</div>';
+        container.innerHTML = html;
     },
 
     fecharModal() {
@@ -166,10 +222,18 @@ window.Produtos = {
         const pSecao = document.getElementById('prod-form-secao').value;
         const pCusto = parseFloat(document.getElementById('prod-form-custo').value);
         const pPeriodo = document.getElementById('prod-form-periodo').value;
-        const pDest = document.getElementById('prod-form-destinacao').value.trim();
-        const pRef = document.getElementById('prod-form-ref').value.trim();
         const pMinimo = parseFloat(document.getElementById('prod-form-minimo').value) || 0;
         const pMaximo = parseFloat(document.getElementById('prod-form-maximo').value) || 0;
+        
+        // Dynamic Fields Reader (Safeguards missing fields reading as empty strings)
+        const d_dest = document.getElementById('dyn-destinacao') ? document.getElementById('dyn-destinacao').value.trim() : '';
+        const d_ref = document.getElementById('dyn-referencia') ? document.getElementById('dyn-referencia').value.trim() : '';
+        const d_galv = document.getElementById('dyn-ref_galvanoteck') ? document.getElementById('dyn-ref_galvanoteck').value.trim() : '';
+        const d_conc = document.getElementById('dyn-ref_concorrente') ? document.getElementById('dyn-ref_concorrente').value.trim() : '';
+        const d_marca = document.getElementById('dyn-marca') ? document.getElementById('dyn-marca').value.trim() : '';
+        const d_dilv = document.getElementById('dyn-diluicao') ? document.getElementById('dyn-diluicao').value.trim() : '';
+        const d_rend = document.getElementById('dyn-rendimento') ? document.getElementById('dyn-rendimento').value.trim() : '';
+        const d_forn = document.getElementById('dyn-fornecedor') ? document.getElementById('dyn-fornecedor').value.trim() : '';
 
         const lojas_config = [];
         const lojas = window.Store.getLojas() || [];
@@ -186,17 +250,22 @@ window.Produtos = {
             alert("Por favor, preencha todos os campos obrigatórios (*).");
             return;
         }
-
         const payload = {
             id: pId,
             nome: pNome,
             secao: pSecao,
             custo: pCusto,
             periodo_consumo: pPeriodo,
-            destinacao: pDest,
-            referencia: pRef,
             estoque_minimo: pMinimo,
             estoque_maximo: pMaximo,
+            destinacao: d_dest,
+            referencia: d_ref,
+            ref_galvanoteck: d_galv,
+            ref_concorrente: d_conc,
+            marca: d_marca,
+            diluicao: d_dilv,
+            rendimento: d_rend,
+            fornecedor: d_forn,
             lojas_config: lojas_config
         };
 
