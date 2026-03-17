@@ -109,8 +109,6 @@ window.Produtos = {
                 document.getElementById('prod-form-secao').value = prod.secao;
                 document.getElementById('prod-form-custo').value = prod.custo;
                 document.getElementById('prod-form-periodo').value = prod.periodo_consumo || 'Mensal';
-                document.getElementById('prod-form-destinacao').value = prod.destinacao || '';
-                document.getElementById('prod-form-ref').value = prod.referencia || '';
                 document.getElementById('prod-form-minimo').value = prod.estoque_minimo || 0;
                 document.getElementById('prod-form-maximo').value = prod.estoque_maximo || 0;
             }
