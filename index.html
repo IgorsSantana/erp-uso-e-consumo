@@ -60,20 +60,16 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-info"
-                    style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <div class="avatar"
-                            style="width:35px; height:35px; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; border-radius:50%;">
-                            👨‍💻</div>
-                        <div>
+                <div class="user-info">
+                    <div class="user-profile-wrapper">
+                        <div class="avatar">👨‍💻</div>
+                        <div class="user-details">
                             <strong id="auth-user-name">Carregando...</strong>
                             <br>
                             <small id="auth-user-role">...</small>
                         </div>
                     </div>
-                    <button onclick="window.Auth.logout()" title="Sair do Sistema"
-                        style="background:transparent; border:none; color:var(--text-secondary); cursor:pointer; font-size:20px;">
+                    <button class="btn-logout-sidebar" onclick="window.Auth.logout()" title="Sair do Sistema">
                         <i class="ph ph-sign-out"></i>
                     </button>
                 </div>
