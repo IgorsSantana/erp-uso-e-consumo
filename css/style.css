@@ -98,10 +98,6 @@ body.sidebar-collapsed .sidebar .nav-item {
     padding: 12px 0;
 }
 
-body.sidebar-collapsed .sidebar #btn-toggle-sidebar {
-    margin: 0;
-}
-
 .sidebar-header {
     padding: 24px;
     display: flex;

@@ -30,9 +30,6 @@
                     <h2>Uso & Consumo</h2>
                     <span>Visão Global</span>
                 </div>
-                <button id="btn-toggle-sidebar" style="margin-left:auto; background:transparent; border:none; color:var(--text-tertiary); cursor:pointer; font-size: 24px; transition: color 0.2s;">
-                    <i class="ph ph-list"></i>
-                </button>
             </div>
 
             <nav class="sidebar-nav">
@@ -86,7 +83,12 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="topbar">
-                <h1 id="page-title">Matriz Geral de Estoque</h1>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button id="btn-toggle-sidebar" style="background:transparent; border:none; color:var(--text-secondary); cursor:pointer; font-size: 24px; transition: color 0.2s; display: flex; align-items: center;">
+                        <i class="ph ph-list"></i>
+                    </button>
+                    <h1 id="page-title">Matriz Geral de Estoque</h1>
+                </div>
                 <div class="topbar-actions" style="display: flex; gap: 10px; align-items: center;">
                     <button class="mobile-logout-btn" onclick="window.Auth.logout()" title="Sair"
                         style="display: none; background: transparent; border: none; font-size: 24px; color: var(--danger); cursor: pointer;">
