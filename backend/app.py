@@ -194,7 +194,8 @@ def create_app(config=None):
             origin = request.headers.get('Origin')
             if origin and origin.rstrip('/')!=request.host_url.rstrip('/'):
                 raise APIError('Origem da requisição não permitida.',403)
-            get_db().execute('BEGIN IMMEDIATE')
+            if request.path!='/api/produtos/ler-planilha':
+                get_db().execute('BEGIN IMMEDIATE')
 
     @app.after_request
     def finish(response):
@@ -380,6 +381,46 @@ def create_app(config=None):
         get_db().execute('INSERT INTO produtos(id,nome,secao_id,unidade,custo,estoque_minimo,estoque_maximo,referencia,destinacao,marca,periodo_consumo,ativo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',(pid,*vals))
         audit('criar','produtos',pid)
         return jsonify(id=pid,message='Produto cadastrado.'),201
+
+    @app.post('/api/produtos/ler-planilha')
+    @require(*MANAGERS)
+    def read_product_spreadsheet():
+        try:
+            from .catalog_csv import fetch_google_csv
+        except ImportError:
+            from catalog_csv import fetch_google_csv
+        try:
+            source=fetch_google_csv(body().get('url'))
+        except ValueError as error:
+            raise APIError(str(error),400)
+        return jsonify(csv_text=source)
+
+    @app.post('/api/produtos/importar')
+    @require(*MANAGERS)
+    def import_product_spreadsheet():
+        try:
+            from .catalog_csv import analyze_csv,import_rows
+        except ImportError:
+            from catalog_csv import analyze_csv,import_rows
+        d=body()
+        apply=flag(d.get('aplicar',False))
+        update=flag(d.get('atualizar_existentes',False))
+        try:
+            analysis=analyze_csv(d.get('csv_text'),d.get('mapping'),d.get('header_row'))
+        except ValueError as error:
+            raise APIError(str(error))
+        existing={r['id'] for r in get_db().execute('SELECT id FROM produtos')}
+        analysis['novos']=sum(item['id'] not in existing for item in analysis['rows'])
+        analysis['existentes']=sum(item['id'] in existing for item in analysis['rows'])
+        if not apply:
+            return jsonify(analysis)
+        if analysis['errors']:
+            raise APIError('A importação contém erros. Corrija as linhas indicadas antes de confirmar.')
+        try:
+            counts=import_rows(get_db(),analysis['rows'],bool(update),g.user['id'])
+        except ValueError as error:
+            raise APIError(str(error))
+        return jsonify(**counts,message='Importação concluída. Saldos de estoque preservados.')
 
     @app.route('/api/produtos/<pid>',methods=['PUT','DELETE'])
     @require(*MANAGERS)

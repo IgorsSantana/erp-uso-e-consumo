@@ -58,6 +58,16 @@ Responder ou encerrar uma cotação não altera o custo do catálogo. O recebime
 
 Relatórios CSV de estoque, movimentações, pedidos e compras usam separador `;`. O indicador de consumo usa o custo registrado no momento de cada saída, preservando os valores históricos quando o custo do cadastro muda. O TXT de pedido usa linhas posicionais com 13 dígitos de código, 6 de quantidade inteira e 6 de custo em centavos. Esse formato exige código numérico de até 13 dígitos e não aceita quantidade fracionada; a exportação sinaliza itens incompatíveis.
 
+## Importar produtos de uma planilha
+
+Em **Produtos → Importar planilha**, cole o link da aba do Google Sheets ou selecione o CSV exportado em **Arquivo → Fazer download → Valores separados por vírgulas (.csv)**. A leitura pelo link exige que a hospedagem possa acessar `docs.google.com` e que o documento permita a leitura. Se a rede ou o compartilhamento impedir o acesso, use o arquivo CSV; a aplicação não solicita nem armazena credenciais do Google.
+
+A etapa de conferência reconhece colunas em português e permite associá-las manualmente. Código e descrição são obrigatórios; seção, unidade, custo, mínimos/máximos, referência, marca e destinação são opcionais. São aceitos CSV com vírgula, ponto e vírgula ou tabulação, até 1,5 MB e 5.000 produtos. Valores como `R$ 1.234,56` são reconhecidos e os zeros à esquerda nos códigos são mantidos.
+
+A prévia informa novos e existentes, erros, colunas ignoradas e repetições. Duplicidades com informações conflitantes impedem a importação inteira até sua correção. Por padrão, os produtos existentes são preservados; marque **Atualizar os produtos existentes** somente quando quiser atualizar as colunas preenchidas. Campos vazios não apagam dados anteriores. A confirmação é transacional e registrada na auditoria.
+
+**Colunas de saldo físico não são importadas por esse fluxo.** O catálogo pode definir níveis mínimo e máximo, mas os saldos disponíveis continuam sendo mantidos por entradas, compras e inventários. A importação não cria movimentações fictícias.
+
 ## Catálogo antigo, sem saldos históricos
 
 O repositório contém uma lista de produtos no literal `raw_data` de `backend/import_data.py`. O importador novo lê somente esse texto pela árvore sintática; não executa o arquivo legado, seus imports ou suas conexões.

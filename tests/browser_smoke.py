@@ -91,6 +91,24 @@ def run():
                 expect(page.locator("#app-content")).to_contain_text("Produto criado no navegador")
                 print("Browser: product creation form passed.", flush=True)
 
+                assert page.locator('.data-table .cell-title').first.evaluate("element => parseFloat(getComputedStyle(element).fontSize)")>=16
+                page.get_by_role('button',name='Importar planilha',exact=True).click()
+                dialog.locator('#catalog-file').set_input_files({
+                    'name':'produtos.csv','mimeType':'text/csv',
+                    'buffer':'Código;Descrição;Seção;Custo\n990001;Nome que não deve sobrescrever;Teste;100\n990002;Produto importado pelo CSV;Papelaria;12,34'.encode('utf-8'),
+                })
+                dialog.get_by_role('button',name='Conferir arquivo CSV',exact=True).click()
+                expect(dialog).to_contain_text('1 novo(s) e 1 já cadastrado(s)')
+                expect(dialog.get_by_role('button',name='Confirmar importação',exact=True)).to_be_enabled()
+                dialog.get_by_role('button',name='Confirmar importação',exact=True).click()
+                expect(dialog).not_to_be_visible()
+                expect(page.locator('#app-content')).to_contain_text('Produto importado pelo CSV')
+                expect(page.locator('#app-content')).to_contain_text('Produto criado no navegador')
+                product_rows=context.request.get(base_url+'/api/produtos').json()
+                assert next(p for p in product_rows if p['id']=='990001')['custo']==10.5
+                assert next(p for p in product_rows if p['id']=='990002')['custo']==12.34
+                print('Browser: spreadsheet CSV preview, import and existing-product preservation passed.',flush=True)
+
                 navigate("estoque")
                 page.get_by_role("button", name="+ Nova movimentação", exact=True).click()
                 dialog.get_by_label("Tipo de movimentação").select_option("Entrada")
@@ -199,6 +217,8 @@ def run():
                 expect(page.locator("#app-content h1")).to_be_visible()
                 assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), "mobile overflow"
                 page.wait_for_function("() => !document.body.classList.contains('sidebar-open') && document.getElementById('sidebar').getBoundingClientRect().right <= 0")
+                assert page.locator(".data-table .cell-title").first.evaluate("element => parseFloat(getComputedStyle(element).fontSize)")>=16
+                assert page.locator(".field-control").first.evaluate("element => parseFloat(getComputedStyle(element).fontSize)")>=16
                 page.screenshot(path="/tmp/erp-ui-mobile.png", full_page=True)
                 page.set_viewport_size({"width": 1440, "height": 1000})
                 page.locator("#logout").click()
