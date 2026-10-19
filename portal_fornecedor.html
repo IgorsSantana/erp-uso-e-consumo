@@ -1,283 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal do Fornecedor | Cotação</title>
-    <!-- Fonte moderna e amigável -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Ícones Phosphor -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <style>
-        :root {
-            /* Colors */
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --primary-light: #eff6ff;
-            --success: #10b981;
-            --success-hover: #059669;
-            --danger: #ef4444;
-            --bg-main: #f8fafc;
-            --bg-surface: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-tertiary: #94a3b8;
-            --border: #e2e8f0;
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --radius-md: 8px;
-            --radius-lg: 12px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            line-height: 1.5;
-            font-size: 14px;
-            padding: 20px 10px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background-color: var(--bg-surface);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: 24px;
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header-brand i {
-            font-size: 32px;
-            color: var(--primary);
-        }
-
-        .header-brand h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .header-brand p {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .cotacao-inbox h2 {
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        .cotacao-inbox p {
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: inherit;
-            font-weight: 600;
-            border: none;
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: 15px;
-            color: white;
-            transition: 0.2s;
-            width: 100%;
-        }
-
-        .btn-success {
-            background-color: var(--success);
-        }
-
-        .btn-success:hover {
-            background-color: var(--success-hover);
-        }
-
-        .item-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .item-card {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 16px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            background: #fafafa;
-        }
-
-        @media (min-width: 600px) {
-            .item-card {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                gap: 20px;
-            }
-
-            .item-info {
-                flex: 1;
-            }
-
-            .item-input {
-                width: 150px;
-            }
-        }
-
-        .item-info h4 {
-            font-size: 16px;
-            margin-bottom: 4px;
-            color: var(--text-primary);
-        }
-
-        .item-info span {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            display: block;
-        }
-
-        .item-qtd {
-            font-weight: 600;
-            color: var(--primary);
-            margin-top: 5px;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            color: var(--primary);
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        .alert-box {
-            padding: 16px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fca5a5;
-        }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #059669;
-            border: 1px solid #6ee7b7;
-            display: none;
-        }
-
-        #total-cotacao {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-align: right;
-            margin: 20px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <title>Portal do fornecedor · Uso & Consumo</title>
+  <style>
+    :root{--ink:#173533;--muted:#617671;--green:#12684f;--green-dark:#0d513e;--mint:#e6f3ed;--line:#dbe6e1;--bg:#f3f7f4;--white:#fff;--warning:#8f5a12;--danger:#ad3434;--shadow:0 16px 44px #1a493809;--radius:16px}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea{font:inherit}button,a,input,textarea{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:wait;opacity:.65}[hidden]{display:none!important}a{color:var(--green)}button:focus-visible,a:focus-visible{outline:3px solid #6abf9b;outline-offset:4px}input:focus,textarea:focus{outline:0;border-color:var(--green);box-shadow:0 0 0 3px #12684f18}input[aria-invalid="true"]{border-color:var(--danger)}
+    .page{max-width:1120px;margin:auto;padding:0 28px}.topbar{height:96px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:43px;height:43px;background:var(--green);color:#fff;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:20px}.brand-name{font-weight:750;letter-spacing:-.6px;font-size:20px}.brand-note{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}.secure-note{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}svg{width:20px;height:20px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.main{padding:42px 0 56px}.eyebrow{font-size:11px;font-weight:750;letter-spacing:1.6px;text-transform:uppercase;color:var(--green);margin:0 0 8px}h1{font-size:clamp(26px,4vw,35px);line-height:1.2;letter-spacing:-1.1px;margin:0 0 12px}h2{font-size:18px;letter-spacing:-.4px;margin:0}h3{font-size:15px;line-height:1.4;margin:0}.intro{color:var(--muted);margin:0;max-width:720px}.heading{margin-bottom:28px}.panel{border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}.quote-header{padding:25px 28px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.quote-title{font-size:20px;margin-bottom:6px}.quote-fornecedor{margin:0;color:var(--muted);font-size:13px}.quote-fornecedor strong{color:var(--ink)}.badge{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid #cce4d7;background:var(--mint);color:var(--green);font-size:12px;font-weight:650;border-radius:999px;padding:5px 11px}.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.badge.closed{background:#f0f2f1;color:var(--muted);border-color:var(--line)}.metadata{display:flex;gap:32px;padding:16px 28px;background:#f8fbf9;border-top:1px solid var(--line);border-bottom:1px solid var(--line);flex-wrap:wrap}.meta-label{display:block;font-size:10px;letter-spacing:1px;font-weight:700;color:var(--muted);text-transform:uppercase}.meta-value{font-weight:600;font-size:13px}.quote-description{margin:0;padding:18px 28px;color:var(--muted);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:24px;margin-top:26px;align-items:start}.section-title{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:14px}.small{font-size:12px;color:var(--muted)}.item-list{display:grid;gap:16px}.item-card{padding:22px 24px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}.item-heading{display:flex;justify-content:space-between;gap:14px;margin-bottom:16px}.item-number{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;font-size:12px;font-weight:650;color:var(--green);background:var(--mint);border-radius:8px}.item-name{flex:1;min-width:0;overflow-wrap:anywhere}.item-ref{font-size:11px;color:var(--muted);margin:4px 0 0;overflow-wrap:anywhere}.quantity{white-space:nowrap;font-size:12px;font-weight:650;padding-top:3px}.item-fields{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}.field label,.field-label{display:block;font-weight:650;font-size:12px;margin-bottom:7px}.field input,.field textarea{display:block;width:100%;border:1px solid #ceddd4;background:#fff;border-radius:9px;padding:10px 12px;color:var(--ink);transition:border-color .15s}.field input:disabled,.field textarea:disabled{background:#f4f6f4;color:var(--muted)}.field textarea{resize:vertical;min-height:74px;line-height:1.5}.field-help{display:block;font-size:11px;color:var(--muted);margin-top:5px}.price-wrap{position:relative}.price-wrap span{position:absolute;left:12px;top:10px;color:var(--muted)}.price-wrap input{padding-left:38px}.wide{grid-column:1/-1}.item-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:17px;padding-top:14px;border-top:1px solid #edf1ee}.unavailable{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;cursor:pointer}.unavailable input{accent-color:var(--green);width:16px;height:16px;margin:0;flex:0 0 16px}.item-total{font-size:12px;color:var(--muted);white-space:nowrap}.item-total strong{display:inline-block;color:var(--ink);margin-left:7px}.details-toggle{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;color:var(--green);font-size:12px;font-weight:600;padding:0;margin-top:14px}.details-toggle svg{width:15px;height:15px}.item-details{margin-top:10px}.item-card.is-unavailable{background:#fafbf9}.item-card.is-unavailable .quantity{color:var(--muted)}.summary{padding:23px;position:sticky;top:24px}.summary h2{font-size:16px;margin-bottom:20px}.summary-row{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;margin:10px 0}.summary-row strong{color:var(--ink);font-weight:650}.summary-total{border-top:1px solid var(--line);padding-top:18px;margin-top:19px}.summary-total span{font-size:11px;color:var(--muted)}.summary-total strong{display:block;font-size:27px;letter-spacing:-1px;margin-top:2px}.summary-help{font-size:11px;color:var(--muted);line-height:1.7;margin:10px 0 18px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9px;padding:11px 17px;font-weight:650;font-size:13px;border:1px solid transparent;text-decoration:none;transition:background .15s}.btn-primary{background:var(--green);color:#fff}.btn-primary:hover{background:var(--green-dark)}.btn-secondary{border-color:var(--line);background:#fff;color:var(--ink)}.btn-secondary:hover{background:#f2f6f3}.summary .btn{width:100%}.privacy{font-size:11px;color:var(--muted);display:flex;gap:7px;margin:15px 0 0;line-height:1.6}.privacy svg{width:15px;height:15px;flex:0 0 15px;margin-top:1px}.general-notes{padding:23px 24px;margin-top:22px}.general-notes h2{font-size:16px;margin-bottom:6px}.general-notes p{font-size:12px;color:var(--muted);margin:0 0 14px}.notice{padding:15px 18px;border:1px solid var(--line);border-radius:12px;font-size:13px;margin:20px 0 0;overflow-wrap:anywhere}.notice p{margin:0}.notice-warning{background:#fff8e9;border-color:#edddb6;color:#805b1b}.notice-error{background:#fff2f1;border-color:#efc6c2;color:var(--danger)}.notice-success{background:#eaf6ee;border-color:#c6e2d1;color:var(--green)}.notice .btn{margin-top:12px}.loading,.empty-state{text-align:center;padding:70px 24px}.loading p,.empty-state p{color:var(--muted);font-size:13px;margin:12px 0}.spinner{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--green);border-radius:50%;display:inline-block;animation:spin .8s linear infinite}.empty-state svg{width:36px;height:36px;color:var(--green);margin-bottom:14px}.success-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}.success-total{display:block;font-size:29px;font-weight:750;letter-spacing:-1px;margin-top:22px}.footer{border-top:1px solid var(--line);padding:22px 0 32px;display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:11px}.footer strong{font-weight:650;color:var(--ink)}@keyframes spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}@media(max-width:820px){.layout{grid-template-columns:1fr}.summary{position:static}.summary h2{margin-bottom:12px}.summary-total{display:flex;align-items:center;justify-content:space-between}.summary-total strong{margin:0}.summary-help{margin-top:8px}.summary-row{max-width:100%}}@media(max-width:520px){.page{padding:0 17px}.topbar{height:82px}.brand-name{font-size:17px}.brand-note{font-size:9px;letter-spacing:1.1px}.secure-note{font-size:0;gap:0}.secure-note svg{width:19px}.main{padding-top:28px}.heading{margin-bottom:23px}.quote-header{padding:20px;flex-direction:column;gap:10px}.quote-title{font-size:18px}.metadata{padding:14px 20px;gap:16px 24px}.quote-description{padding:16px 20px}.item-card{padding:19px 18px}.item-heading{gap:10px;flex-wrap:wrap}.item-name{min-width:calc(100% - 45px)}.quantity{margin-left:40px;padding:0}.item-fields{gap:12px}.field label{font-size:11px}.item-bottom{align-items:flex-start;flex-direction:column;gap:12px}.item-total{align-self:flex-end}.general-notes{padding:20px}.footer{flex-direction:column;gap:6px}.section-title{align-items:flex-end}.section-title .small{max-width:150px;text-align:right}.notice{padding:14px}.summary{padding:20px}}@media print{body{background:#fff;font-size:12px}.page{max-width:none;padding:0}.topbar{height:70px}.main{padding-top:20px}.layout{display:block}.summary{position:static;margin-top:22px}.item-card,.panel{box-shadow:none;break-inside:avoid}.item-card{margin-bottom:12px}.btn,.secure-note,.privacy,.details-toggle,.unavailable,.summary-help,.footer,.notice,.general-notes .field-help{display:none!important}.item-details[hidden]{display:block!important}.item-fields input,.item-fields textarea,.general-notes textarea{border-color:#ddd!important;background:#fff!important}.summary-total{display:block}.heading{margin-bottom:15px}#success-box{display:none!important}#cotacao-content{display:block!important}}
+  </style>
+  <style>
+    .quote-title,.quote-fornecedor,.meta-value{overflow-wrap:anywhere}
+    @media(max-width:520px){.item-fields label{min-height:32px;display:flex;align-items:flex-end}}
+  </style>
+  <script src="/js/fornecedor.js" defer></script>
 </head>
-
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="header-brand">
-                <i class="ph-fill ph-package"></i>
-                <div>
-                    <h1>Portal de Cotações</h1>
-                    <p>Ambiente Exclusivo e Seguro para Fornecedores</p>
-                </div>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark" aria-hidden="true">u.</div><div><div class="brand-name">Uso & Consumo</div><div class="brand-note">Portal do fornecedor</div></div></div>
+      <div class="secure-note"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>Acesso por convite</div>
+    </header>
+    <main class="main" id="main-content">
+      <div class="heading"><p class="eyebrow">Compras · Cotação de materiais</p><h1>Uma boa parceria começa aqui.</h1><p class="intro">Confira os materiais solicitados e envie sua proposta comercial diretamente para nossa equipe de compras.</p></div>
+      <div id="loading" class="panel loading" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><p>Carregando sua cotação…</p></div>
+      <div id="error-box" class="notice notice-error" role="alert" tabindex="-1" hidden><p id="error-message"></p><button id="btn-retry" class="btn btn-secondary" type="button" hidden>Tentar novamente</button></div>
+      <section id="success-box" class="panel empty-state" aria-labelledby="success-title" tabindex="-1" hidden>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
+        <h2 id="success-title">Proposta enviada com sucesso</h2><p id="success-message">Sua proposta já está disponível para nossa equipe de compras.</p><strong id="success-total" class="success-total"></strong><p id="success-detail"></p><div class="success-actions"><button id="btn-edit" type="button" class="btn btn-primary">Revisar minha proposta</button><button id="btn-print-success" type="button" class="btn btn-secondary">Imprimir comprovante</button></div>
+      </section>
+      <div id="cotacao-content" hidden>
+        <section class="panel" aria-labelledby="view-titulo">
+          <div class="quote-header"><div><h2 id="view-titulo" class="quote-title"></h2><p class="quote-fornecedor">Proposta de <strong id="view-fornecedor-nome"></strong></p></div><span id="view-status" class="badge">Cotação aberta</span></div>
+          <div class="metadata"><div><span class="meta-label">Prazo de resposta</span><span id="view-deadline" class="meta-value"></span></div><div><span class="meta-label">Materiais solicitados</span><span id="view-item-count" class="meta-value"></span></div><div><span class="meta-label">Condição dos preços</span><span class="meta-value">Frete e impostos inclusos</span></div></div>
+          <p id="view-observacoes" class="quote-description" hidden></p>
+        </section>
+        <div id="alert-preencheu-aviso" class="notice notice-success" role="status" hidden><p>Você já respondeu a esta cotação. Os valores enviados estão preenchidos abaixo. Ao enviar novamente, a proposta anterior será substituída.</p></div>
+        <div id="closed-notice" class="notice notice-warning" role="status" hidden><p>O período de resposta desta cotação foi encerrado. Você pode consultar e imprimir os dados disponíveis.</p></div>
+        <form id="proposal-form" novalidate>
+          <div class="layout">
+            <div><div class="section-title"><h2>Itens da cotação</h2><span class="small">Informe o valor por unidade</span></div><div id="lista-itens" class="item-list"></div>
+              <section class="panel general-notes" aria-labelledby="notes-title"><h2 id="notes-title">Condições da proposta</h2><p>Informe condições de pagamento, validade dos preços ou outras informações relevantes.</p><div class="field"><label for="proposal-notes">Observações gerais <span class="small">(opcional)</span></label><textarea id="proposal-notes" rows="3" maxlength="2000" placeholder="Ex.: Pagamento em 28 dias. Proposta válida por 15 dias."></textarea><span class="field-help">Até 2.000 caracteres.</span></div></section>
             </div>
-
-            <div id="loading" style="text-align:center; padding: 40px; color: var(--text-tertiary);">
-                <i class="ph ph-spinner-gap" style="font-size:32px; animation: spin 1s linear infinite;"></i>
-                <p style="margin-top:10px;">Autenticando e carregando itens...</p>
-                <style>
-                    @keyframes spin {
-                        100% {
-                            transform: rotate(360deg);
-                        }
-                    }
-                </style>
-            </div>
-
-            <div id="error-box" class="alert-box alert-error" style="display:none;"></div>
-            <div id="success-box" class="alert-box alert-success">
-                <i class="ph-fill ph-check-circle" style="font-size: 40px; margin-bottom: 10px;"></i><br>
-                Obrigado! Sua proposta comercial foi enviada com sucesso para nossa equipe.<br>
-                Você já pode fechar esta aba.
-            </div>
-
-            <div id="cotacao-content" class="cotacao-inbox" style="display:none;">
-                <h2 id="view-titulo">Carregando...</h2>
-                <p>Olá, <strong id="view-fornecedor-nome" style="color:var(--primary)">Fornecedor</strong>! Por favor,
-                    informe seus melhores preços unitários para os itens solicitados abaixo. Considere que o frete e os
-                    impostos já devem estar inclusos no preço.</p>
-
-                <div id="alert-preencheu-aviso" class="alert-box"
-                    style="background:#fffbeb; color:#d97706; border:1px solid #fde68a; font-size:13px; text-align:left; display:none;">
-                    <i class="ph-fill ph-warning-circle"></i> <strong>Atenção:</strong> Você já enviou uma proposta para
-                    esta cotação anteriormente. Se reenviar, seus lances anteriores serão substituídos.
-                </div>
-
-                <div class="item-list" id="lista-itens">
-                    <!-- Itens Inseridos pelo JS -->
-                </div>
-
-                <div id="total-cotacao">Total Estimado: R$ 0,00</div>
-
-                <button class="btn btn-success" id="btn-enviar" onclick="enviarProposta()">
-                    <i class="ph-bold ph-paper-plane-tilt"></i>
-                    Confirmar e Enviar Minha Proposta
-                </button>
-            </div>
-        </div>
-        <div style="text-align:center; font-size:12px; color:var(--text-tertiary); margin-bottom: 40px;">
-            Dúvidas? Entre em contato com nossa equipe de compras.
-        </div>
-    </div>
-
-    <script src="js/fornecedor.js"></script>
+            <aside class="panel summary" aria-labelledby="summary-title"><h2 id="summary-title">Resumo da proposta</h2><div class="summary-row"><span>Itens solicitados</span><strong id="summary-items">0</strong></div><div class="summary-row"><span>Itens com preço</span><strong id="summary-priced">0</strong></div><div class="summary-row"><span>Indisponíveis</span><strong id="summary-unavailable">0</strong></div><div class="summary-total"><span>Total da proposta</span><strong id="total-cotacao">R$ 0,00</strong></div><p class="summary-help">O total considera as quantidades solicitadas. Inclua frete e impostos no preço unitário. Marque os materiais que não pode fornecer.</p><button id="btn-enviar" class="btn btn-primary" type="submit"><span id="submit-label">Enviar proposta</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 14-7-6 15-2-6-6-2ZM11 14l8-9"/></svg></button><button id="btn-print" class="btn btn-secondary" type="button" hidden>Imprimir cotação</button><p class="privacy"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>Seu link é pessoal. Compartilhe apenas com pessoas autorizadas a responder por sua empresa.</p></aside>
+          </div>
+          <div id="form-error" class="notice notice-error" role="alert" tabindex="-1" hidden></div>
+        </form>
+      </div>
+      <noscript><div class="notice notice-error">Ative o JavaScript no navegador para consultar os itens e enviar sua proposta.</div></noscript>
+    </main>
+    <footer class="footer"><span><strong>Uso & Consumo</strong> · Gestão de compras e materiais</span><span>Dúvidas sobre esta cotação? Entre em contato com a equipe de compras.</span></footer>
+  </div>
 </body>
-
 </html>

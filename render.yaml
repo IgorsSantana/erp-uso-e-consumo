@@ -1,7 +1,28 @@
 services:
   - type: web
     name: erp-uso-consumo
-    env: python
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT
+    runtime: python
+    plan: starter
     branch: main
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: gunicorn backend.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 60 --no-control-socket --access-logfile - --error-logfile -
+    healthCheckPath: /api/health
+    disk:
+      name: erp-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.12
+      - key: ERP_ENV
+        value: production
+      - key: ERP_DATA_DIR
+        value: /var/data
+      - key: ERP_COOKIE_SECURE
+        value: "1"
+      - key: ERP_TRUST_PROXY
+        value: "1"
+      - key: ERP_TIMEZONE
+        value: America/Sao_Paulo
+      - key: ERP_SECRET_KEY
+        generateValue: true

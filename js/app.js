@@ -1,115 +1,60 @@
-/**
- * app.js - Arquivo de Inicialização e Roteamento SPA
- */
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // Carrega a preferência de Sidebar Colapsável
-    const isSidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
-    if (isSidebarCollapsed) {
-        document.body.classList.add('sidebar-collapsed');
-    }
-
-    const toggleBtn = document.getElementById('btn-toggle-sidebar');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('sidebar-collapsed');
-            localStorage.setItem('sidebar_collapsed', document.body.classList.contains('sidebar-collapsed'));
-        });
-    }
-
-    // Carrega dados do usuário logado
-    const sessionUser = JSON.parse(localStorage.getItem('erp_user'));
-    if (sessionUser) {
-        document.getElementById('auth-user-name').innerText = sessionUser.nome;
-        document.getElementById('auth-user-role').innerText = sessionUser.nivel_acesso;
-
-        // Show Admin Tab if applicable
-        if (sessionUser.nivel_acesso === 'Admin') {
-            const btnUsers = document.getElementById('nav-btn-usuarios');
-            if (btnUsers) btnUsers.style.display = 'flex';
-        }
-    }
-
-    // Exporta Auth Globais
-    window.Auth = {
-        logout: () => {
-            localStorage.removeItem('erp_user');
-            window.location.href = 'login.html';
-        }
-    };
-
-    // Atualiza Data no Topbar
-    const currentDateEl = document.getElementById('current-date');
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    currentDateEl.innerHTML = new Date().toLocaleDateString('pt-BR', options);
-
-    // Carrega todos os repositórios da nuvem (TiDB via API Flask)
-    await window.Store.fetchInitialData();
-    await window.Store.fetchProdutos();
-    await window.Store.fetchEstoqueGlobal();
-
-    // Inicializa Views Individuais
-    window.Pedidos.init();
-    window.Estoque.init();
-    window.Produtos.init();
-    if (window.Fornecedores) window.Fornecedores.init();
-    if (window.Cotacoes) window.Cotacoes.init();
-    if (window.Contagem) window.Contagem.init();
-    if (window.Usuarios) window.Usuarios.init();
-
-    // Configuração do "Router" (Troca de abas)
-    const navItems = document.querySelectorAll('.nav-item');
-    const pageTitle = document.getElementById('page-title');
-
-    navItems.forEach(item => {
-        item.addEventListener('click', async () => {
-            // 1. Remove active
-            navItems.forEach(nav => nav.classList.remove('active'));
-            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
-
-            // 2. Add active no botao
-            item.classList.add('active');
-
-            // 3. Mostra view e atualiza título
-            const viewName = item.getAttribute('data-view');
-            document.getElementById(`view-${viewName}`).classList.add('active');
-
-            if (viewName === 'pedidos') {
-                pageTitle.innerText = "Fazer Pedido em Lote";
-                await window.Store.fetchProdutos(); // refresh the items before loading
-                window.Pedidos.verificarPainel();
-            } else if (viewName === 'estoque') {
-                pageTitle.innerText = "Matriz Geral de Estoque";
-                await window.Store.fetchEstoqueGlobal();
-                window.Estoque.carregarDados();
-                window.Estoque.renderizarMatrizCompleta();
-            } else if (viewName === 'produtos') {
-                pageTitle.innerText = "Cadastro de Produtos";
-                await window.Store.fetchProdutos();
-                window.Produtos.carregarTabela();
-            } else if (viewName === 'fornecedores') {
-                pageTitle.innerText = "Base de Fornecedores";
-                window.Fornecedores.carregarDados();
-            } else if (viewName === 'cotacoes') {
-                pageTitle.innerText = "Portal de Cotações / Resultados";
-                window.Cotacoes.carregarListagem();
-            } else if (viewName === 'contagem') {
-                pageTitle.innerText = "Contagem de Estoque Global";
-                await window.Store.fetchEstoqueGlobal();
-                window.Contagem.verificarPainel();
-            } else if (viewName === 'usuarios') {
-                pageTitle.innerText = "Gestão de Usuários (Acesso Administrativo)";
-                window.Usuarios.carregarTabela();
-            }
-        });
-    });
-
-    // Auto-Routing Baseado em Dispositivo
-    if (window.innerWidth <= 768) {
-        document.querySelector('.nav-item[data-view="contagem"]')?.click();
-    } else {
-        document.querySelector('.nav-item[data-view="estoque"]')?.click();
-    }
-
-    console.log("== Micro-ERP Inicializado ==");
+'use strict';
+const H=window.Helpers, E=H.escape;
+window.App={
+ view:'dashboard',seq:0,data:{},actions:{},
+ titles:{dashboard:'Visão geral',estoque:'Estoque e movimentos',pedidos:'Requisições',compras:'Compras e recebimentos',contagem:'Inventário',cotacoes:'Cotações',produtos:'Produtos',fornecedores:'Fornecedores',cadastros:'Lojas e seções',usuarios:'Usuários e acessos',relatorios:'Relatórios e auditoria'},
+ get canManage(){return ['Admin','Gestor'].includes(Store.user?.nivel_acesso);},
+ heading(title,description,buttons='',eyebrow='CONTROLE QUE SIMPLIFICA') {return `<div class="page-heading"><div><span class="eyebrow">${E(eyebrow)}</span><h1>${E(title)}</h1><p class="page-description">${E(description)}</p></div><div class="page-actions">${buttons}</div></div>`;},
+ button(label,action,attrs='',style='primary'){return `<button class="button button-${style}" ${/\btype\s*=/.test(attrs)?'':'type="button"'} data-action="${E(action)}" ${attrs}>${E(label)}</button>`;},
+ badge(status){const style=({Atendido:'success',Aprovado:'success',Concluida:'success',Entrada:'success',Aberta:'success',Pendente:'warning',Saida:'warning',Encerrada:'neutral',Cancelado:'danger',Cancelada:'danger',Transferencia:'neutral'})[status]||'neutral';const label=({Saida:'Saída',Transferencia:'Transferência',Concluida:'Concluída'})[status]||status;return `<span class="badge badge-${style}">${E(label)}</span>`;},
+ empty(message='Nenhum registro encontrado.',description='Os novos registros aparecerão aqui.'){return `<div class="empty-state"><span class="empty-icon">${H.icon('estoque')}</span><h3>${E(message)}</h3><p>${E(description)}</p></div>`;},
+ table(headers,rows,id='main-table'){return rows.length?`<div class="table-wrap"><table class="data-table" id="${E(id)}"><thead><tr>${headers.map(h=>`<th>${E(h)}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div><div class="empty-state filtered-empty" hidden>Nenhum registro corresponde à busca.</div>`:this.empty();},
+ row(cells,search='',attrs=''){return `<tr data-search="${E(search.toLowerCase())}" ${attrs}>${cells.map(c=>`<td>${c}</td>`).join('')}</tr>`;},
+ toolbar(placeholder='Buscar registros…',extra=''){return `<div class="toolbar"><div class="search-field"><span aria-hidden="true">⌕</span><input class="field-control" type="search" data-search-table aria-label="${E(placeholder)}" placeholder="${E(placeholder)}"></div>${extra}</div>`;},
+ panel(title,subtitle,body,actions=''){return `<section class="panel"><div class="panel-header"><div><h2 class="panel-title">${E(title)}</h2>${subtitle?`<p class="panel-subtitle">${E(subtitle)}</p>`:''}</div>${actions}</div>${body}</section>`;},
+ options(list,valueKey='id',labelKey='nome',selected='',placeholder='Selecione…'){return `<option value="">${E(placeholder)}</option>`+list.map(x=>`<option value="${E(x[valueKey])}" ${String(x[valueKey])===String(selected)?'selected':''}>${E(x[labelKey])}</option>`).join('');},
+ field(name,label,type='text',value='',options={}) {const attrs=`id="field-${E(name)}" name="${E(name)}" ${options.required?'required':''} ${options.readonly?'readonly':''} ${options.min!==undefined?`min="${E(options.min)}"`:''} ${options.maxlength?`maxlength="${E(options.maxlength)}"`:''} ${type==='number'?`step="${options.step||'0.001'}"`:''}`;let control;if(type==='select')control=`<select class="field-control" ${attrs}>${this.options(options.items||[],options.valueKey||'id',options.labelKey||'nome',value,options.placeholder||'Selecione…')}</select>`;else if(type==='textarea')control=`<textarea class="field-control" ${attrs} rows="3">${E(value)}</textarea>`;else if(type==='checkbox')control=`<label class="checkbox-field"><input type="checkbox" ${attrs} ${value?'checked':''}> ${E(label)}</label>`;else control=`<input class="field-control" type="${type}" ${attrs} value="${E(value)}" ${options.autocomplete?`autocomplete="${E(options.autocomplete)}"`:''}>`;return `<div class="form-field ${options.full?'full-width':''}">${type==='checkbox'?'':`<label for="field-${E(name)}">${E(label)}${options.required?' <span aria-hidden="true">*</span>':''}</label>`}${control}${options.hint?`<small class="field-hint">${E(options.hint)}</small>`:''}</div>`;},
+ modal(title,body,onSubmit,options={}){const dialog=document.getElementById('app-dialog');dialog.className=`dialog ${options.wide?'dialog-wide':''}`;dialog.innerHTML=`<form id="dialog-form"><header class="dialog-header"><div><span class="eyebrow">${E(options.eyebrow||'USO & CONSUMO')}</span><h2 id="dialog-title">${E(title)}</h2></div><button class="button button-icon" type="button" data-action="close-dialog" aria-label="Fechar janela">×</button></header><div class="dialog-body">${body}<p class="field-error" id="dialog-error" hidden role="alert"></p></div><footer class="dialog-footer"><button class="button button-secondary" type="button" data-action="close-dialog">${options.readOnly?'Fechar':'Cancelar'}</button>${options.readOnly?'':`<button class="button button-primary" id="dialog-submit" type="submit">${E(options.submit||'Salvar registro')}</button>`}</footer></form>`;const form=dialog.querySelector('form');form.addEventListener('submit',async ev=>{ev.preventDefault();const button=document.getElementById('dialog-submit'),error=document.getElementById('dialog-error');error.hidden=true;if(button){button.disabled=true;button.dataset.label=button.textContent;button.textContent='Salvando…';}try{await onSubmit?.(Object.fromEntries(new FormData(form)),form);if(dialog.open)dialog.close();}catch(e){error.textContent=e.message;error.hidden=false;error.scrollIntoView({block:'nearest'});}finally{if(button){button.disabled=false;button.textContent=button.dataset.label;}}});if(!dialog.open)dialog.showModal();return form;},
+ async confirm(title,message,onConfirm){this.modal(title,`<p>${E(message)}</p>`,async()=>{await onConfirm();},{submit:'Confirmar ação'});},
+ applyUser(user){Store.user=user;document.getElementById('auth-user-name').textContent=user.nome;document.getElementById('auth-user-role').textContent=user.nivel_acesso;document.getElementById('user-avatar').textContent=user.nome.slice(0,1).toUpperCase();document.getElementById('users-nav').hidden=user.nivel_acesso!=='Admin';document.getElementById('compras-nav').hidden=!App.canManage;},
+ async refresh(){const session=await Store.session();if(!session.user){location.replace('/login.html');return;}this.applyUser(session.user);await Store.loadCatalogs();await this.navigate(this.view);},
+ async navigate(view){if(!this.titles[view])view='dashboard';if((view==='usuarios'&&Store.user.nivel_acesso!=='Admin')||(view==='compras'&&!App.canManage))view='dashboard';this.view=view;const seq=++this.seq;document.querySelectorAll('[data-view]').forEach(el=>{el.classList.toggle('active',el.dataset.view===view);if(el.dataset.view===view)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});document.getElementById('page-title').textContent=this.titles[view];document.body.classList.remove('sidebar-open');document.getElementById('menu-toggle').setAttribute('aria-expanded','false');const content=document.getElementById('app-content');content.setAttribute('aria-busy','true');content.innerHTML='<div class="loading-state"><span class="skeleton"></span>Carregando informações…</div>';try{const html=await this.views[view]();if(seq===this.seq)content.innerHTML=html;}catch(e){if(seq===this.seq)content.innerHTML=`<div class="error-state"><h2>Não foi possível carregar os dados</h2><p>${E(e.message)}</p>${this.button('Tentar novamente','refresh')}</div>`;}finally{if(seq===this.seq)content.removeAttribute('aria-busy');}},
+ views:{}
+};
+App.actions['close-dialog']=()=>document.getElementById('app-dialog').close();
+App.actions.refresh=()=>App.refresh();
+App.actions['change-password']=()=>App.modal('Alterar minha senha',`<div class="form-grid">${App.field('current_password','Senha atual','password','',{required:true,autocomplete:'current-password',full:true})}${App.field('new_password','Nova senha','password','',{required:true,autocomplete:'new-password',full:true,hint:'Pelo menos 10 caracteres. Suas outras sessões serão encerradas.'})}${App.field('confirm_password','Confirme a nova senha','password','',{required:true,autocomplete:'new-password',full:true})}</div>`,async data=>{if(data.new_password!==data.confirm_password)throw new Error('A confirmação da senha não confere.');await Store.request('/account/password',{method:'POST',body:{current_password:data.current_password,new_password:data.new_password}});H.toast('Senha alterada com sucesso.');},{submit:'Alterar senha'});
+App.actions['export-table']=()=>{const table=document.querySelector('#app-content table');if(!table)return;H.csv(`${App.view}-${new Date().toISOString().slice(0,10)}.csv`,Array.from(table.querySelectorAll('thead th')).map(c=>c.textContent),Array.from(table.querySelectorAll('tbody tr')).filter(r=>!r.hidden).map(r=>Array.from(r.cells).slice(0,-(r.cells[r.cells.length-1].querySelector('button')?1:0)||undefined).map(c=>c.textContent.trim())));};
+App.views.dashboard=async()=>{
+ const d=await Store.request('/dashboard');App.data.dashboard=d;
+ const stats=[['Valor do estoque',H.money(d.valor_estoque),'Investimento disponível nas lojas','estoque'],['Produtos cadastrados',H.number(d.produtos),`${H.number(d.lojas)} lojas conectadas`,'produtos'],['Requisições pendentes',H.number(d.pedidos_pendentes),'Acompanhe aprovação e atendimento','pedidos'],['Cotações abertas',H.number(d.cotacoes_abertas),'Compras com fornecedores parceiros','cotacoes']];
+ const alerts=(d.alertas||[]).slice(0,7).map(r=>App.row([`<span class="cell-title">${E(r.produto_nome)}</span><span class="cell-subtitle">${E(r.produto_id)} · ${E(r.loja_nome)}</span>`,`<span class="numeric">${H.number(r.quantidade)} ${E(r.unidade||'UN')}</span>`,`<span class="badge badge-danger">Mín. ${H.number(r.estoque_minimo)}</span>`],r.produto_nome));
+ const movement=(d.ultimas_movimentacoes||[]).slice(0,6).map(r=>`<div class="timeline-item"><span class="stat-icon">${H.icon('estoque')}</span><div><span class="cell-title">${E(r.produto_nome)}</span><span class="cell-subtitle">${E(r.loja_nome)} · ${H.date(r.criado_em,true)}</span></div><div>${App.badge(r.tipo)}<strong class="numeric">${H.number(r.quantidade)} un.</strong></div></div>`).join('');
+ const consumption=d.consumo_por_secao||[],max=Math.max(1,...consumption.map(x=>x.valor));
+ const onboarding=Number(d.produtos)===0?App.panel('Prepare sua operação','Comece pelo catálogo e registre os saldos reais das suas lojas.',`<div class="panel-body quick-actions"><a href="#produtos">${H.icon('produtos')}<span><strong>1. Cadastre seus produtos</strong><small>Defina códigos, unidades, custos e limites de estoque.</small></span><span>→</span></a><a href="#fornecedores">${H.icon('fornecedores')}<span><strong>2. Organize os fornecedores</strong><small>Prepare seus contatos para as próximas compras.</small></span><span>→</span></a><a href="#contagem">${H.icon('contagem')}<span><strong>3. Informe os saldos iniciais</strong><small>Use o inventário para registrar as quantidades físicas.</small></span><span>→</span></a></div>`):'';
+ return App.heading('Sua operação, em perspectiva.','Acompanhe recursos, antecipe necessidades e mantenha tudo em movimento.',`<a class="button button-secondary" href="#estoque">Ver estoque</a>${App.button('+ Nova requisição','new-pedido')}`,'PAINEL DE OPERAÇÕES')+onboarding+`<div class="stats-grid">${stats.map((s,i)=>`<article class="stat-card"><div class="stat-card-top"><span class="stat-label">${E(s[0])}</span><span class="stat-icon">${H.icon(s[3])}</span></div><strong class="stat-value">${E(s[1])}</strong><span class="stat-caption">${E(s[2])}</span></article>`).join('')}</div><div class="two-column">${App.panel('Precisam de atenção','Produtos com saldo abaixo do mínimo',App.table(['Produto / loja','Disponível','Nível mínimo'],alerts),'<a class="text-link" href="#estoque">Ver todos ↗</a>')}${App.panel('Últimas movimentações','O que aconteceu no seu estoque',movement?`<div class="panel-body timeline">${movement}</div>`:App.empty('Nenhuma movimentação ainda.','Registre uma entrada para começar.'))}</div><div class="two-column">${App.panel('Consumo por seção','Valor das saídas no mês atual',`<div class="panel-body">${consumption.length?consumption.map(c=>`<div class="consumption-row"><div><span>${E(c.secao||'Sem seção')}</span><strong>${H.money(c.valor)}</strong></div><div class="progress-bar"><span style="width:${Math.max(2,Number(c.valor)/max*100)}%"></span></div></div>`).join(''):App.empty('O consumo aparecerá aqui.','As saídas registradas alimentam este indicador.')}</div>`)}${App.panel('O próximo passo','Atalhos para o dia a dia',`<div class="quick-actions"><a href="#pedidos">${H.icon('pedidos')}<span><strong>Requisitar materiais</strong><small>Abasteça sua loja com organização</small></span><span>→</span></a><a href="#contagem">${H.icon('contagem')}<span><strong>Conferir inventário</strong><small>Mantenha o saldo alinhado ao físico</small></span><span>→</span></a><a href="#cotacoes">${H.icon('cotacoes')}<span><strong>Comparar cotações</strong><small>Encontre condições para sua compra</small></span><span>→</span></a></div>` )}</div>`;
+};
+const catalogConfigs={
+ produtos:{singular:'produto',plural:'Produtos',description:'Um catálogo organizado para compras e controle de consumo.',columns:['Código / produto','Seção','Unidade','Custo unitário','Mín. / máx.','Situação','Ações'],fields:p=>[App.field('id','Código ERP','text',p.id||'',{required:true,readonly:!!p.id,maxlength:40}),App.field('nome','Nome do produto','text',p.nome||'',{required:true,maxlength:150}),App.field('secao_id','Seção','select',p.secao_id,{items:Store.secoes}),App.field('unidade','Unidade de medida','select',p.unidade||'UN',{required:true,items:['UN','PC','CX','PCT','KG','G','L','ML','M','ROLO','PAR'].map(x=>({id:x,nome:x}))}),App.field('custo','Custo unitário (R$)','number',p.custo||0,{required:true,min:0,step:'0.01'}),App.field('periodo_consumo','Período de consumo','select',p.periodo_consumo||'Mensal',{items:['Diário','Semanal','Mensal','Trimestral','Anual'].map(x=>({id:x,nome:x}))}),App.field('estoque_minimo','Estoque mínimo por loja','number',p.estoque_minimo||0,{min:0}),App.field('estoque_maximo','Estoque máximo por loja','number',p.estoque_maximo||0,{min:0}),App.field('marca','Marca','text',p.marca||'',{maxlength:100}),App.field('referencia','Referência','text',p.referencia||'',{maxlength:100}),App.field('destinacao','Destinação de uso','text',p.destinacao||'',{maxlength:200,full:true}),App.field('ativo','Produto ativo','checkbox',p.ativo!==false&&p.ativo!==0,{full:true})].join(''),row:p=>[`<span class="cell-title">${E(p.nome)}</span><span class="cell-subtitle">${E(p.id)}${p.marca?' · '+E(p.marca):''}</span>`,E(p.secao||'Sem seção'),E(p.unidade),H.money(p.custo),`${H.number(p.estoque_minimo)} / ${H.number(p.estoque_maximo)}`,App.badge(p.ativo?'Ativo':'Inativo')]},
+ fornecedores:{singular:'fornecedor',plural:'Fornecedores',description:'Parceiros e contatos sempre à mão, prontos para suas cotações.',columns:['Fornecedor','CNPJ','Contato','E-mail / telefone','Situação','Ações'],fields:p=>[App.field('nome_fantasia','Nome fantasia','text',p.nome_fantasia||'',{required:true,maxlength:150}),App.field('cnpj','CNPJ','text',p.cnpj||'',{maxlength:20}),App.field('contato_nome','Pessoa de contato','text',p.contato_nome||'',{maxlength:100}),App.field('email','E-mail','email',p.email||'',{maxlength:150}),App.field('telefone','Telefone','tel',p.telefone||'',{maxlength:30}),App.field('ativo','Fornecedor ativo','checkbox',p.ativo!==false&&p.ativo!==0)].join(''),row:p=>[`<span class="cell-title">${E(p.nome_fantasia)}</span>`,E(p.cnpj||'—'),E(p.contato_nome||'—'),`<span class="cell-title">${E(p.email||'—')}</span><span class="cell-subtitle">${E(p.telefone||'—')}</span>`,App.badge(p.ativo?'Ativo':'Inativo')]},
+ lojas:{singular:'loja',plural:'Lojas',columns:['Loja','Sigla','Ações'],fields:p=>App.field('nome','Nome da loja','text',p.nome||'',{required:true,maxlength:100})+App.field('sigla','Sigla','text',p.sigla||'',{required:true,maxlength:10}),row:p=>[`<span class="cell-title">${E(p.nome)}</span>`,E(p.sigla)]},
+ secoes:{singular:'seção',plural:'Seções',columns:['Seção','Ações'],fields:p=>App.field('nome','Nome da seção','text',p.nome||'',{required:true,maxlength:100,full:true}),row:p=>[`<span class="cell-title">${E(p.nome)}</span>`]},
+ usuarios:{singular:'usuário',plural:'Usuários',description:'Acesso seguro, com as permissões certas para cada pessoa.',columns:['Nome / usuário','Perfil','Situação','Criado em','Ações'],fields:p=>App.field('nome','Nome completo','text',p.nome||'',{required:true,maxlength:100})+App.field('username','Usuário de acesso','text',p.username||'',{required:true,maxlength:80,autocomplete:'off'})+App.field('password',p.id?'Nova senha (opcional)':'Senha','password','',{required:!p.id,autocomplete:'new-password',hint:p.id?'Deixe em branco para manter a senha atual. Mínimo de 10 caracteres.':'Mínimo de 10 caracteres.'})+App.field('nivel_acesso','Perfil de acesso','select',p.nivel_acesso||'Operacional',{required:true,items:[{id:'Operacional',nome:'Operacional · consultas e requisições'},{id:'Gestor',nome:'Gestor · gestão operacional'},{id:'Admin',nome:'Admin · acesso completo'}]})+App.field('ativo','Usuário ativo','checkbox',p.ativo!==false&&p.ativo!==0,{full:true}),row:p=>[`<span class="cell-title">${E(p.nome)}</span><span class="cell-subtitle">@${E(p.username)}</span>`,App.badge(p.nivel_acesso),App.badge(p.ativo?'Ativo':'Inativo'),H.date(p.criado_em)]}
+};
+App.catalogTable=(resource,list)=>{const cfg=catalogConfigs[resource];return App.table(cfg.columns,list.map(p=>App.row([...cfg.row(p),App.canManage?`<div class="row-actions">${App.button('Editar','edit-catalog',`data-resource="${resource}" data-id="${E(p.id)}"`,'secondary')}${App.button(resource==='usuarios'?'Desativar':'Excluir','delete-catalog',`data-resource="${resource}" data-id="${E(p.id)}"`,'danger')}</div>`:'<span class="muted">Consulta</span>'],Object.values(p).join(' '))));};
+for(const resource of ['produtos','fornecedores','usuarios'])App.views[resource]=async()=>{const cfg=catalogConfigs[resource],list=resource==='usuarios'?await Store.request('/usuarios'):Store[resource];App.data[resource]=list;return App.heading(cfg.plural,cfg.description,`${App.button('Exportar CSV','export-table','','secondary')}${App.canManage?App.button(`+ Novo ${cfg.singular}`,'edit-catalog',`data-resource="${resource}"`):''}`)+App.panel(`${list.length} ${cfg.plural.toLowerCase()} cadastrados`,'',App.toolbar(`Buscar ${cfg.plural.toLowerCase()}…`)+App.catalogTable(resource,list));};
+App.views.cadastros=async()=>App.heading('A estrutura da sua operação','Organize lojas e seções para conectar todos os seus recursos.','')+`<div class="two-column">${['lojas','secoes'].map(r=>App.panel(catalogConfigs[r].plural,`${Store[r].length} registros`,App.catalogTable(r,Store[r]),App.canManage?App.button('+ Adicionar','edit-catalog',`data-resource="${r}"`,'secondary'):'')).join('')}</div>`;
+App.actions['edit-catalog']=({resource,id})=>{if(!App.canManage)return;const cfg=catalogConfigs[resource],list=Store[resource]||App.data[resource]||[],p=id?list.find(x=>String(x.id)===id):{};if(!p)throw new Error('Registro não encontrado. Atualize a página.');App.modal(`${id?'Editar':'Novo'} ${cfg.singular}`,`<div class="form-grid">${cfg.fields(p)}</div>`,async(data,form)=>{if(form.elements.ativo)data.ativo=form.elements.ativo.checked;if(resource==='usuarios'&&data.password&&data.password.length<10)throw new Error('A senha deve ter pelo menos 10 caracteres.');if(resource==='produtos'&&Number(data.estoque_maximo)>0&&Number(data.estoque_maximo)<Number(data.estoque_minimo))throw new Error('O estoque máximo deve ser igual ou maior que o mínimo.');if(!data.password)delete data.password;await Store.save(resource,data,id);if(resource==='usuarios'){const session=await Store.session();if(session.user)App.applyUser(session.user);}await Store.loadCatalogs();await App.navigate(App.view);H.toast('Registro salvo com sucesso.');});};
+App.actions['delete-catalog']=({resource,id})=>{const cfg=catalogConfigs[resource];App.confirm(`${resource==='usuarios'?'Desativar':'Excluir'} ${cfg.singular}?`,'Esta ação será registrada. Registros com vínculos operacionais podem ser preservados pelo sistema.',async()=>{await Store.remove(resource,id);await App.refresh();H.toast('Operação concluída com sucesso.');});};
+document.addEventListener('DOMContentLoaded',async()=>{
+ document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=H.icon(el.dataset.icon));
+ document.getElementById('current-date').textContent=new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'});
+ document.getElementById('menu-toggle').addEventListener('click',()=>{const open=document.body.classList.toggle('sidebar-open');document.getElementById('menu-toggle').setAttribute('aria-expanded',String(open));});
+ document.getElementById('logout').addEventListener('click',async()=>{try{await Store.request('/logout',{method:'POST'});location.replace('/login.html');}catch(e){H.toast(e.message,'error');}});
+ document.getElementById('refresh-data').addEventListener('click',()=>App.refresh().catch(e=>H.toast(e.message,'error')));
+ document.addEventListener('click',async event=>{const button=event.target.closest('[data-action]');if(!button||button.disabled)return;const fn=App.actions[button.dataset.action];if(fn){try{await fn(button.dataset,button,event);}catch(e){H.toast(e.message,'error');}}});
+ document.addEventListener('input',event=>{if(event.target.matches('[data-search-table]')){const panel=event.target.closest('.panel'),q=event.target.value.toLocaleLowerCase('pt-BR').trim();let visible=0;panel.querySelectorAll('tbody tr').forEach(row=>{row.hidden=!row.dataset.search.includes(q);if(!row.hidden)visible++;});const empty=panel.querySelector('.filtered-empty');if(empty)empty.hidden=visible>0;}});
+ window.addEventListener('hashchange',()=>App.navigate(location.hash.slice(1)));
+ document.getElementById('app-dialog').addEventListener('click',event=>{if(event.target===event.currentTarget){const r=event.currentTarget.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.currentTarget.close();}});
+ try{const s=await Store.session();if(!s.user){location.replace('/login.html');return;}App.applyUser(s.user);await Store.loadCatalogs();await App.navigate(location.hash.slice(1)||'dashboard');}catch(e){document.getElementById('app-content').innerHTML=`<div class="error-state"><h2>Não foi possível iniciar</h2><p>${E(e.message)}</p><a class="button button-primary" href="/login.html">Ir para o acesso</a></div>`;}
 });

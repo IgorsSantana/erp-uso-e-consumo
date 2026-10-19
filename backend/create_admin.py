@@ -1,47 +1,35 @@
-import os
-import pymysql
-from werkzeug.security import generate_password_hash
-from db import get_connection
+"""Cadastre somente o primeiro administrador pelo fluxo oficial de configuração.
+
+Uso: python -m backend.create_admin --nome "Seu nome" --username seu.usuario
+A senha é solicitada no terminal, sem ser exibida ou gravada no histórico.
+Administradores adicionais devem ser cadastrados na área Usuários do ERP.
+"""
+
+import argparse
+from getpass import getpass
+
+from backend.app import create_app
+
 
 def create_admin():
-    conn = get_connection()
-    if not conn:
-        print("Failed to connect.")
-        return
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--nome", required=True, help="Nome do primeiro administrador")
+    parser.add_argument("--username", required=True, help="Nome de usuário para entrar")
+    args = parser.parse_args()
+    password = getpass("Senha (mínimo de 10 caracteres): ")
+    if password != getpass("Confirme a senha: "):
+        parser.exit(1, "As senhas não coincidem. Nenhum usuário foi criado.\n")
+    app = create_app()
+    with app.test_client() as client:
+        response = client.post(
+            "/api/setup",
+            json={"nome": args.nome, "username": args.username, "password": password},
+        )
+    if response.status_code not in (200, 201):
+        payload = response.get_json(silent=True) or {}
+        parser.exit(1, f"Não foi possível criar o administrador: {payload.get('error', 'verifique a configuração do ambiente')}.\n")
+    print("Primeiro administrador criado. Entre pelo navegador com as credenciais escolhidas.")
 
-    try:
-        with conn.cursor() as cursor:
-            # Create Table
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS Usuarios (
-                    ID INT AUTO_INCREMENT PRIMARY KEY,
-                    Nome VARCHAR(100) NOT NULL,
-                    Username VARCHAR(50) NOT NULL UNIQUE,
-                    SenhaHash VARCHAR(255) NOT NULL,
-                    Nivel_Acesso VARCHAR(20) DEFAULT 'Operacional',
-                    Data_Criacao DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            print("Tabela Usuarios verificada/criada.")
 
-            # Check if admin exists
-            cursor.execute("SELECT ID FROM Usuarios WHERE Username = 'admin'")
-            if cursor.fetchone() is None:
-                # Insert admin
-                hash_senha = generate_password_hash("admin")
-                cursor.execute(
-                    "INSERT INTO Usuarios (Nome, Username, SenhaHash, Nivel_Acesso) VALUES (%s, %s, %s, %s)",
-                    ("Administrador", "admin", hash_senha, "Admin")
-                )
-                print("Usuário 'admin' (senha 'admin') criado com sucesso.")
-            else:
-                print("Usuário 'admin' já existe.")
-        
-        conn.commit()
-    except Exception as e:
-        print(f"Erro: {e}")
-    finally:
-        conn.close()
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     create_admin()

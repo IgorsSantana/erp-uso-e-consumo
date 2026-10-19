@@ -1,0 +1,29 @@
+# Python e ambientes locais
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Configuração privada e dados persistentes
+.env
+.env.*
+!.env.example
+instance/
+erp-data/
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.sqlite3-*
+*.db
+*.db-*
+backups/
+
+# Ferramentas e artefatos locais
+node_modules/
+playwright-report/
+test-results/
+*.log
+.DS_Store
