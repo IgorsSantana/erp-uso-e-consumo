@@ -92,16 +92,37 @@ def run():
                 expect(dialog).not_to_be_visible()
                 expect(page.locator("#app-content")).to_contain_text("Produto criado no navegador")
                 print("Browser: product creation form passed.", flush=True)
+                page.get_by_role('button',name='Limites por loja',exact=True).click()
+                dialog.get_by_role('checkbox',name='Usar limites em Loja do navegador',exact=True).check()
+                dialog.get_by_label('Mínimo em Loja do navegador',exact=True).fill('2')
+                dialog.get_by_label('Máximo em Loja do navegador',exact=True).fill('12')
+                dialog.get_by_role('checkbox',name='Usar limites em Filial do navegador',exact=True).check()
+                dialog.get_by_label('Mínimo em Filial do navegador',exact=True).fill('10')
+                dialog.get_by_label('Máximo em Filial do navegador',exact=True).fill('50')
+                dialog.get_by_role('button',name='Salvar limites das lojas',exact=True).click()
+                expect(dialog).not_to_be_visible()
+                limits=context.request.get(base_url+'/api/produtos/990001/limites').json()['lojas']
+                assert next(row for row in limits if row['loja_id']==origin)['estoque_minimo']==2
+                assert next(row for row in limits if row['loja_id']==destination)['estoque_minimo']==10
+                page.get_by_role('button',name='Limites por loja',exact=True).click()
+                dialog.get_by_label('Máximo em Loja do navegador',exact=True).fill('15')
+                dialog.get_by_role('button',name='Salvar limites das lojas',exact=True).click()
+                expect(dialog).not_to_be_visible()
+                limits=context.request.get(base_url+'/api/produtos/990001/limites').json()['lojas']
+                assert next(row for row in limits if row['loja_id']==destination)['estoque_maximo']==50
+                print('Browser: independent product thresholds per store passed.',flush=True)
+
 
                 assert page.locator('.data-table .cell-title').first.evaluate("element => parseFloat(getComputedStyle(element).fontSize)")>=16
                 page.get_by_role('button',name='Importar planilha',exact=True).click()
                 dialog.locator('#catalog-file').set_input_files({
                     'name':'produtos.csv','mimeType':'text/csv',
-                    'buffer':'Código;Descrição;Seção;Custo\n990001;Nome que não deve sobrescrever;Teste;100\n990002;Produto importado pelo CSV;Papelaria;12,34'.encode('utf-8'),
+                    'buffer':'Código;Descrição;Seção;Custo;Estoque mínimo;Estoque máximo\n990001;Nome que não deve sobrescrever;Teste;100;1;4\n990002;Produto importado pelo CSV;Papelaria;12,34;3;9'.encode('utf-8'),
                 })
                 dialog.get_by_role('button',name='Conferir arquivo',exact=True).click()
                 expect(dialog).to_contain_text('1 novo(s) e 1 já cadastrado(s)')
                 expect(dialog.get_by_role('button',name='Confirmar importação',exact=True)).to_be_enabled()
+                dialog.get_by_label('Loja que receberá os mínimos e máximos',exact=True).select_option(str(destination))
                 dialog.get_by_role('button',name='Confirmar importação',exact=True).click()
                 expect(dialog).not_to_be_visible()
                 expect(page.locator('#app-content')).to_contain_text('Produto importado pelo CSV')
@@ -109,6 +130,12 @@ def run():
                 product_rows=context.request.get(base_url+'/api/produtos').json()
                 assert next(p for p in product_rows if p['id']=='990001')['custo']==10.5
                 assert next(p for p in product_rows if p['id']=='990002')['custo']==12.34
+                imported_limits=context.request.get(base_url+'/api/produtos/990002/limites').json()['lojas']
+                assert next(row for row in imported_limits if row['loja_id']==destination)['estoque_minimo']==3
+                assert next(row for row in imported_limits if row['loja_id']==origin)['limites_configurados']==0
+                retained_limits=context.request.get(base_url+'/api/produtos/990001/limites').json()['lojas']
+                assert next(row for row in retained_limits if row['loja_id']==destination)['estoque_minimo']==10
+
                 print('Browser: spreadsheet CSV preview, import and existing-product preservation passed.',flush=True)
                 excel=openpyxl.Workbook()
                 excel.active.title='Cadastro Excel'
@@ -141,6 +168,11 @@ def run():
                 expect(dialog).not_to_be_visible()
                 assert stock(origin) == 12
                 print("Browser: inventory entry passed.", flush=True)
+                page.locator('#stock-level-filter').select_option('unconfigured')
+                expect(page.locator('#stock-table tbody tr:visible').first).to_be_visible()
+                assert page.locator('#stock-table tbody tr:visible').evaluate_all("rows => rows.every(row => row.dataset.configured === '0')")
+                page.locator('#stock-level-filter').select_option('')
+
 
                 navigate("pedidos")
                 page.get_by_role("button", name="+ Nova requisição", exact=True).click()

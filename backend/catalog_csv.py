@@ -148,38 +148,54 @@ def analyze_csv(source, mapping=None, header_row=None):
     return result
 
 
-def import_rows(db, items, update_existing=False, user_id=None, origin='CSV'):
-    """Run inside the caller's transaction; never commit partial imports."""
+def import_rows(db, items, update_existing=False, user_id=None, origin='CSV', loja_id=None):
+    """Import metadata and optionally store-specific thresholds in the caller's transaction."""
     counts={'criados':0,'atualizados':0,'preservados':0,'secoes_criadas':0}
+    if loja_id is not None:
+        counts['limites_atualizados']=0
+        if not db.execute('SELECT 1 FROM lojas WHERE id=?',(loja_id,)).fetchone():
+            raise ValueError('Loja dos limites não encontrada.')
     sections={normalized(row['nome']):row['id'] for row in db.execute('SELECT id,nome FROM secoes')}
     for item in items:
         old=db.execute('SELECT * FROM produtos WHERE id=?',(item['id'],)).fetchone()
         if old and not update_existing:
             counts['preservados']+=1
-            continue
-        fields={key:value for key,value in item.items() if key!='secao'}
-        section=item.get('secao')
-        if section:
-            key=normalized(section)
-            if key not in sections:
-                sections[key]=db.execute('INSERT INTO secoes(nome) VALUES(?)',(section,)).lastrowid
-                counts['secoes_criadas']+=1
-            fields['secao_id']=sections[key]
-        if old:
-            minimum=fields.get('estoque_minimo',old['estoque_minimo'])
-            maximum=fields.get('estoque_maximo',old['estoque_maximo'])
-            if maximum and minimum>maximum:
-                raise ValueError(f'{item["id"]}: mínimo superior ao máximo existente. Revise os limites antes de atualizar.')
-            fields.pop('id')
-            db.execute('UPDATE produtos SET '+','.join(f'{key}=?' for key in fields)+' WHERE id=?',(*fields.values(),item['id']))
-            counts['atualizados']+=1
         else:
-            db.execute('INSERT INTO produtos('+','.join(fields)+') VALUES('+','.join('?' for _ in fields)+')',tuple(fields.values()))
-            counts['criados']+=1
-    if counts['criados'] or counts['atualizados']:
+            # Global spreadsheet columns are never operational product thresholds.
+            fields={key:value for key,value in item.items() if key not in ('secao','estoque_minimo','estoque_maximo')}
+            section=item.get('secao')
+            if section:
+                key=normalized(section)
+                if key not in sections:
+                    sections[key]=db.execute('INSERT INTO secoes(nome) VALUES(?)',(section,)).lastrowid
+                    counts['secoes_criadas']+=1
+                fields['secao_id']=sections[key]
+            if old:
+                fields.pop('id')
+                db.execute('UPDATE produtos SET '+','.join(f'{key}=?' for key in fields)+' WHERE id=?',(*fields.values(),item['id']))
+                counts['atualizados']+=1
+            else:
+                db.execute('INSERT INTO produtos('+','.join(fields)+') VALUES('+','.join('?' for _ in fields)+')',tuple(fields.values()))
+                counts['criados']+=1
+        if loja_id is not None and any(key in item for key in ('estoque_minimo','estoque_maximo')):
+            current=db.execute('SELECT * FROM estoque_limites WHERE produto_id=? AND loja_id=?',(item['id'],loja_id)).fetchone()
+            if current and not update_existing:
+                continue
+            minimum=item.get('estoque_minimo',current['estoque_minimo'] if current else 0)
+            maximum=item.get('estoque_maximo',current['estoque_maximo'] if current else 0)
+            if maximum and minimum>maximum:
+                raise ValueError(f'{item["id"]}: mínimo superior ao máximo da loja. Revise os limites antes de atualizar.')
+            try:
+                from .stock_limits import save_limit
+            except ImportError:
+                from stock_limits import save_limit
+            save_limit(db,item['id'],loja_id,minimum,maximum)
+            counts['limites_atualizados']+=1
+    if counts['criados'] or counts['atualizados'] or counts.get('limites_atualizados'):
         import json
+        details={**counts,**({'loja_limites_id':loja_id} if loja_id is not None else {})}
         db.execute('INSERT INTO auditoria(usuario_id,acao,entidade,entidade_id,detalhes) VALUES(?,?,?,?,?)',
-                   (user_id,'importar','produtos',origin,json.dumps(counts,ensure_ascii=False)))
+                   (user_id,'importar','produtos',origin,json.dumps(details,ensure_ascii=False)))
     return counts
 
 

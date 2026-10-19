@@ -23,6 +23,13 @@ CREATE TABLE IF NOT EXISTS produtos (id TEXT PRIMARY KEY, nome TEXT NOT NULL,
  periodo_consumo TEXT NOT NULL DEFAULT 'Mensal', ativo INTEGER NOT NULL DEFAULT 1);
 CREATE TABLE IF NOT EXISTS estoque (produto_id TEXT REFERENCES produtos(id), loja_id INTEGER REFERENCES lojas(id),
  quantidade REAL NOT NULL DEFAULT 0 CHECK(quantidade>=0), PRIMARY KEY(produto_id,loja_id));
+CREATE TABLE IF NOT EXISTS estoque_limites (
+ produto_id TEXT NOT NULL REFERENCES produtos(id) ON DELETE CASCADE,
+ loja_id INTEGER NOT NULL REFERENCES lojas(id) ON DELETE CASCADE,
+ estoque_minimo REAL NOT NULL DEFAULT 0 CHECK(estoque_minimo>=0),
+ estoque_maximo REAL NOT NULL DEFAULT 0 CHECK(estoque_maximo>=0),
+ atualizado_em TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ','now')),
+ PRIMARY KEY(produto_id,loja_id), CHECK(estoque_maximo=0 OR estoque_maximo>=estoque_minimo));
 CREATE TABLE IF NOT EXISTS pedidos (id INTEGER PRIMARY KEY, loja_id INTEGER NOT NULL REFERENCES lojas(id),
  loja_origem_id INTEGER NOT NULL REFERENCES lojas(id), status TEXT NOT NULL DEFAULT 'Pendente', total REAL NOT NULL,
  observacoes TEXT NOT NULL DEFAULT '', usuario_id INTEGER NOT NULL REFERENCES usuarios(id),
@@ -92,6 +99,11 @@ def initialize(app):
                 db.execute('INSERT OR IGNORE INTO secoes(nome) VALUES(?)',(nome,))
             db.execute('PRAGMA user_version=1')
             db.commit()
+        try:
+            from .stock_limits import migrate_limits
+        except ImportError:
+            from stock_limits import migrate_limits
+        migrate_limits(db)
         if app.config.get('SEED_CATALOG',not app.testing):
             try:
                 from .bundled_catalog import apply_catalog

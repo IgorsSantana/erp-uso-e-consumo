@@ -88,9 +88,9 @@ class SpreadsheetTests(unittest.TestCase):
         self.assertEqual(sum(row['quantidade'] for row in self.client.get('/api/estoque').json),0)
 
     def test_import_failure_rolls_back_earlier_products_and_new_sections(self):
-        self.post({'csv_text':'Código;Descrição;Estoque máximo\n001;Existente;5','aplicar':True})
+        self.post({'csv_text':'Código;Descrição;Estoque máximo\n001;Existente;5','aplicar':True,'loja_limites_id':1})
         source='Código;Descrição;Seção;Estoque mínimo\n002;Novo;Nova seção;1\n001;Existente;Limpeza;10'
-        response=self.post({'csv_text':source,'aplicar':True,'atualizar_existentes':True})
+        response=self.post({'csv_text':source,'aplicar':True,'atualizar_existentes':True,'loja_limites_id':1})
         self.assertEqual(response.status_code,400)
         self.assertEqual([row['id'] for row in self.client.get('/api/produtos').json],['001'])
         self.assertNotIn('Nova seção',[row['nome'] for row in self.client.get('/api/secoes').json])

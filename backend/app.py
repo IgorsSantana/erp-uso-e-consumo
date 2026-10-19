@@ -138,11 +138,11 @@ def move(pid,sid,delta,kind,reason,pedido_id=None):
     get_db().execute('INSERT INTO movimentacoes(tipo,produto_id,loja_id,quantidade,saldo_anterior,saldo_atual,motivo,usuario_id,pedido_id,custo_unitario) VALUES(?,?,?,?,?,?,?,?,?,?)',
                      (kind,pid,sid,delta,before,after,reason,g.user['id'],pedido_id,product(pid)['custo']))
 
-PRODUCT_SQL = '''SELECT p.*, s.nome AS secao FROM produtos p LEFT JOIN secoes s ON s.id=p.secao_id'''
+PRODUCT_SQL = '''SELECT p.id,p.nome,p.secao_id,p.unidade,p.custo,p.referencia,p.destinacao,p.marca,p.periodo_consumo,p.ativo,s.nome AS secao FROM produtos p LEFT JOIN secoes s ON s.id=p.secao_id'''
 STOCK_SQL = '''SELECT p.id AS produto_id,p.nome AS produto_nome,l.id AS loja_id,l.nome AS loja_nome,s.nome AS secao,
- p.unidade,COALESCE(e.quantidade,0) AS quantidade,p.estoque_minimo,p.estoque_maximo,p.custo
+ p.unidade,COALESCE(e.quantidade,0) AS quantidade,COALESCE(el.estoque_minimo,0) AS estoque_minimo,COALESCE(el.estoque_maximo,0) AS estoque_maximo,CASE WHEN el.produto_id IS NULL THEN 0 ELSE 1 END AS limites_configurados,p.custo
  FROM produtos p CROSS JOIN lojas l LEFT JOIN secoes s ON s.id=p.secao_id
- LEFT JOIN estoque e ON e.produto_id=p.id AND e.loja_id=l.id WHERE p.ativo=1'''
+ LEFT JOIN estoque e ON e.produto_id=p.id AND e.loja_id=l.id LEFT JOIN estoque_limites el ON el.produto_id=p.id AND el.loja_id=l.id WHERE p.ativo=1'''
 MOVES_SQL = '''SELECT m.*,p.nome AS produto_nome,l.nome AS loja_nome,u.nome AS usuario_nome
  FROM movimentacoes m JOIN produtos p ON p.id=m.produto_id JOIN lojas l ON l.id=m.loja_id LEFT JOIN usuarios u ON u.id=m.usuario_id'''
 
@@ -431,12 +431,19 @@ def create_app(config=None):
         existing={r['id'] for r in get_db().execute('SELECT id FROM produtos')}
         analysis['novos']=sum(item['id'] not in existing for item in analysis['rows'])
         analysis['existentes']=sum(item['id'] in existing for item in analysis['rows'])
+        analysis['possui_limites']=any(any(key in item for key in ('estoque_minimo','estoque_maximo')) for item in analysis['rows'])
         if not apply:
             return jsonify(analysis)
         if analysis['errors']:
             raise APIError('A importação contém erros. Corrija as linhas indicadas antes de confirmar.')
+        limit_store=None
+        if d.get('loja_limites_id') not in ('',None):
+            limit_store=store(d['loja_limites_id'])['id']
+        ignore_limits=flag(d.get('ignorar_limites',False))
+        if analysis['possui_limites'] and limit_store is None and not ignore_limits:
+            raise APIError('Escolha a loja que receberá os mínimos/máximos ou marque para não importar os limites.')
         try:
-            counts=import_rows(get_db(),analysis['rows'],bool(update),g.user['id'])
+            counts=import_rows(get_db(),analysis['rows'],bool(update),g.user['id'],loja_id=None if ignore_limits else limit_store)
         except ValueError as error:
             raise APIError(str(error))
         return jsonify(**counts,message='Importação concluída. Saldos de estoque preservados.')
@@ -490,6 +497,43 @@ def create_app(config=None):
             sql+=' AND l.id=?'
             params.append(ident(request.args['loja_id']))
         return jsonify(rows(sql+' ORDER BY p.nome,l.id',params))
+
+    @app.route('/api/produtos/<pid>/limites',methods=['GET','PUT'])
+    @require()
+    def product_store_limits(pid):
+        p=product(pid,False)
+        if request.method=='GET':
+            settings=rows("""SELECT l.id AS loja_id,l.nome AS loja_nome,COALESCE(e.quantidade,0) AS quantidade,
+              COALESCE(el.estoque_minimo,0) AS estoque_minimo,COALESCE(el.estoque_maximo,0) AS estoque_maximo,
+              CASE WHEN el.produto_id IS NULL THEN 0 ELSE 1 END AS limites_configurados
+              FROM lojas l LEFT JOIN estoque e ON e.loja_id=l.id AND e.produto_id=?
+              LEFT JOIN estoque_limites el ON el.loja_id=l.id AND el.produto_id=? ORDER BY l.id""",(pid,pid))
+            return jsonify(produto={'id':p['id'],'nome':p['nome'],'unidade':p['unidade']},lojas=settings)
+        manager()
+        items=body().get('lojas')
+        if not isinstance(items,list) or not 1<=len(items)<=1000:
+            raise APIError('Informe de 1 a 1000 lojas para configurar.')
+        validated,seen=[],set()
+        for item in items:
+            if not isinstance(item,dict):raise APIError('Configuração de loja inválida.')
+            sid=store(item.get('loja_id'))['id']
+            if sid in seen:raise APIError('A mesma loja foi informada mais de uma vez.')
+            seen.add(sid)
+            configured=flag(item.get('configurado',True))
+            minimum=number(item.get('estoque_minimo',0),'estoque_minimo')
+            maximum=number(item.get('estoque_maximo',0),'estoque_maximo')
+            if maximum and minimum>maximum:
+                raise APIError('O máximo deve ser maior ou igual ao mínimo. Use máximo zero para deixar sem teto.')
+            validated.append((sid,minimum,maximum,configured))
+        try:
+            from .stock_limits import save_limit
+        except ImportError:
+            from stock_limits import save_limit
+        for sid,minimum,maximum,configured in validated:
+            if configured:save_limit(get_db(),pid,sid,minimum,maximum)
+            else:get_db().execute('DELETE FROM estoque_limites WHERE produto_id=? AND loja_id=?',(pid,sid))
+        audit('configurar_limites','produtos',pid,json.dumps([{'loja_id':sid,'minimo':minimum,'maximo':maximum,'configurado':bool(configured)} for sid,minimum,maximum,configured in validated],ensure_ascii=False))
+        return jsonify(message='Limites atualizados somente nas lojas informadas.')
 
     @app.route('/api/movimentacoes',methods=['GET','POST'])
     @require()
@@ -848,7 +892,7 @@ def create_app(config=None):
     def reports(report):
         if report=='estoque':
             result=rows(STOCK_SQL+' ORDER BY p.nome,l.id')
-            fields=['produto_id','produto_nome','loja_nome','secao','unidade','quantidade','estoque_minimo','estoque_maximo','custo']
+            fields=['produto_id','produto_nome','loja_id','loja_nome','secao','unidade','quantidade','estoque_minimo','estoque_maximo','limites_configurados','custo']
         elif report=='movimentacoes':
             result=movement_rows(limit=100000)
             fields=['id','criado_em','tipo','produto_id','produto_nome','loja_nome','quantidade','saldo_anterior','saldo_atual','motivo','usuario_nome']

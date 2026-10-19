@@ -303,6 +303,8 @@ dialog::backdrop, .dialog-backdrop { background: rgb(21 39 32 / 48%); backdrop-f
 .login-feature p { margin-top: 4px; color: #8fa98f; font-size: 14px; }
 .login-story > .login-footer { margin-top: 42px; color: #738e75; font-size: 14px; text-align: left; }
 
+.limits-table .field-control { min-width: 110px; }
+.limits-table td { vertical-align: middle; }
 .import-source { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px 0; border-top: 1px solid var(--border); }
 .import-source .form-field { width: 100%; }
 .import-update { margin: 24px 0 10px; align-items: flex-start; }
