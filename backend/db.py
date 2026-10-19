@@ -110,6 +110,12 @@ def initialize(app):
             except ImportError:
                 from bundled_catalog import apply_catalog
             apply_catalog(db)
+            if app.config.get('APPLY_CATALOG_ADJUSTMENTS',True):
+                try:
+                    from .catalog_adjustments import apply_adjustments
+                except ImportError:
+                    from catalog_adjustments import apply_adjustments
+                apply_adjustments(db)
 
 
 def close_db(error=None):

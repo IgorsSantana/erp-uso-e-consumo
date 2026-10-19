@@ -11,6 +11,10 @@ Foram conferidas as 13 abas do Excel enviado pelo usuário. O arquivo original n
 
 As abas visíveis têm prioridade para descrição e detalhes do produto. As bases ocultas complementam códigos e campos ausentes, sem substituir o cadastro principal. Foram aproveitadas somente as colunas de produto suportadas pelo ERP; valores de custos e limites são incluídos quando informados e válidos. Fórmulas não foram executadas. Contatos, instruções em anotações e históricos não são importados como dados operacionais.
 
+## Revisão posterior dos cadastros antigos
+
+Após a separação dos limites por loja, os dados foram conferidos novamente com o Excel. Foram ajustados 175 produtos e 410 campos que ainda tinham valores do catálogo anterior, sem alterar saldos ou mínimos/máximos por loja. Consulte [ajuste_catalogo_20261019.md](ajuste_catalogo_20261019.md) para os resultados e as regras de proteção das edições do usuário.
+
 ## Códigos que precisam de revisão
 
 | Código | Origem | Descrição no Excel |

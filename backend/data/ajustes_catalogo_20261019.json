@@ -1,0 +1,2521 @@
+{
+  "version": "catalogo_excel_20261019_revisao_2",
+  "source_sha256": "8ee4eef4e6d5adcb64f9a0d86d8a07ef6249447e4c4182fa041fae6933274d97",
+  "changes": [
+    {
+      "id": "15",
+      "campos": {
+        "nome": {
+          "antes": "PULVERIZADOR",
+          "depois": "Pulverizador"
+        }
+      }
+    },
+    {
+      "id": "310782",
+      "campos": {
+        "nome": {
+          "antes": "VASSOURA PIAÇAVA",
+          "depois": "Vassoura piaçava"
+        }
+      }
+    },
+    {
+      "id": "321234",
+      "campos": {
+        "nome": {
+          "antes": "Cereja em Calda com Talo kg",
+          "depois": "CEREJA C TALO 1,65KG"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "PADARIA"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "KG"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semanal"
+        }
+      }
+    },
+    {
+      "id": "321616",
+      "campos": {
+        "nome": {
+          "antes": "MANGA P CONFEITAR DESCARTAVEL G C 50",
+          "depois": "Manga para confeitar descartável G c/50"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Manga para Confeitar"
+        }
+      }
+    },
+    {
+      "id": "324480",
+      "campos": {
+        "nome": {
+          "antes": "DESENTUPIDOR SODA CAUSTICA YARA 950G",
+          "depois": "SODA CAUSTICA YARA 950G"
+        }
+      }
+    },
+    {
+      "id": "330928",
+      "campos": {
+        "nome": {
+          "antes": "PANO DE CHAO ALVEJADO UNIAO COLORIDO",
+          "depois": "Pano alvejado azul"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "UNIÃO"
+        }
+      }
+    },
+    {
+      "id": "334413",
+      "campos": {
+        "nome": {
+          "antes": "FORMINHA DE PAPEL C 1000 N 0",
+          "depois": "Forminha de papel caixa  c/ 1000 n.0 branca"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Cestinha  Aberto de Alho Poro"
+        }
+      }
+    },
+    {
+      "id": "334512",
+      "campos": {
+        "secao": {
+          "antes": "Embalagem",
+          "depois": "ETIQUETAS"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "ELIMINADA"
+        }
+      }
+    },
+    {
+      "id": "338389",
+      "campos": {
+        "nome": {
+          "antes": "SERRA FITA 1,69",
+          "depois": "SERRA FITA MODELO 169 (não usa)"
+        }
+      }
+    },
+    {
+      "id": "339476",
+      "campos": {
+        "nome": {
+          "antes": "Uva Passas 10kg",
+          "depois": "UVA PASSA 10KG"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "PADARIA"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "KG"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semanal"
+        }
+      }
+    },
+    {
+      "id": "341927",
+      "campos": {
+        "nome": {
+          "antes": "NOZ MOSCADA PRODUCAO KG",
+          "depois": "NOZ MOSCADA KG"
+        }
+      }
+    },
+    {
+      "id": "342604",
+      "campos": {
+        "nome": {
+          "antes": "EXACOR ACOUGUE",
+          "depois": "EXACOR AÇOUGUE"
+        }
+      }
+    },
+    {
+      "id": "343244",
+      "campos": {
+        "nome": {
+          "antes": "SERRA FITA 2,82",
+          "depois": "SERRA FITA MODELO (BICAS   282)"
+        }
+      }
+    },
+    {
+      "id": "344998",
+      "campos": {
+        "nome": {
+          "antes": "SAL DE CURA PRODUCAO KG",
+          "depois": "SAL DE CURA 1 KG"
+        }
+      }
+    },
+    {
+      "id": "352546",
+      "campos": {
+        "nome": {
+          "antes": "SERRA FITA 1,74",
+          "depois": "SERRA FITA 1,74 (SJ2)"
+        }
+      }
+    },
+    {
+      "id": "358743",
+      "campos": {
+        "nome": {
+          "antes": "VASSOURA SINTETICA",
+          "depois": "Vassoura sintética"
+        }
+      }
+    },
+    {
+      "id": "359071",
+      "campos": {
+        "nome": {
+          "antes": "AGLOMAX TOSNACA",
+          "depois": "AGLOMAX TOSCANA (FARDO C/ 30)"
+        }
+      }
+    },
+    {
+      "id": "359074",
+      "campos": {
+        "nome": {
+          "antes": "CHIMICHURRI PRODUCAO KG",
+          "depois": "CHIMICHURRI KG"
+        }
+      }
+    },
+    {
+      "id": "360589",
+      "campos": {
+        "nome": {
+          "antes": "FECHO ARAME KG",
+          "depois": "Arame encapado kg"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "EMBALAR PRODUTOS PADARIA"
+        }
+      }
+    },
+    {
+      "id": "360781",
+      "campos": {
+        "destinacao": {
+          "antes": "",
+          "depois": "LANCHONETE"
+        }
+      }
+    },
+    {
+      "id": "360973",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA LAMINADA RETANGULAR N.7 C/20",
+          "depois": "Bandeja Retangular Laminada n.7 c/20"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "ENCOMENDA BOLO"
+        }
+      }
+    },
+    {
+      "id": "363124",
+      "campos": {
+        "nome": {
+          "antes": "CORANTE URUCUM L",
+          "depois": "URUCUM LÍQUIDO 1L"
+        }
+      }
+    },
+    {
+      "id": "364997",
+      "campos": {
+        "nome": {
+          "antes": "FORMA DE BOLO KRAFT 18CM C/50",
+          "depois": "Forma de bolo Kraft 18cm c/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Rosca doce de chocolate"
+        }
+      }
+    },
+    {
+      "id": "366835",
+      "campos": {
+        "nome": {
+          "antes": "PAPEL ABSORVENTE PARA BANDEJA CAIXA C/3000",
+          "depois": "Papel Absorvente para Bandeja c/ 3000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Absorvente para Carne"
+        }
+      }
+    },
+    {
+      "id": "366951",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA DE ISOPOR AMARELA 52 FUNDA C/400 DB52",
+          "depois": "Bandeja de Isopor Amarela Funda 52 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-052 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CARNE MOÍDA"
+        }
+      }
+    },
+    {
+      "id": "366952",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA DE ISOPOR BRANCA N.2 RASA C/400 DARNEL 02SE",
+          "depois": "Bandeja de Isopor Branca Rasa B2 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-002 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PRODUTOS EMBALADOS PADARIA"
+        }
+      }
+    },
+    {
+      "id": "366955",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA DE ISOPOR BRANCA N.3 RASA C/400 04SE",
+          "depois": "Bandeja de Isopor Branca Rasa B3 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-003 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PRODUTOS EMBALADOS PADARIA"
+        }
+      }
+    },
+    {
+      "id": "366956",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA DE ISOPOR BRANCA N.1 RASA C/400 11SE",
+          "depois": "Bandeja de Isopor Branca Rasa B1 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-001 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PRODUTOS ATENDIMENTO PADARIA"
+        }
+      }
+    },
+    {
+      "id": "366957",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA DE ISOPOR PRETA N.2 RASA C/400 DARNEL 02SE",
+          "depois": "Bandeja de Isopor Preta Rasa B2 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "TRL-02 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BACALHAU"
+        }
+      }
+    },
+    {
+      "id": "366958",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA ISOPOR PRETA N.3 RASA C/400",
+          "depois": "Bandeja de Isopor Preta Rasa B3 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-003 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CARNES BIFES (somente açougue)"
+        }
+      }
+    },
+    {
+      "id": "366959",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA DE ISOPOR PRETA N.4 RASA C/400",
+          "depois": "Bandeja de Isopor Preta Rasa B4 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-004 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CARNES BIFES"
+        }
+      }
+    },
+    {
+      "id": "366964",
+      "campos": {
+        "nome": {
+          "antes": "DISCO DE ISOPOR N.30 C/400",
+          "depois": "Disco de Isopor nº 30 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "NÃO TEM GABARITO"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PIZZA DA CASA"
+        }
+      }
+    },
+    {
+      "id": "366967",
+      "campos": {
+        "nome": {
+          "antes": "FILME POLIOLEFINICO 400X0,12",
+          "depois": "Filme Poliolefínico 360x0,15"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "WR EMBALAGENS"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Pizza da casa"
+        }
+      }
+    },
+    {
+      "id": "366969",
+      "campos": {
+        "nome": {
+          "antes": "PAPEL MANTEIGA 50X70 C/400",
+          "depois": "Papel Manteiga c/400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Desenformar Bolo"
+        }
+      }
+    },
+    {
+      "id": "366970",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM ARTICULADA P/ 2 DOCES G-14 C/100",
+          "depois": "Embalagem Articulada para 2 Doces"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-14 C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "DOCE"
+        }
+      }
+    },
+    {
+      "id": "366973",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ PANETONE TRUFADO TAM.33 G-33 C/100",
+          "depois": "Embalagem Transparente para Panetone Trufado de 500g"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-33 C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PANETONE TRUFADO - FINAL DE ANO"
+        }
+      }
+    },
+    {
+      "id": "366975",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ BOLO TAM.50M MILENIUM MEDIA G-50MM C/50",
+          "depois": "Embalagem Redonda para Bolo de 1.5Kg (Milenium Tampa Média)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-50MM C/50"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BOLO 1.5kg"
+        }
+      }
+    },
+    {
+      "id": "366976",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ APERITIVO C 4 DIVISORIAS TAM.540 G-540 C/100",
+          "depois": "Embalagem para aperitivo G-540 C/100"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-540 C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "TABUA DE FRIOS"
+        }
+      }
+    },
+    {
+      "id": "366977",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ BOLO TAM.60 MILENIUM MEDIA G-60MM C/50",
+          "depois": "Embalagem Redonda para Bolo de 2.2Kg"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-60MM C/50"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BOLO 2.2kg"
+        }
+      }
+    },
+    {
+      "id": "366981",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ TORTA GRANDE TAM.65 MILENIUM MEDIA G-65MM C/50",
+          "depois": "EMBALAGEM P/TORTA GRANDE TAM.65 MILENIUM MEDIA G-65MM C/ 50"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-65MM"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "TORTA DE PÃO DE FORMA GRANDE"
+        }
+      }
+    },
+    {
+      "id": "366983",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ BOLO TAM.70 MILENIUM MEDIA G-70MM C/20",
+          "depois": "Embalagem Retangular para Bolo de 3Kg"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-70MM C/20"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BOLO 3kg ENCOMENDA"
+        }
+      }
+    },
+    {
+      "id": "366992",
+      "campos": {
+        "nome": {
+          "antes": "GARRAFA PLASTICA PARA BANHA 1L C/25",
+          "depois": "Garrafa Plástica branca 1l c/35 (TAMPA LARANJA)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "São João"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BANHA AÇOUGUE"
+        }
+      }
+    },
+    {
+      "id": "366995",
+      "campos": {
+        "nome": {
+          "antes": "PLACA DE ISOPOR 003 PARA FRIOS FATIADOS PN 003 C/400",
+          "depois": "Placa de Isopor Branca 003 C/ 400"
+        }
+      }
+    },
+    {
+      "id": "366997",
+      "campos": {
+        "nome": {
+          "antes": "PLASTICO STRETCH ROLO",
+          "depois": "Filme Plástico Stretch Rolo"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Envolver Mercadorias"
+        }
+      }
+    },
+    {
+      "id": "366999",
+      "campos": {
+        "nome": {
+          "antes": "FILME PVC 38X800 ROLO",
+          "depois": "Filme PVC 38x800 Rolo"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "COMPRA NA REDE"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Selar Produtos Padaria e Frios"
+        }
+      }
+    },
+    {
+      "id": "367001",
+      "campos": {
+        "nome": {
+          "antes": "SACO A VACUO P/ BACON E PAIO 15X20 C/1000",
+          "depois": "Embalagem a Vácuo 15x20cm C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BACON / PAIO / ALHO"
+        }
+      }
+    },
+    {
+      "id": "367018",
+      "campos": {
+        "nome": {
+          "antes": "LUVA DESCARTAVEL PLASTICA C/100",
+          "depois": "Luva descartável c/ 100"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "BM3"
+        }
+      }
+    },
+    {
+      "id": "367020",
+      "campos": {
+        "nome": {
+          "antes": "PANO MULTIUSO PERFEX C 600M UNID",
+          "depois": "Perfex rolão"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "BM3"
+        }
+      }
+    },
+    {
+      "id": "367022",
+      "campos": {
+        "nome": {
+          "antes": "PAPEL TOALHA BRANCO 20X21CM C/1000",
+          "depois": "Papel toalha interfolhado c/ 1000(FARDO)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "SANPAPER"
+        }
+      }
+    },
+    {
+      "id": "367030",
+      "campos": {
+        "nome": {
+          "antes": "TOUCA SANFONADA DESCARTAVEL C/100",
+          "depois": "Touca sanfonada c/ 100"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "BM3"
+        }
+      }
+    },
+    {
+      "id": "367034",
+      "campos": {
+        "nome": {
+          "antes": "SABONETE LIQUIDO COMUM P/ BANHEIRO SABONETE LIQUIDO HERBAL 5L",
+          "depois": "Sabonete Liq. p/ banheiro 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 19.0
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Lim+"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Higienização das mãos em banheiros"
+        }
+      }
+    },
+    {
+      "id": "367036",
+      "campos": {
+        "nome": {
+          "antes": "ALCOOL GEL 70 5L",
+          "depois": "Álcool Gel 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 52.0
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Somente na área de produção ( banheiros )"
+        }
+      }
+    },
+    {
+      "id": "367038",
+      "campos": {
+        "nome": {
+          "antes": "LIMPADOR MULTIUSO PERFUMADO LIMPA FACIL FLORALGEL 5L",
+          "depois": "Desinfetante concentrado floral 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 39.0
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Limp+"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Limpeza de banheiros"
+        }
+      }
+    },
+    {
+      "id": "367040",
+      "campos": {
+        "nome": {
+          "antes": "DESINFETANTE BACTERICIDA BIGUANIDA 5L",
+          "depois": "Mirax BG - Biguanida 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 219.0
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Mirax BG"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Sanitizante alimentício inodor"
+        }
+      }
+    },
+    {
+      "id": "367042",
+      "campos": {
+        "nome": {
+          "antes": "ANTI-FERRUGEM DECAPANTE PARA GANCHO 5L",
+          "depois": "Decapante p/ gancho 5L"
+        }
+      }
+    },
+    {
+      "id": "367044",
+      "campos": {
+        "nome": {
+          "antes": "DETERGENTE CLORADO DETERGENTE CLORADO 5L",
+          "depois": "Detergente Clearon - Alcalino Clorado 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 76.95
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Cleraron"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Limpador Multiuso para superficies"
+        }
+      }
+    },
+    {
+      "id": "367046",
+      "campos": {
+        "nome": {
+          "antes": "DETERGENTE NEUTRO SEM CHEIRO 5L",
+          "depois": "Detergente Neutro 5L ( usar urca 5L )"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 15.0
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Urca"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Lava louças URCA"
+        }
+      }
+    },
+    {
+      "id": "367054",
+      "campos": {
+        "nome": {
+          "antes": "DETERGENTE ALCALINO AL ALKA 5L",
+          "depois": "Detergente Intenso - Alcalino 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 71.0
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Intenso"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Limpador Piso área de produção e manipulação inodor"
+        }
+      }
+    },
+    {
+      "id": "367056",
+      "campos": {
+        "nome": {
+          "antes": "QUATERNARIO DE AMONIO 5L",
+          "depois": "379126 - Desinfetante Inodoro - Quaternário 5L"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 79.0
+        },
+        "marca": {
+          "antes": "",
+          "depois": "Inodoro"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Sanitizante área produção"
+        }
+      }
+    },
+    {
+      "id": "367061",
+      "campos": {
+        "nome": {
+          "antes": "CANETA AZUL UN",
+          "depois": "CANETA AZUL C/100"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367067",
+      "campos": {
+        "nome": {
+          "antes": "CANETA DETECTORA NOTA FALSA UN",
+          "depois": "CANETA NOTA FALSA UNIDADE"
+        }
+      }
+    },
+    {
+      "id": "367069",
+      "campos": {
+        "nome": {
+          "antes": "CLIPS N.3 POTE",
+          "depois": "CLIPS N.3 C/50"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367071",
+      "campos": {
+        "nome": {
+          "antes": "CLIPS N.6 POTE",
+          "depois": "CLIPS N.6 C/50"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367073",
+      "campos": {
+        "nome": {
+          "antes": "CLIPS N.8 POTE",
+          "depois": "CLIPS N.8 C/50"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367075",
+      "campos": {
+        "nome": {
+          "antes": "COLA BASTAO UN",
+          "depois": "COLA BASTÃO CX C/12"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367081",
+      "campos": {
+        "nome": {
+          "antes": "DUREX 12MM X 50M UN",
+          "depois": "DUREX 12MM x 50M CX C/20"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367083",
+      "campos": {
+        "nome": {
+          "antes": "ELASTICO DINHEIRO PACOTE",
+          "depois": "ELÁSTICO DINHEIRO PACOTE"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367085",
+      "campos": {
+        "nome": {
+          "antes": "ENVELOPE PARDO",
+          "depois": "ENVELOPE PARDO CX C/100"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367087",
+      "campos": {
+        "nome": {
+          "antes": "ENVELOPE BRANCO PEQUENO",
+          "depois": "ENVELOPE PEQUENO CX C/100"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367089",
+      "campos": {
+        "nome": {
+          "antes": "ESTILETE GRANDE UN",
+          "depois": "ESTILETE GRANDE UNIDADE"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367091",
+      "campos": {
+        "nome": {
+          "antes": "FITA PARA SELADORA UN",
+          "depois": "Fita p/ Seladora"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "DUREX LARGO"
+        }
+      }
+    },
+    {
+      "id": "367109",
+      "campos": {
+        "nome": {
+          "antes": "GRAMPO 26/6 CAIXA",
+          "depois": "GRAMPO  26/6 CX C/10X5000"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367111",
+      "campos": {
+        "nome": {
+          "antes": "LACRE NUMERADO PACOTE C/100",
+          "depois": "LACRE CAMINHÃO NUMERADO C/500"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367115",
+      "campos": {
+        "nome": {
+          "antes": "LAPIS PRETO UN",
+          "depois": "LÁPIS PRETO CX C/144"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367119",
+      "campos": {
+        "nome": {
+          "antes": "MARCA TEXTO UN",
+          "depois": "MARCA TEXTO CX C/12"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367129",
+      "campos": {
+        "nome": {
+          "antes": "PINCEL ATOMICO UN",
+          "depois": "PINCEL ATÔMICO  CX C/12"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367137",
+      "campos": {
+        "nome": {
+          "antes": "REGUA GRANDE 30CM UN",
+          "depois": "RÉGUA GRANDE 30CM CX C/6"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367143",
+      "campos": {
+        "nome": {
+          "antes": "SELADORA UN",
+          "depois": "SELADORA UNIDADE"
+        }
+      }
+    },
+    {
+      "id": "367145",
+      "campos": {
+        "nome": {
+          "antes": "TESOURA GRANDE UN 36",
+          "depois": "TESOURA GRANDE UNIDADE"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367147",
+      "campos": {
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367155",
+      "campos": {
+        "nome": {
+          "antes": "BORRACHA UN",
+          "depois": "BORRACHA GRANDE CX C/20"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367157",
+      "campos": {
+        "nome": {
+          "antes": "CALCULADORA UN",
+          "depois": "CALCULADORA UNIDADE"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semestral"
+        }
+      }
+    },
+    {
+      "id": "367175",
+      "campos": {
+        "nome": {
+          "antes": "BARBANTE P/ ACOUGUE",
+          "depois": "BARBANTE ROLO"
+        }
+      }
+    },
+    {
+      "id": "367177",
+      "campos": {
+        "nome": {
+          "antes": "FIXADOR A80 80G",
+          "depois": "FIXADOR A80 250G"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "AÇOUGUE"
+        }
+      }
+    },
+    {
+      "id": "367179",
+      "campos": {
+        "nome": {
+          "antes": "HARMONIX F 600G",
+          "depois": "HARMONIX F 600 G (CX15)"
+        }
+      }
+    },
+    {
+      "id": "367185",
+      "campos": {
+        "nome": {
+          "antes": "PEDRA P AMOLAR",
+          "depois": "PEDRA PRA AMOLAR"
+        }
+      }
+    },
+    {
+      "id": "367193",
+      "campos": {
+        "nome": {
+          "antes": "TRIPA GROSSA SUINA MAÇO",
+          "depois": "TRIPA SUÍNA GROSSA FD(10)"
+        }
+      }
+    },
+    {
+      "id": "367195",
+      "campos": {
+        "secao": {
+          "antes": null,
+          "depois": "AÇOUGUE"
+        }
+      }
+    },
+    {
+      "id": "367199",
+      "campos": {
+        "nome": {
+          "antes": "FACA BIFE N.12 BRANCA",
+          "depois": "FACA N.12 BRANCA"
+        }
+      }
+    },
+    {
+      "id": "367207",
+      "campos": {
+        "nome": {
+          "antes": "CORANTE CARMIM",
+          "depois": "CORANTE CARMIN 1L"
+        }
+      }
+    },
+    {
+      "id": "367209",
+      "campos": {
+        "nome": {
+          "antes": "TRIPA FINA 22 MAÇO",
+          "depois": "TRIPA FINA 22"
+        }
+      }
+    },
+    {
+      "id": "367278",
+      "campos": {
+        "nome": {
+          "antes": "BUCHA FIBRA LIMPEZA PESADA C/10",
+          "depois": "Bucha de Fibra Limpeza Pesada un. (FD c/10)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "FSD"
+        }
+      }
+    },
+    {
+      "id": "367281",
+      "campos": {
+        "nome": {
+          "antes": "BUCHA FIBRA LIMPEZA LEVE C/10",
+          "depois": "Bucha de Fibra Limpeza Leve un. (FD c/10)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "FSD"
+        }
+      }
+    },
+    {
+      "id": "367312",
+      "campos": {
+        "nome": {
+          "antes": "FACA BIFE N.12 AZUL",
+          "depois": "FACA N.12 AZUL"
+        }
+      }
+    },
+    {
+      "id": "367314",
+      "campos": {
+        "nome": {
+          "antes": "FACA BIFE N.12 AMARELA",
+          "depois": "FACA N.12 AMARELA"
+        }
+      }
+    },
+    {
+      "id": "367891",
+      "campos": {
+        "nome": {
+          "antes": "PAPEL HIGIENICO ROLAO UNID",
+          "depois": "Papel higiênico rolão un. (FARDO C/8)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "SANPAPER"
+        }
+      }
+    },
+    {
+      "id": "367960",
+      "campos": {
+        "nome": {
+          "antes": "DISCO FIBRA ENCERADEIRA UNID",
+          "depois": "Disco de Fibra p/ máquina Flaire 440 Verde"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "FSD"
+        }
+      }
+    },
+    {
+      "id": "367995",
+      "campos": {
+        "nome": {
+          "antes": "LIMPADOR FLOORMAQ 5L",
+          "depois": "Desinfetante concentrado máquina piso"
+        },
+        "custo": {
+          "antes": 0.0,
+          "depois": 129.0
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Limpador piso máquina loja"
+        }
+      }
+    },
+    {
+      "id": "368117",
+      "campos": {
+        "nome": {
+          "antes": "PIMENTA MALAGUETA 1L",
+          "depois": "PIMENTA MALAGUETA 2L"
+        }
+      }
+    },
+    {
+      "id": "368128",
+      "campos": {
+        "nome": {
+          "antes": "LUVA DE BORRACHA TAM.G 1 C/30",
+          "depois": "Luva de borracha G  C/ 36 (RH)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "BM3"
+        }
+      }
+    },
+    {
+      "id": "368133",
+      "campos": {
+        "nome": {
+          "antes": "MARMITEX ALUMINIO T-90 9X12 C/200",
+          "depois": "Forma Descartável Alumínio para Empadão 240ml C/200"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Empadão"
+        }
+      }
+    },
+    {
+      "id": "368209",
+      "campos": {
+        "nome": {
+          "antes": "FORMA PARA EMPADA N.5 C 12",
+          "depois": "Forma de Alumino empada Mello c/ 600"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Empadas e Quiches de Alho Poró"
+        }
+      }
+    },
+    {
+      "id": "368221",
+      "campos": {
+        "nome": {
+          "antes": "PAPEL PARA EMBALAR",
+          "depois": "Bobina de Papel para embalar"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "EMBALAGEM"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "WR BOBINA STRONG"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "EMBALAR ENCOMENDAS"
+        }
+      }
+    },
+    {
+      "id": "368292",
+      "campos": {
+        "nome": {
+          "antes": "PAPEL TOALHA ROLO 200 MTS",
+          "depois": "Papel toalha rolão (fardo c/ 6)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "SANPAPER"
+        }
+      }
+    },
+    {
+      "id": "368392",
+      "campos": {
+        "nome": {
+          "antes": "SACO PP P/ PAO DE RABANADA 15X70 C/1000",
+          "depois": "Sacos PP para Pão Rabanada"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SACO PP 15x70 C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Pão de Rabanada"
+        }
+      }
+    },
+    {
+      "id": "368395",
+      "campos": {
+        "nome": {
+          "antes": "SACO PP P/ FARINHA DE ROSCA 16X30 C/1000",
+          "depois": "Sacos PP para Farinha de Rosca"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SACO PP 15x30 C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Farinha de Rosca"
+        }
+      }
+    },
+    {
+      "id": "368396",
+      "campos": {
+        "nome": {
+          "antes": "SACO PP P/ ROSQUINHA E TORRADA 17X35 C/1000",
+          "depois": "Sacos PP c/1000"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SACO PP 17x35 C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Torradas / rosquinha temperada"
+        }
+      }
+    },
+    {
+      "id": "368398",
+      "campos": {
+        "nome": {
+          "antes": "SACO PP 20X45 C/1000",
+          "depois": "Sacos PP para pães embaldos"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SACO PP 20x45 C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Pães embalados, cearense"
+        }
+      }
+    },
+    {
+      "id": "368400",
+      "campos": {
+        "nome": {
+          "antes": "SACO PP P/ PAO SIRIO E PANETTONE E PAES DA CASA 25X35 C/1000",
+          "depois": "Sacos PP para Pão Sírio (SUBSTITUIÇÃO 25X40)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SACO PP 25x35 C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Sírio / Panettone/ pães embalados/ Polvilho/ Torresmo"
+        }
+      }
+    },
+    {
+      "id": "368405",
+      "campos": {
+        "nome": {
+          "antes": "SACO PP P/ MASSA DE PIZZA 30X45 C/1000",
+          "depois": "Sacos PP para pizza"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SACO PP 30x45 C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Pizza/ Hot Dog"
+        }
+      }
+    },
+    {
+      "id": "368410",
+      "campos": {
+        "nome": {
+          "antes": "SACO A VACUO P/ LINGUICA CALABRESA MAIOR 15X35 C/1000",
+          "depois": "Embalagem a Vácuo 15x35cm C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CALABRESA"
+        }
+      }
+    },
+    {
+      "id": "368411",
+      "campos": {
+        "nome": {
+          "antes": "SACO A VACUO P/ LINGUICA CALABRESA MENOR 20X25 C/1000",
+          "depois": "Embalagem a Vácuo 20x25cm C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "SALSICHA / VERDURAS"
+        }
+      }
+    },
+    {
+      "id": "368413",
+      "campos": {
+        "nome": {
+          "antes": "SACO A VACUO P/ FRIOS FATIADOS 22X30 C/1000",
+          "depois": "Embalagem a Vácuo 22x30cm C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "FRIOS FATIADOS / LEGUMES"
+        }
+      }
+    },
+    {
+      "id": "368416",
+      "campos": {
+        "nome": {
+          "antes": "SACOLA SUPERMAIS 30X40 C/1000",
+          "depois": "SACOLA SUPERMAIS P 2,4KG 30X40CM c/100"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "Sacola Supermais"
+        }
+      }
+    },
+    {
+      "id": "368418",
+      "campos": {
+        "nome": {
+          "antes": "SACOLA SUPERMAIS 38X48 FARDO C/1000",
+          "depois": "SACOLA SUPERMAIS M 3,6KG 38X50CM c/ 100"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "Sacola Supermais"
+        }
+      }
+    },
+    {
+      "id": "368420",
+      "campos": {
+        "nome": {
+          "antes": "SACOLA SUPERMAIS 50X70 FARDO C/1000",
+          "depois": "SACOLA SUPERMAIS G 5,2KG 50X60CM c/100"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "Sacola Supermais"
+        }
+      }
+    },
+    {
+      "id": "368422",
+      "campos": {
+        "nome": {
+          "antes": "BOBINA PLASTICA FUNDO ESTRELA TAM.G CAIXA C/6",
+          "depois": "Bobina Plástica Estrela G C/6"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        }
+      }
+    },
+    {
+      "id": "368424",
+      "campos": {
+        "nome": {
+          "antes": "BOBINA PLASTICA FUNDO ESTRELA TAM.M CAIXA C/6",
+          "depois": "Bobina Plástica Estrela M  C/6"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        }
+      }
+    },
+    {
+      "id": "368426",
+      "campos": {
+        "nome": {
+          "antes": "BOBINA PLASTICA FUNDO ESTRELA P C/6",
+          "depois": "Bobina Plástica Estrela P C/6"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        }
+      }
+    },
+    {
+      "id": "368438",
+      "campos": {
+        "nome": {
+          "antes": "BOBINA PDV TERMICA BRANCA ROLO 80MMX80M",
+          "depois": "BOBINA PDV TERMICA BRANCA ROLO 80MMX80M (16)"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        }
+      }
+    },
+    {
+      "id": "368491",
+      "campos": {
+        "nome": {
+          "antes": "RIBBON 110X74 CERA",
+          "depois": "RIBBON 110X74 CERA (24)"
+        }
+      }
+    },
+    {
+      "id": "368493",
+      "campos": {
+        "nome": {
+          "antes": "ETIQUETA GONDOLA 70X35 ROLO C/1000",
+          "depois": "Etiqueta de Gondola (70 x 35) (36)"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        }
+      }
+    },
+    {
+      "id": "368495",
+      "campos": {
+        "nome": {
+          "antes": "ETIQUETA COUCHE BRANCA 60X80 ROLO C/800",
+          "depois": "Etiqueta couche branca (80 x 65) RL 950 (16)"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "ETIQUETAS"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "Seis Meses"
+        }
+      }
+    },
+    {
+      "id": "368762",
+      "campos": {
+        "secao": {
+          "antes": null,
+          "depois": "PADARIA"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "KG"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semanal"
+        }
+      }
+    },
+    {
+      "id": "368978",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ BOLO TAM.50 MILENIUM ALTA G-50MA C/50",
+          "depois": "Embalagem Redonda para Bolo de 1.5Kg (Milenium Tampa Alta)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-50MA C/50"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BOLO 1.5kg"
+        }
+      }
+    },
+    {
+      "id": "369308",
+      "campos": {
+        "referencia": {
+          "antes": "",
+          "depois": "G-620"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "KIT DOCES / BROWNIE"
+        }
+      }
+    },
+    {
+      "id": "369361",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ BOLO CONE TAM.32 LISA MEDIA G-32CT C/100",
+          "depois": "Embalagem Redonda para Bolo Cone de 750g ( Lisa Tampa Média)"
+        }
+      }
+    },
+    {
+      "id": "369367",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM P/ BOLO TAM.32 MILENIUM ALTA G-32MA C/100",
+          "depois": "Embalagem para Bolo G-32MA c/100"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-32MA C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BOLO CONFEITADO / TORTA PREMIUM"
+        }
+      }
+    },
+    {
+      "id": "369438",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA LAMINADA RETANGULAR N.5 C/100",
+          "depois": "Bandeja Retangular Laminada n.5 c/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "ENCOMENDA BOLO"
+        }
+      }
+    },
+    {
+      "id": "369473",
+      "campos": {
+        "nome": {
+          "antes": "CAPA PARA CESTA BASICA 50X80 C/100",
+          "depois": "Capa para Cesta Básica 50x80 C/100"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "COMPRA NA REDE"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CESTA BÁSICA"
+        }
+      }
+    },
+    {
+      "id": "369502",
+      "campos": {
+        "nome": {
+          "antes": "ETIQUETA DE BALACA ROLO 40X40X30 C/ BARREIRA",
+          "depois": "Etiqueta de Balança (40 x 40) (80) BARREIRA ( 36 )"
+        },
+        "secao": {
+          "antes": "Bobina PDV",
+          "depois": "ETIQUETAS"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "CX"
+        }
+      }
+    },
+    {
+      "id": "369801",
+      "campos": {
+        "nome": {
+          "antes": "G-63MA C/ 100",
+          "depois": "Embalagem Retangular para Tranças Salgadas (validar substituição por tamanho)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-63MA C/ 100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Roscas Salgadas"
+        }
+      }
+    },
+    {
+      "id": "369905",
+      "campos": {
+        "nome": {
+          "antes": "REFIL ESFREGAO",
+          "depois": "Refil esfregão"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "FSD"
+        }
+      }
+    },
+    {
+      "id": "369968",
+      "campos": {
+        "nome": {
+          "antes": "GUARDANAPO MAXIM C 50 22X23CM",
+          "depois": "GUARDANAPO"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "MAXIM C 50"
+        }
+      }
+    },
+    {
+      "id": "370177",
+      "campos": {
+        "nome": {
+          "antes": "FUMARIM ACOUGUE 1L",
+          "depois": "FUMARIN 1L"
+        }
+      }
+    },
+    {
+      "id": "370472",
+      "campos": {
+        "nome": {
+          "antes": "SACO A VACUO 20X35 C/1000",
+          "depois": "Embalagem a Vácuo 20x35cm C/ 1000"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CONGELADOS"
+        }
+      }
+    },
+    {
+      "id": "370508",
+      "campos": {
+        "nome": {
+          "antes": "SERRA FITA 2,55",
+          "depois": "SERRA FITA MODELO 255 (Maripá)"
+        }
+      }
+    },
+    {
+      "id": "370978",
+      "campos": {
+        "nome": {
+          "antes": "BANDEJA ISOPOR PRETA  N.2 FUNDA C/400",
+          "depois": "Bandeja de Isopor Preta Funda B2 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CF-002 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CARNE PICADA"
+        }
+      }
+    },
+    {
+      "id": "371126",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM PARA COLOMBA G-34 C 100",
+          "depois": "EMBALAGEM PARA COLOMBA G 2000ML c/200"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-34G"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "COLOMBA"
+        }
+      }
+    },
+    {
+      "id": "373090",
+      "campos": {
+        "nome": {
+          "antes": "FORMA P PANETTONE 500G C 100 MARROM",
+          "depois": "Forma de papel para Panettone 500g c/100 Marrom"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Forma de Panettone"
+        }
+      }
+    },
+    {
+      "id": "373276",
+      "campos": {
+        "nome": {
+          "antes": "COPO DESCARTAVEL 200ML COPOFLEX C 100 BRANCO",
+          "depois": "COPO DESCARTAVEL 200ML  C 100"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "COPOFLEX"
+        }
+      }
+    },
+    {
+      "id": "373521",
+      "campos": {
+        "nome": {
+          "antes": "GUARDANAPO CAICAI C 8000",
+          "depois": "Guardanapo Caicai c 8000"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "SANPAPER"
+        }
+      }
+    },
+    {
+      "id": "373627",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM G-560 C/100",
+          "depois": "Embalagem Sanduíche Natural G-560 C/100"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-560 C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "SANDUICHE NATURAL"
+        }
+      }
+    },
+    {
+      "id": "373817",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM PET COLOMBA 1000ML G-34 C/150",
+          "depois": "EMBALAGEM PARA MINI COLOMBA E  PAVÊ P c/1000 c/150"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-34P"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Pavê de Bombom e Uva"
+        }
+      }
+    },
+    {
+      "id": "374119",
+      "campos": {
+        "secao": {
+          "antes": null,
+          "depois": "PADARIA"
+        },
+        "unidade": {
+          "antes": "UN",
+          "depois": "KG"
+        },
+        "periodo_consumo": {
+          "antes": "Mensal",
+          "depois": "Semanal"
+        }
+      }
+    },
+    {
+      "id": "374233",
+      "campos": {
+        "nome": {
+          "antes": "LUVA DE BORRACHA CANO LONGO",
+          "depois": "Luva de borracha Cano Longo c/ 36 (RH)"
+        },
+        "secao": {
+          "antes": "Limpeza",
+          "depois": "CONSUMO GERAL"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "BM3"
+        }
+      }
+    },
+    {
+      "id": "374663",
+      "campos": {
+        "nome": {
+          "antes": "DETERGENTE P/ MAQUINA LAVA LOUCAS 5L",
+          "depois": "Detergente maquina de lavar louça 5L"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Lava louças Lanchonete"
+        }
+      }
+    },
+    {
+      "id": "374665",
+      "campos": {
+        "nome": {
+          "antes": "SECANTE P/ MAQUINA LAVA LOUCAS 5L",
+          "depois": "Secante maquina de lavar louça 5L"
+        },
+        "secao": {
+          "antes": null,
+          "depois": "LIMPEZA"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Lava louças Lanchonete"
+        }
+      }
+    },
+    {
+      "id": "374852",
+      "campos": {
+        "nome": {
+          "antes": "SANITIZANTE DE VERDURAS LEGUMES FRUTAS 3,6KG",
+          "depois": "Sanitizante de verduras e legumes 3,6kg"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "SANITIZANTE"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Sanitizar verduras e legumes"
+        }
+      }
+    },
+    {
+      "id": "375040",
+      "campos": {
+        "nome": {
+          "antes": "SACO DE LIXO C/100 TRANSPARENTE 100L",
+          "depois": "Saco de lixo c/100 TRANSPARENTE 110L"
+        },
+        "marca": {
+          "antes": "",
+          "depois": "FSD"
+        }
+      }
+    },
+    {
+      "id": "375376",
+      "campos": {
+        "destinacao": {
+          "antes": "",
+          "depois": "SUCO NATURAL"
+        }
+      }
+    },
+    {
+      "id": "375732",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM N.682 G-682 C/100",
+          "depois": "Embalagem para salada G-682 c/100"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-682 c/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "SALADA PROTEICAS"
+        }
+      }
+    },
+    {
+      "id": "375899",
+      "campos": {
+        "nome": {
+          "antes": "SERRA FITA 310",
+          "depois": "SERRA FITA MODELO (MEP 310) (SJ S310)9 DESCOBERTO)"
+        }
+      }
+    },
+    {
+      "id": "376096",
+      "campos": {
+        "nome": {
+          "antes": "PALHA DE AÇO",
+          "depois": "Palha de aço"
+        }
+      }
+    },
+    {
+      "id": "376315",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) BANDEJA ISOPOR PRETA N.1 RASA C/400",
+          "depois": "Bandeja de Isopor Preta B1 C/ 400"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "CRL-001 C/ 400"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CARNE SECA"
+        }
+      }
+    },
+    {
+      "id": "376497",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM DA-10 C/100",
+          "depois": "Embalagem Articulada DA-10 C/100"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "GA-10 C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "EMBALADOS PADARIA (Salgados assados, Bolo Aipim e Broa queijo e Coco)"
+        }
+      }
+    },
+    {
+      "id": "376499",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM P/ PEQUENOS DOCES D-650 C/300",
+          "depois": "Embalagem Quadrada para Pequenos Doces de 200ml"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-650 C/300"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "KIT DOCES / BROWNIE"
+        }
+      }
+    },
+    {
+      "id": "376501",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM P/ BOLO CONE D-32M C/100",
+          "depois": "Embalagem Redonda para Bolo Cone de 750g (Milenium Tampa Média)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-32M C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BOLO CONE / ROSCAS"
+        }
+      }
+    },
+    {
+      "id": "376503",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM P/ CACAROLA D-35A C/100",
+          "depois": "Embalagem Redonda para Caçarola (Tampa Alta)"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-35MA C/100"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "CAÇAROLA / BOLO FIT / BENTO CAKE"
+        }
+      }
+    },
+    {
+      "id": "376505",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM P/ ROCAMBOLE D-62R C/150",
+          "depois": "Embalagem Retangular para Rocambole Pequeno de 300g"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-62 C/150"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "ROCAMBOLE / BOLO"
+        }
+      }
+    },
+    {
+      "id": "376507",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) EMBALAGEM P/ PIZZABROWNIE D-630 C/300",
+          "depois": "Embalagem Triangular para Pizzabrownie"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-630 C300"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PIZZA BROWNIE / CHEESE CAKE"
+        }
+      }
+    },
+    {
+      "id": "376509",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) POTE ACOPLADO D-750R C/200",
+          "depois": "Pote Acoplado 350mL"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-750M C/200"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Azeitonas/ Parmesão"
+        }
+      }
+    },
+    {
+      "id": "376511",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) POTE ACOPLADO D-742R C/200",
+          "depois": "Pote Acoplado 250mL"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-742M C/200"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Cebolinha em Conserva, Tomate Seco, Cogumelos"
+        }
+      }
+    },
+    {
+      "id": "376513",
+      "campos": {
+        "nome": {
+          "antes": "(MCI-EMB) POTE ACOPLADO D-771R C/200",
+          "depois": "Pote Acoplado 500ml"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-771M C/200"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "Pasta alho / Parmesão / Biscoito"
+        }
+      }
+    },
+    {
+      "id": "377013",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM COPO TAMPA BOLHA 500ML G-850",
+          "depois": "Copo sem tampa 400ml G-840 C/450"
+        }
+      }
+    },
+    {
+      "id": "377015",
+      "campos": {
+        "nome": {
+          "antes": "FORMINHA DE PAPEL C 1000 N 4",
+          "depois": "Forminha de papel c/ 100 n.4 branca"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "BRIGADEIRO"
+        }
+      }
+    },
+    {
+      "id": "377127",
+      "campos": {
+        "nome": {
+          "antes": "COPO COM TAMPA 200ML CRISTAL C 320",
+          "depois": "Copo  cristal c/ tampa bolha 200ml c/320"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "PRA FESTA"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "DOCE POTE FELICIDADE"
+        }
+      }
+    },
+    {
+      "id": "377171",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM N.658 DOCE QUADRADO G-658 C/150",
+          "depois": "Embalagem  para torta de pão de forma"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-658 C/ 150"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "TORTINHAS PÃO DE FORMA"
+        }
+      }
+    },
+    {
+      "id": "377173",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM FORMA PUDIM 1100ML PW53 C 32",
+          "depois": "Embalagem Forma Pudim 1100ml PW53 c/32 FORNÉAVEL"
+        }
+      }
+    },
+    {
+      "id": "377233",
+      "campos": {
+        "nome": {
+          "antes": "Copo com Tampa Bolha 400ml G-840 C/50 GALVANOTEK",
+          "depois": "Copo com Tampa Bolha 400ml G-840SF C/200"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "G-840SF C/200"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "SALADA DE FRUTAS"
+        }
+      }
+    },
+    {
+      "id": "377701",
+      "campos": {
+        "nome": {
+          "antes": "EMBALAGEM DELPAK PUDIM NATURAL TP FILME C 200",
+          "depois": "EMBALAGEM DELPAK PUDIM GRANDE NATURAL TP FILME C 200"
+        },
+        "referencia": {
+          "antes": "",
+          "depois": "DELPAK"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PUDIM GRANDE"
+        }
+      }
+    },
+    {
+      "id": "377703",
+      "campos": {
+        "referencia": {
+          "antes": "",
+          "depois": "DELPAK"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PUDIM MINI"
+        }
+      }
+    },
+    {
+      "id": "377705",
+      "campos": {
+        "referencia": {
+          "antes": "",
+          "depois": "DELPAK"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PASTINHAS / ANTEPASTOS"
+        }
+      }
+    },
+    {
+      "id": "377709",
+      "campos": {
+        "referencia": {
+          "antes": "",
+          "depois": "DELPAK"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PERNIL / LAGARTO - FINAL DE ANO"
+        }
+      }
+    },
+    {
+      "id": "377711",
+      "campos": {
+        "referencia": {
+          "antes": "",
+          "depois": "DELPAK"
+        },
+        "destinacao": {
+          "antes": "",
+          "depois": "PÃO DE QUEIJO PIPOQUINHA"
+        }
+      }
+    }
+  ]
+}

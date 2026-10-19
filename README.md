@@ -76,6 +76,8 @@ O arquivo **USO E CONSUMO (1).xlsx** foi conferido em 13 abas. O catálogo em `b
 
 Na inicialização, a aplicação aplica cada revisão do catálogo uma única vez, identificada pelo SHA-256 do CSV. Ela adiciona produtos ausentes, preserva os cadastros existentes e não altera saldos, custos cadastrados ou movimentações anteriores. Reinícios não repetem a importação nem restauram produtos excluídos após a aplicação da revisão. Novas instalações recebem os 466 produtos revisados; instalações com catálogos anteriores conservam também seus produtos existentes.
 
+A segunda revisão corrige os dados antigos conhecidos em 175 produtos (410 campos), alinhando descrições, seções, unidades, períodos, destinação, marcas, referências e 9 custos à planilha. Veja [docs/ajuste_catalogo_20261019.md](docs/ajuste_catalogo_20261019.md). Essa correção também é aplicada uma única vez na inicialização: edições feitas posteriormente são preservadas. Campos já personalizados e mudanças de unidade que exigem conversão de saldos, histórico ou limites são separados para revisão. Nenhuma correção altera saldos ou mínimos/máximos das lojas.
+
 Para conferir novamente um Excel e gerar outro catálogo, sem alterar o banco:
 
 ```bash
