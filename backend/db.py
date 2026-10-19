@@ -84,15 +84,20 @@ def initialize(app):
         if 'custo_unitario' not in [row[1] for row in db.execute('PRAGMA table_info(movimentacoes)')]:
             db.execute('ALTER TABLE movimentacoes ADD COLUMN custo_unitario REAL NOT NULL DEFAULT 0')
             db.commit()
-        if not fresh:
-            return
-        # Operational reference data only, no invented stock, prices, users or transactions.
-        for loja in [(1,'BCS','BCS'),(3,'SJN','SJN'),(4,'MEP','MEP'),(5,'FCL1','FCL1'),(6,'FCL2','FCL2'),(7,'FCL3','FCL3'),(8,'FCL4','FCL4')]:
-            db.execute('INSERT OR IGNORE INTO lojas(id,nome,sigla) VALUES(?,?,?)',loja)
-        for nome in ['Embalagem','Limpeza','Consumo Geral','Escritório','Açougue','Bobina PDV','Etiquetas','Bobina Estrela']:
-            db.execute('INSERT OR IGNORE INTO secoes(nome) VALUES(?)',(nome,))
-        db.execute('PRAGMA user_version=1')
-        db.commit()
+        if fresh:
+            # Operational reference data only; imported product metadata never creates stock.
+            for loja in [(1,'BCS','BCS'),(3,'SJN','SJN'),(4,'MEP','MEP'),(5,'FCL1','FCL1'),(6,'FCL2','FCL2'),(7,'FCL3','FCL3'),(8,'FCL4','FCL4')]:
+                db.execute('INSERT OR IGNORE INTO lojas(id,nome,sigla) VALUES(?,?,?)',loja)
+            for nome in ['Embalagem','Limpeza','Consumo Geral','Escritório','Açougue','Bobina PDV','Etiquetas','Bobina Estrela']:
+                db.execute('INSERT OR IGNORE INTO secoes(nome) VALUES(?)',(nome,))
+            db.execute('PRAGMA user_version=1')
+            db.commit()
+        if app.config.get('SEED_CATALOG',not app.testing):
+            try:
+                from .bundled_catalog import apply_catalog
+            except ImportError:
+                from bundled_catalog import apply_catalog
+            apply_catalog(db)
 
 
 def close_db(error=None):

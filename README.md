@@ -14,7 +14,7 @@ export ERP_DATA_DIR=/workspace/erp-data
 /workspace/erp-venv/bin/gunicorn backend.app:app --bind 127.0.0.1:8000 --workers 1 --threads 4 --timeout 60 --no-control-socket
 ```
 
-Abra `http://127.0.0.1:8000`. No onboarding na nuvem, a validação ocorre por requisições locais; a interface de onboarding não oferece preview web. O banco e suas tabelas são criados automaticamente. Lojas e seções iniciais são configurações de referência; produtos, saldos e operações precisam representar a sua empresa.
+Abra `http://127.0.0.1:8000`. No onboarding na nuvem, a validação ocorre por requisições locais; a interface de onboarding não oferece preview web. O banco e suas tabelas são criados automaticamente. O catálogo revisado do Excel enviado acompanha a aplicação e adiciona os produtos ausentes na primeira inicialização dessa versão. Lojas e seções iniciais são referências; confira os cadastros e registre os saldos reais da empresa.
 
 Na primeira abertura, cadastre seu nome, usuário e uma senha de pelo menos 10 caracteres. Não há conta ou senha padrão. Proteja o acesso ao endereço até concluir esse cadastro. Administradores adicionais são gerenciados na área de usuários. O botão **Minha senha** permite que cada pessoa altere sua própria senha, encerrando as outras sessões. Sair da conta invalida a sessão no servidor.
 
@@ -60,13 +60,29 @@ Relatórios CSV de estoque, movimentações, pedidos e compras usam separador `;
 
 ## Importar produtos de uma planilha
 
-Em **Produtos → Importar planilha**, cole o link da aba do Google Sheets ou selecione o CSV exportado em **Arquivo → Fazer download → Valores separados por vírgulas (.csv)**. A leitura pelo link exige que a hospedagem possa acessar `docs.google.com` e que o documento permita a leitura. Se a rede ou o compartilhamento impedir o acesso, use o arquivo CSV; a aplicação não solicita nem armazena credenciais do Google.
+Em **Produtos → Importar planilha**, cole o link da aba do Google Sheets ou selecione diretamente um arquivo Excel `.xlsx` ou o CSV exportado em **Arquivo → Fazer download → Valores separados por vírgulas (.csv)**. A leitura pelo link exige que a hospedagem possa acessar `docs.google.com` e que o documento permita a leitura. Se a rede ou o compartilhamento impedir o acesso, use o arquivo CSV; a aplicação não solicita nem armazena credenciais do Google.
+
+O Excel é lido sem executar fórmulas nem carregar links externos. Todas as abas com código e descrição são verificadas; as abas visíveis têm prioridade sobre as bases ocultas. Datas, históricos sem código e anotações não são tratados como produtos. Se um código tiver descrições diferentes nas abas prioritárias, ele é separado para revisão e exibido na prévia, preservando seu cadastro atual.
 
 A etapa de conferência reconhece colunas em português e permite associá-las manualmente. Código e descrição são obrigatórios; seção, unidade, custo, mínimos/máximos, referência, marca e destinação são opcionais. São aceitos CSV com vírgula, ponto e vírgula ou tabulação, até 1,5 MB e 5.000 produtos. Valores como `R$ 1.234,56` são reconhecidos e os zeros à esquerda nos códigos são mantidos.
 
 A prévia informa novos e existentes, erros, colunas ignoradas e repetições. Duplicidades com informações conflitantes impedem a importação inteira até sua correção. Por padrão, os produtos existentes são preservados; marque **Atualizar os produtos existentes** somente quando quiser atualizar as colunas preenchidas. Campos vazios não apagam dados anteriores. A confirmação é transacional e registrada na auditoria.
 
 **Colunas de saldo físico não são importadas por esse fluxo.** O catálogo pode definir níveis mínimo e máximo, mas os saldos disponíveis continuam sendo mantidos por entradas, compras e inventários. A importação não cria movimentações fictícias.
+
+## Catálogo revisado do Excel enviado
+
+O arquivo **USO E CONSUMO (1).xlsx** foi conferido em 13 abas. O catálogo em `backend/data/catalogo_uso_consumo.csv` reúne 466 códigos válidos, sem saldos físicos ou dados de contato. O relatório [docs/importacao_uso_consumo.md](docs/importacao_uso_consumo.md) registra as regras e os 3 códigos conflitantes que precisam de revisão.
+
+Na inicialização, a aplicação aplica cada revisão do catálogo uma única vez, identificada pelo SHA-256 do CSV. Ela adiciona produtos ausentes, preserva os cadastros existentes e não altera saldos, custos cadastrados ou movimentações anteriores. Reinícios não repetem a importação nem restauram produtos excluídos após a aplicação da revisão. Novas instalações recebem os 466 produtos revisados; instalações com catálogos anteriores conservam também seus produtos existentes.
+
+Para conferir novamente um Excel e gerar outro catálogo, sem alterar o banco:
+
+```bash
+/workspace/erp-venv/bin/python -m backend.import_workbook arquivo.xlsx --output /tmp/catalogo.csv --report /tmp/revisao.json
+```
+
+A geração não aplica dados ao app. Para outro arquivo, prefira **Produtos → Importar planilha** e confira a prévia antes de confirmar. `SEED_CATALOG=False` nas configurações da fábrica de aplicação desativa o catálogo integrado em testes; a suíte padrão usa bancos temporários sem carregar dados reais.
 
 ## Catálogo antigo, sem saldos históricos
 

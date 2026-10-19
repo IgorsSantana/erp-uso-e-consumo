@@ -194,7 +194,7 @@ def create_app(config=None):
             origin = request.headers.get('Origin')
             if origin and origin.rstrip('/')!=request.host_url.rstrip('/'):
                 raise APIError('Origem da requisição não permitida.',403)
-            if request.path!='/api/produtos/ler-planilha':
+            if request.path not in ('/api/produtos/ler-planilha','/api/produtos/ler-excel'):
                 get_db().execute('BEGIN IMMEDIATE')
 
     @app.after_request
@@ -394,6 +394,25 @@ def create_app(config=None):
         except ValueError as error:
             raise APIError(str(error),400)
         return jsonify(csv_text=source)
+
+    @app.post('/api/produtos/ler-excel')
+    @require(*MANAGERS)
+    def read_excel_products():
+        try:
+            from .import_workbook import extract_catalog
+        except ImportError:
+            from import_workbook import extract_catalog
+        upload=request.files.get('arquivo')
+        if upload is None or not (upload.filename or '').lower().endswith('.xlsx'):
+            raise APIError('Selecione um arquivo Excel .xlsx.')
+        payload=upload.read(1_500_001)
+        if len(payload)>1_500_000:
+            raise APIError('O arquivo excede o limite de 1,5 MB.')
+        try:
+            source,report=extract_catalog(payload)
+        except ValueError as error:
+            raise APIError(str(error))
+        return jsonify(csv_text=source,report=report)
 
     @app.post('/api/produtos/importar')
     @require(*MANAGERS)

@@ -1,0 +1,136 @@
+{
+  "source_sha256": "8ee4eef4e6d5adcb64f9a0d86d8a07ef6249447e4c4182fa041fae6933274d97",
+  "sheets": [
+    {
+      "sheet": "DADOS ESTOQUE",
+      "state": "hidden",
+      "rows": 159,
+      "header_row": 1
+    },
+    {
+      "sheet": "PADARIADADOS",
+      "state": "hidden",
+      "rows": 156,
+      "header_row": 1
+    },
+    {
+      "sheet": "EMBALAGEM",
+      "state": "visible",
+      "rows": 104,
+      "header_row": 1
+    },
+    {
+      "sheet": "LIMPEZA",
+      "state": "visible",
+      "rows": 11,
+      "header_row": 1
+    },
+    {
+      "sheet": "CONSUMO GERAL",
+      "state": "visible",
+      "rows": 27,
+      "header_row": 1
+    },
+    {
+      "sheet": "ESCRITÓRIO",
+      "state": "visible",
+      "rows": 28,
+      "header_row": 1
+    },
+    {
+      "sheet": "BOBINA PDV",
+      "state": "visible",
+      "rows": 3,
+      "header_row": 1
+    },
+    {
+      "sheet": "ETIQUETAS",
+      "state": "visible",
+      "rows": 5,
+      "header_row": 1
+    },
+    {
+      "sheet": "BOBINA ESTRELA",
+      "state": "visible",
+      "rows": 3,
+      "header_row": 1
+    },
+    {
+      "sheet": "Sacola Supermais",
+      "state": "visible",
+      "rows": 3,
+      "header_row": 1
+    },
+    {
+      "sheet": "AÇOUGUE",
+      "state": "visible",
+      "rows": 35,
+      "header_row": 1
+    },
+    {
+      "sheet": "PADARIA",
+      "state": "visible",
+      "rows": 190,
+      "header_row": 1
+    },
+    {
+      "sheet": "CONSUMO INTERNO PADARIA",
+      "state": "visible",
+      "rows": 39,
+      "header_row": 1
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "360618",
+      "variants": [
+        {
+          "sheet": "AÇOUGUE",
+          "row": 7,
+          "nome": "CALDÃO DE GALINHA 1KG"
+        },
+        {
+          "sheet": "PADARIA",
+          "row": 19,
+          "nome": "CALDO EM PÓ GALINHA MAGGI 1,01KG (KNNOR)"
+        }
+      ]
+    },
+    {
+      "id": "341499",
+      "variants": [
+        {
+          "sheet": "AÇOUGUE",
+          "row": 5,
+          "nome": "AJINOMOTO KG"
+        },
+        {
+          "sheet": "PADARIA",
+          "row": 188,
+          "nome": "TEMPERO ANJINOMOTO 2KG"
+        }
+      ]
+    },
+    {
+      "id": "377707",
+      "variants": [
+        {
+          "sheet": "EMBALAGEM",
+          "row": 38,
+          "nome": "EMBALAGEM DELPAK K121 NATURAL TP FILME C 200"
+        },
+        {
+          "sheet": "EMBALAGEM",
+          "row": 40,
+          "nome": "EMBALAGEM DELPAK K151 NATURAL TP FILME C 200"
+        }
+      ]
+    }
+  ],
+  "field_warnings": [],
+  "historical_rows_ignored": 15,
+  "unique_codes": 469,
+  "products": 466,
+  "conflicting_codes": 3,
+  "policy": "Abas visíveis têm prioridade; abas ocultas complementam produtos ausentes. Códigos com descrições conflitantes não são importados. Estoques, pedidos, contatos e observações livres não são importados."
+}
