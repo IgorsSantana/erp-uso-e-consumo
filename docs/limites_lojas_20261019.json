@@ -1,0 +1,126 @@
+{
+  "source_sha256": "8ee4eef4e6d5adcb64f9a0d86d8a07ef6249447e4c4182fa041fae6933274d97",
+  "conflicting_codes": [
+    "360618",
+    "341499",
+    "377707"
+  ],
+  "warnings": [
+    {
+      "id": "367281",
+      "sheet": "CONSUMO GERAL",
+      "row": 2,
+      "message": "Máximo agregado difere da soma; usadas as colunas individuais das lojas."
+    },
+    {
+      "id": "374233",
+      "sheet": "CONSUMO GERAL",
+      "row": 11,
+      "message": "Máximo agregado difere da soma; usadas as colunas individuais das lojas."
+    },
+    {
+      "id": "368128",
+      "sheet": "CONSUMO GERAL",
+      "row": 12,
+      "message": "Máximo agregado difere da soma; usadas as colunas individuais das lojas."
+    },
+    {
+      "id": "368495",
+      "sheet": "ETIQUETAS",
+      "row": 4,
+      "message": "Máximo agregado difere da soma; usadas as colunas individuais das lojas."
+    },
+    {
+      "id": "334512",
+      "sheet": "ETIQUETAS",
+      "row": 5,
+      "message": "Máximo agregado difere da soma; usadas as colunas individuais das lojas."
+    }
+  ],
+  "pending": [
+    {
+      "id": "366959",
+      "sheet": "EMBALAGEM",
+      "row": 11,
+      "message": "Limite agregado manual com várias lojas; não foi distribuído automaticamente."
+    },
+    {
+      "id": "334512",
+      "sheet": "ETIQUETAS",
+      "row": 5,
+      "message": "Máximo agregado zero contradiz as quantidades por loja; revisar item descontinuado."
+    }
+  ],
+  "sheets": [
+    {
+      "sheet": "EMBALAGEM",
+      "rule": "minimum_plus_20_percent",
+      "rows": 102
+    },
+    {
+      "sheet": "LIMPEZA",
+      "rule": "maximum_only",
+      "rows": 11
+    },
+    {
+      "sheet": "CONSUMO GERAL",
+      "rule": "maximum_only",
+      "rows": 27
+    },
+    {
+      "sheet": "ESCRITÓRIO",
+      "rule": "maximum_only",
+      "rows": 28
+    },
+    {
+      "sheet": "BOBINA PDV",
+      "rule": "maximum_only",
+      "rows": 3
+    },
+    {
+      "sheet": "ETIQUETAS",
+      "rule": "maximum_only",
+      "rows": 5
+    },
+    {
+      "sheet": "BOBINA ESTRELA",
+      "rule": "maximum_only",
+      "rows": 3
+    },
+    {
+      "sheet": "Sacola Supermais",
+      "rule": "minimum_times_two",
+      "rows": 3
+    },
+    {
+      "sheet": "AÇOUGUE",
+      "rule": "minimum_times_two",
+      "rows": 33
+    },
+    {
+      "sheet": "PADARIA",
+      "rule": "bakery_bcs",
+      "rows": 188
+    },
+    {
+      "sheet": "CONSUMO INTERNO PADARIA",
+      "rule": "bakery_bcs",
+      "rows": 39
+    }
+  ],
+  "limits": 629,
+  "products_with_limits": 403,
+  "by_store": {
+    "BCS": 394,
+    "FCL1": 30,
+    "FCL2": 33,
+    "FCL3": 38,
+    "FCL4": 33,
+    "MEP": 44,
+    "SJN": 57
+  },
+  "pending_products": [
+    "334512",
+    "366959"
+  ]
+}

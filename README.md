@@ -72,11 +72,15 @@ A prévia informa novos e existentes, erros, colunas ignoradas e repetições. D
 
 ## Catálogo revisado do Excel enviado
 
-O arquivo **USO E CONSUMO (1).xlsx** foi conferido em 13 abas. O catálogo em `backend/data/catalogo_uso_consumo.csv` reúne 466 códigos válidos, sem saldos físicos ou dados de contato. Os mínimos e máximos desse arquivo são referências para importação com loja escolhida; o catálogo integrado não cria novos limites globais nem copia esses valores automaticamente para lojas novas. O relatório [docs/importacao_uso_consumo.md](docs/importacao_uso_consumo.md) registra as regras e os 3 códigos conflitantes que precisam de revisão.
+O arquivo **USO E CONSUMO (1).xlsx** foi conferido em 13 abas. O catálogo em `backend/data/catalogo_uso_consumo.csv` reúne 466 códigos válidos, sem saldos físicos ou dados de contato. Os mínimos e máximos agregados desse CSV são referências para importação com loja escolhida. A revisão separada `backend/data/limites_lojas_20261019.json` contém 629 configurações individuais extraídas das colunas das lojas e dos limites de Padaria atribuídos à BCS pelo responsável. O relatório [docs/importacao_uso_consumo.md](docs/importacao_uso_consumo.md) registra as regras e os 3 códigos conflitantes que precisam de revisão.
 
 Na inicialização, a aplicação aplica cada revisão do catálogo uma única vez, identificada pelo SHA-256 do CSV. Ela adiciona produtos ausentes, preserva os cadastros existentes e não altera saldos, custos cadastrados ou movimentações anteriores. Reinícios não repetem a importação nem restauram produtos excluídos após a aplicação da revisão. Novas instalações recebem os 466 produtos revisados; instalações com catálogos anteriores conservam também seus produtos existentes.
 
 A segunda revisão corrige os dados antigos conhecidos em 175 produtos (410 campos), alinhando descrições, seções, unidades, períodos, destinação, marcas, referências e 9 custos à planilha. Veja [docs/ajuste_catalogo_20261019.md](docs/ajuste_catalogo_20261019.md). Essa correção também é aplicada uma única vez na inicialização: edições feitas posteriormente são preservadas. Campos já personalizados e mudanças de unidade que exigem conversão de saldos, histórico ou limites são separados para revisão. Nenhuma correção altera saldos ou mínimos/máximos das lojas.
+
+Depois da carga dos produtos, a revisão dos limites preenche os pares produto/loja do Excel, tanto em novas instalações como nas bases em que a versão anterior deixou os limites vazios. Onde o Excel só informa máximo, o mínimo permanece em **0**, conforme definido pelo responsável; Padaria e Consumo Interno Padaria pertencem somente à **BCS**. Embalagem usa a quantidade da loja como mínimo e o máximo com a margem da planilha; Açougue usa o dobro do mínimo como máximo. Ajustes explícitos de uma linha com destino único são respeitados. Não há distribuição do total da rede para todas as lojas.
+
+A revisão preserva ajustes manuais registrados, limites personalizados e saldos. Cópias automáticas antigas são corrigidas apenas quando os valores e o horário correspondem exatamente à migração anterior e não há edição manual registrada. A aplicação ocorre uma vez por versão; reinícios preservam alterações e exclusões posteriores, e lojas novas continuam sem herdar limites. O relatório [docs/limites_lojas_20261019.md](docs/limites_lojas_20261019.md) detalha as quantidades, regras e os 2 produtos com limites contraditórios que ficaram pendentes. O envio ao GitHub não reinicia a hospedagem: é necessário que o serviço execute essa versão para aplicar a revisão.
 
 Para conferir novamente um Excel e gerar outro catálogo, sem alterar o banco:
 
@@ -161,6 +165,8 @@ A suíte de testes usa bancos SQLite temporários e não precisa de serviços ex
 ```
 
 Há também um teste opcional de navegador em `tests/browser_smoke.py`, que exige o pacote de desenvolvimento `playwright` e um Chromium instalado. Execute `python tests/browser_smoke.py` no ambiente que os fornece; use `CHROMIUM_EXECUTABLE` se o executável estiver fora de `/usr/bin/chromium`. O teste abre um serviço temporário e não cadastra dados de demonstração no banco da aplicação.
+
+`python tests/browser_store_limits.py` valida, em outro banco temporário, o catálogo integrado com os limites reais da revisão: valores diferentes por loja, edição independente, Padaria somente na BCS e as abas com somente máximo.
 
 A validação básica inclui integridade SQLite, autenticação, permissões, regras de estoque e transações dos fluxos de pedido e cotação. O endpoint de saúde é útil para verificar se o serviço está ativo:
 

@@ -116,6 +116,13 @@ def initialize(app):
                 except ImportError:
                     from catalog_adjustments import apply_adjustments
                 apply_adjustments(db)
+            # Store quantities are a separate revision: the old global-limit
+            # migration runs before the catalog and cannot seed a fresh DB.
+            try:
+                from .bundled_limits import apply_limits
+            except ImportError:
+                from bundled_limits import apply_limits
+            apply_limits(db)
 
 
 def close_db(error=None):

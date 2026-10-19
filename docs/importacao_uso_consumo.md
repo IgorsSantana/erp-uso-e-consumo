@@ -15,6 +15,8 @@ As abas visíveis têm prioridade para descrição e detalhes do produto. As bas
 
 Após a separação dos limites por loja, os dados foram conferidos novamente com o Excel. Foram ajustados 175 produtos e 410 campos que ainda tinham valores do catálogo anterior, sem alterar saldos ou mínimos/máximos por loja. Consulte [ajuste_catalogo_20261019.md](ajuste_catalogo_20261019.md) para os resultados e as regras de proteção das edições do usuário.
 
+Uma revisão posterior corrige a falta de limites em instalações novas: [limites_lojas_20261019.md](limites_lojas_20261019.md). Ela utiliza as colunas individuais das lojas e a confirmação do responsável sobre Padaria/BCS e mínimos ausentes, em vez de repetir os limites agregados em toda a rede.
+
 ## Códigos que precisam de revisão
 
 | Código | Origem | Descrição no Excel |

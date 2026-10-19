@@ -1,5 +1,7 @@
 """Independent stock thresholds for each product/store; balances remain untouched."""
 
+WORKBOOK_STORES = ('BCS', 'SJN', 'MEP', 'FCL1', 'FCL2', 'FCL3', 'FCL4')
+
 
 def migrate_limits(db):
     """Copy the old threshold to existing stores once, then remove any global fallback."""
